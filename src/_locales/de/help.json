@@ -1,0 +1,38 @@
+{
+  "help_title": "PrioMailbox - Hilfe",
+  "instructions_title": "Anleitung:",
+  "instructions_text_1": "Wähle in den PrioMailbox-Einstellungen Schlagwörter (z.B. „Wichtig“, „Persönlich“) aus, die automatisch (basierend auf deinem Training) gesetzt werden sollen. Trainiere jedes Schlagwort, indem du einige Mails auswählst, die zu diesem Schlagwort passen, und einige, die nicht passen. Klicke dazu in der Mailliste mit der rechten Maustaste auf die jeweilige Mail, gehe im Menü auf „PrioMailbox“, wähle das entsprechende Schlagwort und trainiere die Mail.",
+  "instructions_text_2": "Zum schnellen Testen der Erkennung markiere einige Mails (mit denen noch nicht trainiert wurde) und klicke im PrioMailbox-Menü auf „Klassifiziere E-Mail“. Diese Mails werden dann überprüft, und wenn die Schlagwörter basierend auf den Trainingsdaten zutreffen, werden sie automatisch gesetzt.",
+  "instructions_text_3": "Um weitere Informationen zu einer Mail zu erhalten, klicke im PrioMailbox-Menü auf „E-Mail Infos“.",
+  
+  "usage_ideas_title": "Nutzungsideen:",
+  "usage_idea_1_title": "Unwichtige Mails automatisch abschwächen:",
+  "usage_idea_1_text": "Erstelle ein neues Schlagwort wie „Werbung“ oder „Unwichtig“ und gib ihm eine graue Farbe. Wähle das Schlagwort in PrioMailbox aus und trainiere den Filter. So kannst du Mails, die zwar kein Spam, aber nicht wichtig sind, farblich unauffälliger machen und ihre Aufmerksamkeit minimieren.",
+  "usage_idea_2_title": "Wichtige Mails hervorheben:",
+  "usage_idea_2_text": "Erstelle ein Schlagwort für wichtige Mails, z.B. „Dringend“, und wähle eine auffällige Farbe. Trainiere den Filter in PrioMailbox, um wichtige Mails sofort hervorzuheben und sicherzustellen, dass sie nicht untergehen.",
+  "usage_idea_3_title": "Schlagwörter für To-Do-Aufgaben:",
+  "usage_idea_3_text": "Verwende automatische Schlagwörter, um Mails zu markieren, bei denen noch Handlungsbedarf besteht. Wenn du beispielsweise für die Bearbeitung von Rechnungen zuständig bist, erstelle das Schlagwort „Rechnung“ und trainiere es. Nach dem Training werden Mails mit Rechnungen automatisch markiert. Nach dem Bezahlen kannst du das Schlagwort entfernen, um den Überblick zu behalten.",
+  
+  "good_training_notes_title": "Hinweise für gutes Training:",
+  "good_training_text_1": "Hier am Beispiel des Schlagworts „Wichtig“:",
+  "good_training_text_2": "Trainiere zu Beginn einige Mails, die als „Wichtig“ gelten, und einige, die nicht „Wichtig“ sind. Später reicht es aus, nur noch die Mails zu trainieren, bei denen das Schlagwort „Wichtig“ fälschlicherweise gesetzt wurde (Falsch-Positiv) oder die nicht als „Wichtig“ markiert wurden, obwohl sie es sein sollten (Falsch-Negativ).",
+  
+  "poor_training_title": "Schlechtes Training (Überanpassung vermeiden):",
+  "poor_training_text_1": "Achte darauf, Mails nicht falsch zu trainieren. Es ist nicht sinnvoll, bereits richtig erkannte Mails weiterhin zu trainieren. Wenn eine Mail korrekt als „Wichtig“ markiert wurde, sollte sie nicht erneut als „Wichtig“ trainiert werden. Gleiches gilt für Mails, die korrekt als „NICHT-Wichtig“ erkannt wurden – diese sollten nicht erneut als „NICHT-Wichtig“ trainiert werden.",
+  "poor_training_text_2": "Wiederholtes falsches Training kann zu Überanpassung (Overfitting) führen, was die Lernfähigkeit des Filters verschlechtert. Kurz gesagt: Trainiere am besten nur die Falsch-Positiv- und Falsch-Negativ-Mails, um die besten Ergebnisse zu erzielen.",
+  
+  "additional_notes_title": "Hinweise:",
+  "note_1": "Die Schlagwörter werden unabhängig voneinander trainiert. Es ist normal, dass Mails mit mehreren Schlagwörtern markiert werden. Dies ist so beabsichtigt.",
+  "note_2": "Manuelles Setzen oder Entfernen von Schlagwörtern ändert die Trainingsdaten nicht. Trainiert wird ausschließlich über das PrioMailbox-Menü.",
+  "note_3": "Bereits trainierte Mails können für eine gewisse Zeit nicht erneut trainiert werden, um Überanpassung zu vermeiden.",
+  
+  "questions_title": "Fragen:",
+  "question_1_title": "Wo werden die Daten gespeichert?",
+  "question_1_text": "Die Trainingsdaten werden lokal auf deinem Gerät in deinem Thunderbird-Profil gespeichert. Deine Daten sind also vollständig in deiner Hand und werden nicht extern übertragen.",
+  
+  "question_2_title": "Wie funktioniert die Erkennung?",
+  "question_2_text": "Die Erkennung basiert auf einem sogenannten Bayes-Filter. Aus den von dir trainierten Mails wird gezählt, welche Tokens (Wörter / Wortpaare) in Mails vorkommen, die zu deinem Schlagwort passen, und welche nicht. Bei neuen Mails kann durch die Analyse der enthaltenen Tokens die Wahrscheinlichkeit berechnet werden, ob diese Mail zu deinem Schlagwort passt. Wenn der Wahrscheinlichkeitswert über einem bestimmten Schwellwert liegt, wird das Schlagwort automatisch gesetzt.",
+  
+  "question_3_title": "Welche Inhalte einer Mail werden beim Training / der Klassifizierung beachtet?",
+  "question_3_text": "PrioMailbox analysiert die ersten 150 Tokens (Wörter) einer Mail sowie den Betreff, den Absender, den Empfänger, CC und die Dateinamen der Anhänge."
+}

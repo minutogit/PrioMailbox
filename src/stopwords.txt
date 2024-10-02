@@ -1,0 +1,72 @@
+the, is, in, at, of, on, and, a, to, it,  # Englisch
+的, 是, 在, 了, 和, 有, 我, 他, 这, 那,  # Mandarin
+का, के, में, हैं, है, से, और, यह, जो, कि,  # Hindi
+el, la, de, y, a, que, en, es, un, por,  # Spanisch
+من, في, على, هو, هذا, كان, أن, إلى, مع, كما,  # Arabisch
+le, la, de, et, en, un, une, dans, que, est,  # Französisch
+এবং, এর, কি, ছিল, এই, জন্য, যে, তার, তারা, ছিলাম,  # Bengalisch
+и, в, не, на, с, что, это, как, он, но,  # Russisch
+o, a, de, que, e, em, um, para, com, não,  # Portugiesisch
+yang, dan, di, ke, dari, ini, itu, pada, adalah, dengan,  # Indonesisch
+کے, میں, ہے, یہ, اور, کے, کی, سے, کو, جو,  # Urdu
+の, に, は, を, た, が, で, て, と, し,  # Japanisch
+der, die, das, und, ist, in, zu, den, ein, es,  # Deutsch
+na, ya, kwa, wa, katika, ni, kama, cha, hii, yao,  # Swahili
+आणि, च्या, मध्ये, आहे, ते, हा, होते, की, हे, साठी,  # Marathi
+లో, కోసం, తో, కాని, మీ, నుండి, అనే, మరియు, ఆ, ఇది,  # Telugu
+ve, bu, için, ile, de, bir, ama, olarak, çok, ya,  # Türkisch
+அந்த, இந்த, இது, அவர், என், உங்கள், அங்கு, நான், ஆனால், ஒரு,  # Tamil
+il, la, di, e, che, a, un, in, è, per,  # Italienisch
+và, của, trong, là, có, cho, một, với, được, để  # Vietnamesisch
+da,ne,ya,na,cikin,da,su,ka,yake,wani  # Hausa
+ਨੇ,ਹੈ,ਦਾ,ਨੂੰ,ਹੈ,ਤੇ,ਦਾ,ਨਾਲ,ਦੀ,ਸੇ  # Punjabi
+karo,iki,ing,kang,iku,saka,kangge,ora,dening,lan  # Javanisch
+个,哎,嘛,伲,侬,咯,啥,老,哪能,啷个  # Wu (Shanghainese)
+എന്നും,അങ്ങനെ,ആ,ആണ്,ഉള്ള,എന്ന,അവൻ,ഇല്ല,അത്,അവൾ  # Malayalam
+jeung,ti,nu,jeung,teh,di,ieu,nya,na,tina  # Sundanesisch
+ใน,เป็น,การ,ที่,และ,ของ,หรือ,ไม่,มี,แต่  # Thai
+અને,છે,કે,તે,ના,એક,થી,છે,પર,કરવા  # Gujarati
+ಅದರ,ಇದು,ಮತ್ತು,ಏಕೆ,ನೀವು,ಅವರು,ಏನು,ನಾನು,ನಿಮ್ಮ,ಯಾವ  # Kannada
+ده,د,نه,په,چې,یو,له,هم,ځینې,یې  # Pashto
+ni,ati,ti,jẹ,nítorí,wípé,sí,fún,ní,jẹ́  # Yoruba
+आ,हैं,में,के,से,जा,का,और,बा,ही  # Maithili
+ပြီး,ဖြစ်,ထား,သည်,မည်,မဟုတ်,အဖြစ်,အတွက်,တစ်ခု,ကို  # Burmese
+iyo,waxaa,ku,ayaa,in,ka,ah,u,uu,leh  # Somali
+ang,sa,ug,nga,ni,na,ka,siya,ko,dili  # Cebuano
+እንደ,እንዲሁም,በላይ,ከሆነ,ለእንዲሁም,የ,እና,በ,ተጨማሪም,እንደዚህም  # Amharisch
+fi,irratti,kana,ta'e,yookaan,isaa,yoo,inni,waa,irraa  # Oromo
+আৰু,হয়,এই,যি,কোনো,মোৰ,তুমি,তাতে,হ'ল,তাৰপৰা  # Assamesisch
+se,dhika,jeh,bi',karna,tak,apa,sang,la,pa  # Maduresisch
+සහ,එය,මේ,හා,ඇති,වන,බව,මම,ඔයා,කළා  # Sinhalese
+के,ए,हे,ह,मा,पर,अउ,जा,हो,मन  # Chhattisgarhi
+को,मा,भयो,कि,छ,भने,तपाईंको,हो,त्यस,लागि  # Nepali
+का,और,है,में,से,कि,ये,वो,जो,जब  # Deccan
+का,ने,सै,अर,हूं,या,ते,नै,से,मैं  # Haryanvi
+है,रो,और,में,ने,ने,बा,की,ही,सा  # Marwari
+हवे,के,बा,हमरा,का,कुछ,जइसे,से,रहे,ही  # Magahi
+अर,रो,में,सा,तो,ने,है,की,हां,कह  # Rajasthani
+के,बा,ह,से,हो,में,का,केहू,जे,रहे  # Bhojpuri
+ti,ken,iti,iti,nga,iti,na,di,ken,kadagiti  # Ilokano
+នៅ,នឹង,ទៅ,ជា,ពី,សម្រាប់,មួយ,របស់,អ្នក,ហើយ  # Khmer
+个,哎,嘛,伲,侬,咯,啥,老,哪能,啷个  # Xiang (Hunanese)
+ئه,ئا,كه,يه,ئه‌و,بۆ,و,له‌,به‌,نا  # Baluchi
+futhi,ukuthi,ukuthi,ukuthi,futhi,ukuthi,okukhona,uma,lapho,ukuthi  # Zulu
+die,en,van,ek,is,in,om,te,vir,met  # Afrikaans
+na,nke,dị,na,ọ bụ,ndị,ọ,nke a,maka,ma  # Igbo
+wan,kay,hina,chay,mana,llapan,kan,ichaqa,ña,noqayku  # Quechua
+uye,kuti,zviri,pamusoro,zvichaitika,kana,zviri,akati,zvino,ndino  # Shona
+va,bu,ham,bilan,uchun,emas,deb,bu,uning,lekin  # Uzbek
+va,ki,ast,in,ba,az,yak,bo,in,man  # Tajik
+le,la,ka,go,e,e le,e ba,mme,gore,ke  # Tswana
+le,hore,ka,e,ba,mme,ka,re,tsena,ha  # Sesotho
+នៅ,នឹង,ទៅ,ជា,ពី,សម្រាប់,មួយ,របស់,អ្នក,ហើយ  # Khmer
+мен,бұл,және,да,сол,үшін,ол,не,сіз,қалай  # Kazakh
+ne,no,wɔ,na,ɛwɔ,sɛ,wɔ,de,nso,bi  # Akan
+kwaye,ukuze,zinto,lo,lo nto,ukuba,kuba,ukuba,yile,ngenxa  # Xhosa
+na,ku,xikwembu,leswaku,swi,tani,hi,leri,tanihi,leswaku  # Tsonga
+бу,һәм,ул,әгәр,тик,да,бар,бу,иде  # Tatar
+بىلەن,ھەم,ۋە,ئۈچۈن,بولسا,ئەمىسە,بىلەن,ئۇلار,بۇ,ئويلا  # Uyghur
+ပြီး,ဖြစ်,ထား,သည်,မည်,မဟုတ်,အဖြစ်,အတွက်,တစ်ခု,ကို  # Burmese
+
+
+

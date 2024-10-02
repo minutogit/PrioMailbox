@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>PrioMailbox - E-Mail-Info</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f9;
+      color: #333;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;    /* Vertikales Scrollen aktivieren */
+      width: 800px; /* Feste Breite für das Fenster */
+    }
+
+    h2 {
+      font-size: 20px;
+      color: #007ACC;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      table-layout: fixed; /* Feste Tabellenlayout */
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border: 1px solid #ddd;
+      word-wrap: break-word;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #e9f5fb;
+      color: #007ACC;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Zusätzliche Stile für die Token-Tabellen */
+    #token-tables-container table {
+      margin-top: 15px;
+      table-layout: fixed;
+    }
+
+    #token-tables-container th, #token-tables-container td {
+      padding: 6px;
+      font-size: 12px;
+    }
+
+    #token-tables-container th {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+
+    #token-tables-container tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    #token-tables-container tr:hover {
+      background-color: #e2e3e5;
+    }
+
+    /* Farben für positive und negative Token */
+    .positive-token {
+      color: #1a7f37;
+      font-weight: bold;
+    }
+
+    .negative-token {
+      color: #b21f24;
+      font-weight: bold;
+    }
+
+    /* Stil für den Toggle-Button */
+    #toggle-tokens-button {
+      background-color: transparent;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      display: block;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="email-info-title"></h2>
+  <table>
+    <thead>
+      <tr>
+        <th id="emailinfo_label_tag"></th>
+        <th id="emailinfo_label_probability"></th>
+        <th id="emailinfo_label_known_tokens"></th>
+      </tr>
+    </thead>
+    <tbody id="probabilities-table">
+    </tbody>
+  </table>
+
+  <!-- Toggle-Button -->
+  <button id="toggle-tokens-button">&#9660;</button>
+
+  <!-- Container für die zusätzlichen Token-Tabellen pro Schlagwort -->
+  <div id="token-tables-container"></div>
+
+  <script src="email_info.js"></script>
+  
+</body>
+</html>

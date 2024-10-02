@@ -1,0 +1,43 @@
+{
+  "manifest_version": 2,
+  "name": "PrioMailbox",
+  "version": "0.11.6",
+  "default_locale": "en",
+  "description": "PrioMailbox organisiert Ihre E-Mails in Thunderbird mit intelligenten, trainierbaren Schlagwörtern. Wichtiges wird hervorgehoben, Unwichtiges ausgeblendet.",
+  "icons": {
+    "16": "icons/priomailbox-icon-16.png",
+    "48": "icons/priomailbox-icon-48.png",
+    "128": "icons/priomailbox-icon-128.png"
+  },
+  "browser_specific_settings": {
+  "gecko": {
+      "id": "sgalek@gmx.de",
+      "strict_min_version": "115.0"
+    }
+  },
+  "permissions": [
+    "messagesModify",
+    "messagesRead",
+    "storage",
+    "menus",
+    "notifications",
+    "accountsRead",
+    "accountsFolders"
+  ],
+  "browser_action": {
+      "default_popup": "popup/popup.html",
+      "default_title": "PrioMailbox",
+      "default_icon": "icons/icon.png"
+  },
+  "background": {
+    "scripts": ["bayes.js", "background.js", "tokenutils.js", "optimize_token_data.js","utils.js"]
+  },
+  "options_ui": {
+    "page": "settings/settings.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    "email_info.html",
+    "email_info.js"
+  ]
+}

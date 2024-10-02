@@ -1,0 +1,38 @@
+{
+  "help_title": "PrioMailbox - Help",
+  "instructions_title": "Instructions:",
+  "instructions_text_1": "Select keywords (e.g. 'Important', 'Personal') in the PrioMailbox settings that should be set automatically (based on your training). Train each keyword by selecting some emails that match this keyword and some that do not. To do this, right-click on the respective email in the email list, go to the 'PrioMailbox' menu, select the corresponding keyword, and train the email.",
+  "instructions_text_2": "To quickly test the detection, mark some emails (that have not yet been trained) and click on 'Classify Email' in the PrioMailbox menu. These emails will then be checked, and if the keywords match based on the training data, they will be set automatically.",
+  "instructions_text_3": "To get more information about an email, click on 'Email Info' in the PrioMailbox menu.",
+  
+  "usage_ideas_title": "Usage Ideas:",
+  "usage_idea_1_title": "Automatically De-emphasize Unimportant Emails:",
+  "usage_idea_1_text": "Create a new keyword like 'Advertisement' or 'Unimportant' and give it a gray color. Select the keyword in PrioMailbox and train the filter. This way, you can make emails that are not spam but not important less noticeable and minimize their attention.",
+  "usage_idea_2_title": "Highlight Important Emails:",
+  "usage_idea_2_text": "Create a keyword for important emails, such as 'Urgent', and choose a noticeable color. Train the filter in PrioMailbox to highlight important emails immediately and ensure they do not get lost.",
+  "usage_idea_3_title": "Keywords for To-Do Tasks:",
+  "usage_idea_3_text": "Use automatic keywords to mark emails that require action. For example, if you are responsible for processing invoices, create the keyword 'Invoice' and train it. After training, emails with invoices will be automatically marked. After payment, you can remove the keyword to keep track.",
+  
+  "good_training_notes_title": "Notes for Good Training:",
+  "good_training_text_1": "Here using the example of the keyword 'Important':",
+  "good_training_text_2": "Initially train some emails that are considered 'Important' and some that are not 'Important'. Later, it suffices to only train the emails where the keyword 'Important' was mistakenly set (False Positive) or those that were not marked as 'Important' although they should have been (False Negative).",
+  
+  "poor_training_title": "Poor Training (Avoid Overfitting):",
+  "poor_training_text_1": "Be careful not to train emails incorrectly. It does not make sense to continue training emails that have already been correctly recognized. If an email is correctly marked as 'Important', it should not be trained again as 'Important'. The same applies to emails that were correctly recognized as 'NOT Important' – these should not be retrained as 'NOT Important'.",
+  "poor_training_text_2": "Repeated incorrect training can lead to overfitting, which degrades the learning ability of the filter. In short: It is best to train only the False Positive and False Negative emails to achieve the best results.",
+  
+  "additional_notes_title": "Notes:",
+  "note_1": "The keywords are trained independently of each other. It is normal for emails to be marked with multiple keywords. This is intended.",
+  "note_2": "Manually setting or removing keywords does not change the training data. Training is done exclusively through the PrioMailbox menu.",
+  "note_3": "Already trained emails cannot be retrained for a certain period to avoid overfitting.",
+  
+  "questions_title": "Questions:",
+  "question_1_title": "Where is the data stored?",
+  "question_1_text": "The training data is stored locally on your device in your Thunderbird profile. Your data is therefore entirely in your hands and is not transmitted externally.",
+  
+  "question_2_title": "How does the detection work?",
+  "question_2_text": "The detection is based on a so-called Bayes filter. It counts which tokens (words/word pairs) appear in emails that match your keyword and which do not from the emails you have trained. For new emails, the probability can be calculated by analyzing the tokens contained to determine whether this email matches your keyword. If the probability value is above a certain threshold, the keyword is set automatically.",
+  
+  "question_3_title": "What content of an email is considered during training/classification?",
+  "question_3_text": "PrioMailbox analyzes the first 150 tokens (words) of an email as well as the subject, sender, recipient, CC, and the filenames of the attachments."
+}
