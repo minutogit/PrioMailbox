@@ -1,7 +1,7 @@
 // settings.js
 
 function trans(messageName, placeholders = {}) {
-  const message = browser.i18n.getMessage(messageName, Object.values(placeholders));
+  const message = messenger.i18n.getMessage(messageName, Object.values(placeholders));
 
   if (!message) {
     console.warn(`No translation found for key "${messageName}".`);
@@ -21,10 +21,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const allAccountsCheckbox = document.getElementById("all-accounts-checkbox");
 
   document.getElementById("settings-title").textContent = trans("setting_title");
-  document.getElementById("auto-tag-title").innerHTML = `${trans("setting_autoTagTitle")} <span class="info-icon" data-tooltip="${trans('setting_autoTagTooltip')}">ⓘ</span>`;
+  
+  // Sicheres Hinzufügen von Tooltip-Inhalten ohne innerHTML
+  const autoTagTitle = document.getElementById("auto-tag-title");
+  autoTagTitle.textContent = trans("setting_autoTagTitle");
+  const autoTagTooltip = document.createElement("span");
+  autoTagTooltip.className = "info-icon";
+  autoTagTooltip.setAttribute("data-tooltip", trans("setting_autoTagTooltip"));
+  autoTagTooltip.textContent = "ⓘ";
+  autoTagTitle.appendChild(autoTagTooltip);
+
   document.getElementById("all-accounts-label").textContent = trans("setting_allAccountsLabel");
-  document.getElementById("select-tags-title").innerHTML = `${trans("setting_selectTagsTitle")} <span class="info-icon" data-tooltip="${trans('setting_selectTagsTooltip')}">ⓘ</span>`;
-  document.getElementById("threshold-title").innerHTML = `${trans("setting_thresholdTitle")} <span class="info-icon" data-tooltip="${trans('setting_thresholdTooltip')}">ⓘ</span>`;
+  
+  // Sicheres Hinzufügen des Tooltip-Inhalts für select-tags-title
+  const selectTagsTitle = document.getElementById("select-tags-title");
+  selectTagsTitle.textContent = trans("setting_selectTagsTitle");
+  const selectTagsTooltip = document.createElement("span");
+  selectTagsTooltip.className = "info-icon";
+  selectTagsTooltip.setAttribute("data-tooltip", trans("setting_selectTagsTooltip"));
+  selectTagsTooltip.textContent = "ⓘ";
+  selectTagsTitle.appendChild(selectTagsTooltip);
+
+  // Sicheres Hinzufügen des Tooltip-Inhalts für threshold-title
+  const thresholdTitle = document.getElementById("threshold-title");
+  thresholdTitle.textContent = trans("setting_thresholdTitle");
+  const thresholdTooltip = document.createElement("span");
+  thresholdTooltip.className = "info-icon";
+  thresholdTooltip.setAttribute("data-tooltip", trans("setting_thresholdTooltip"));
+  thresholdTooltip.textContent = "ⓘ";
+  thresholdTitle.appendChild(thresholdTooltip);
+
   document.getElementById("threshold-label").textContent = trans("setting_thresholdLabel");
   document.getElementById("set-tags-title").textContent = trans("setting_setTagsTitle");
   document.getElementById("tag-on-training-label").textContent = trans("setting_tagOnTrainingLabel");
@@ -49,9 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Lade alle verfügbaren Tags, Konten und Einstellungen
   Promise.all([
-    browser.messages.listTags(),
-    browser.accounts.list(),
-    browser.storage.local.get([
+    messenger.messages.listTags(),
+    messenger.accounts.list(),
+    messenger.storage.local.get([
       "selectedTags",
       "bayesData",
       "selectedAccounts",
@@ -185,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         button.addEventListener("click", () => {
           // Lade die neuesten bayesData aus dem Speicher
-          browser.storage.local
+          messenger.storage.local
             .get("bayesData")
             .then((result) => {
               window.bayesData = result.bayesData || {};
@@ -276,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Speichere die aktualisierten bayesData
-    browser.storage.local
+    messenger.storage.local
       .set({ bayesData: window.bayesData })
       .then(() => {
         alert(trans("settings_trainingDataDeleted", { tagName }));
@@ -285,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         // Sende eine Nachricht an background.js, um bayesData neu zu laden
-        browser.runtime.sendMessage({ action: "refreshBayesData" });
+        messenger.runtime.sendMessage({ action: "refreshBayesData" });
 
         // Aktualisiere die Anzeige
         tokenCountSpan.textContent = `0 Tokens `;
@@ -372,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
       (tagName) => window.tagNameToKeyMap[tagName] || tagName
     );
 
-    browser.storage.local
+    messenger.storage.local
       .set({
         selectedTags: selectedTagKeys,
         selectedAccounts: window.selectedAccounts,
@@ -384,12 +410,12 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(trans("settings_saved"));
 
         // Senden der Nachrichten, um die Änderungen in background.js zu aktualisieren
-        browser.runtime.sendMessage({ action: "updateContextMenu" });
-        browser.runtime.sendMessage({
+        messenger.runtime.sendMessage({ action: "updateContextMenu" });
+        messenger.runtime.sendMessage({
           action: "updateThreshold",
           threshold: window.threshold,
         });
-        browser.runtime.sendMessage({
+        messenger.runtime.sendMessage({
           action: "updateRemoveOnClassify",
           removeOnClassify: removeOnClassifyCheckbox.checked,
         });
@@ -411,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Funktion zum Neuladen der Einstellungen
   window.reloadSettings = function () {
     console.log("Reloading settings...");
-    browser.storage.local
+    messenger.storage.local
       .get([
         "selectedTags",
         "bayesData",

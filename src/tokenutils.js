@@ -149,7 +149,7 @@ async function getHeaders(message) {
 
 // Funktion zum Abrufen des gesamten E-Mail-Inhalts einschließlich Anhänge
 function getEmailContent(messageId) {
-  return browser.messages.getFull(messageId).then(async (message) => {
+  return messenger.messages.getFull(messageId).then(async (message) => {
     let body = "";
 
     // Funktion zur rekursiven Extraktion der Nachrichtenteile

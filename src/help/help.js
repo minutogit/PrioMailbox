@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Get the current language of the Thunderbird UI
-    let userLanguage = browser.i18n.getUILanguage();
+    let userLanguage = messenger.i18n.getUILanguage();
     // Extract the base language code (e.g., 'en' from 'en-US')
     userLanguage = userLanguage.split('-')[0];
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Define the path to help.json
-    const helpJsonUrl = browser.runtime.getURL(`_locales/${helpLocale}/help.json`);
+    const helpJsonUrl = messenger.runtime.getURL(`_locales/${helpLocale}/help.json`);
 
     // Fetch the help.json
     fetchJSON(helpJsonUrl)
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error loading help.json:', error);
             // Fallback to English if fetching localized help.json fails
             if (helpLocale !== 'en') {
-                const fallbackHelpJsonUrl = browser.runtime.getURL('_locales/en/help.json');
+                const fallbackHelpJsonUrl = messenger.runtime.getURL('_locales/en/help.json');
                 fetchJSON(fallbackHelpJsonUrl)
                     .then(data => {
                         // Populate the HTML with fallback (English) strings

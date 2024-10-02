@@ -10,7 +10,7 @@ let tagNameToKeyMap = {}; // Mapping von Tag-Name zu Tag-Key
 
 // translate-Funktion zur Nutzung von i18n
 function trans(messageName, placeholders = []) {
-  const message = browser.i18n.getMessage(messageName, placeholders);
+  const message = messenger.i18n.getMessage(messageName, placeholders);
 
   if (!message) {
     console.warn(`No translation found for key "${messageName}"`);
@@ -24,7 +24,7 @@ function trans(messageName, placeholders = []) {
 function initialize() {
   console.log("Initializing...");
   Promise.all([
-    browser.storage.local.get([
+    messenger.storage.local.get([
       "selectedTags",
       "bayesData",
       "selectedAccounts",
@@ -32,7 +32,7 @@ function initialize() {
       "tagOnTraining",
       "removeOnClassify",
     ]),
-    browser.messages.listTags(),
+    messenger.messages.listTags(),
   ])
     .then(([storageResult, tags]) => {
       allTags = tags;
@@ -66,7 +66,7 @@ function initialize() {
         settingsToSave.removeOnClassify = false;
       }
       if (Object.keys(settingsToSave).length > 0) {
-        browser.storage.local.set(settingsToSave);
+        messenger.storage.local.set(settingsToSave);
       }
 
       // Mapping von Tag-Key zu Tag-Name erstellen
@@ -121,7 +121,7 @@ function initialize() {
       console.log("RemoveOnClassify status:", removeOnClassify);
 
       createContextMenu();
-      browser.messages.onNewMailReceived.addListener(onNewMailReceived);
+      messenger.messages.onNewMailReceived.addListener(onNewMailReceived);
     })
     .catch((error) => {
       console.error("Error during initialization:", error);
@@ -129,13 +129,13 @@ function initialize() {
 }
 
 function openPopupWithMessage(messageText) {
-  browser.browserAction
+  messenger.browserAction
     .setPopup({
       popup: `popup/popup.html?message=${encodeURIComponent(messageText)}`,
     })
     .then(() => {
-      browser.browserAction.openPopup().then(() => {
-        browser.browserAction.setPopup({ popup: "popup/popup.html" });
+      messenger.browserAction.openPopup().then(() => {
+        messenger.browserAction.setPopup({ popup: "popup/popup.html" });
       });
     })
     .catch((error) => {
@@ -145,18 +145,18 @@ function openPopupWithMessage(messageText) {
 
 
 function createContextMenu() {
-  browser.menus
+  messenger.menus
     .removeAll()
     .then(() => {
       // Hauptmenüeintrag für PrioMailbox
-      browser.menus.create({
+      messenger.menus.create({
         id: "priomailbox",
         title: "PrioMailbox",
         contexts: ["message_list"],
       });
 
       // Untermenüeintrag für E-Mail-Infos
-      browser.menus.create({
+      messenger.menus.create({
         id: "show_info",
         parentId: "priomailbox",
         title: trans("emailInfoMenu"),
@@ -164,7 +164,7 @@ function createContextMenu() {
       });
 
       // Untermenüeintrag für Klassifizieren
-      browser.menus.create({
+      messenger.menus.create({
         id: "classify",
         parentId: "priomailbox",
         title: trans("classifyMenu"),
@@ -172,7 +172,7 @@ function createContextMenu() {
       });
 
       // Trenner im Menü
-      browser.menus.create({
+      messenger.menus.create({
         id: "separator_top",
         parentId: "priomailbox",
         type: "separator",
@@ -186,7 +186,7 @@ function createContextMenu() {
         const tagKey = tagNameToKeyMap[tagName];
         if (tagKey) {
           // Hauptmenüeintrag für das Schlagwort mit Platzhalter
-          browser.menus.create({
+          messenger.menus.create({
             id: `tag_${tagKey}`,
             parentId: "priomailbox",
             title: trans("trainTagMenu", [tagName]),
@@ -194,7 +194,7 @@ function createContextMenu() {
           });
 
           // Untermenüeintrag: Lerne als [Schlagwort]
-          browser.menus.create({
+          messenger.menus.create({
             id: `learn_${tagKey}`,
             parentId: `tag_${tagKey}`,
             title: trans("learnTagMenu", [tagName]),
@@ -202,7 +202,7 @@ function createContextMenu() {
           });
 
           // Untermenüeintrag: Lerne als nicht [Schlagwort]
-          browser.menus.create({
+          messenger.menus.create({
             id: `unlearn_${tagKey}`,
             parentId: `tag_${tagKey}`,
             title: trans("unlearnTagMenu", [tagName]),
@@ -221,7 +221,7 @@ function createContextMenu() {
 
 initialize();
 
-browser.storage.onChanged.addListener((changes, area) => {
+messenger.storage.onChanged.addListener((changes, area) => {
   if (area === "local") {
     if (changes.selectedTags) {
       selectedTags = changes.selectedTags.newValue.map(
@@ -242,7 +242,7 @@ browser.storage.onChanged.addListener((changes, area) => {
   }
 });
 
-browser.menus.onClicked.addListener((info, tab) => {
+messenger.menus.onClicked.addListener((info, tab) => {
   console.log("Menu item clicked:", info.menuItemId);
   console.log("Info object:", info);
   if (info.selectedMessages && info.selectedMessages.messages.length > 0) {
@@ -261,7 +261,7 @@ browser.menus.onClicked.addListener((info, tab) => {
 
 function handleMenuClick(info, messageId) {
   // Lade die neuesten bayesData bei jedem Klick
-  browser.storage.local
+  messenger.storage.local
     .get("bayesData")
     .then((result) => {
       bayesData = result.bayesData || {}; // Stelle sicher, dass die neuesten Daten geladen sind
@@ -302,7 +302,7 @@ function handleMenuClick(info, messageId) {
 
 
 function selectMessage(messageId) {
-  return browser.mailTabs
+  return messenger.mailTabs
     .setSelectedMessages([messageId])
     .then(() => {
       console.log(`Message with ID ${messageId} selected.`);
@@ -313,7 +313,7 @@ function selectMessage(messageId) {
 }
 
 function getMessageTags(messageId) {
-  return browser.messages.get(messageId).then((message) => message.tags || []);
+  return messenger.messages.get(messageId).then((message) => message.tags || []);
 }
 
 function learnTagFromMail(messageId, tagName, isPositive) {
@@ -328,7 +328,7 @@ function learnTagFromMail(messageId, tagName, isPositive) {
     return;
   }
 
-  browser.storage.local
+  messenger.storage.local
     .get(["bayesData", "tagOnTraining"])
     .then((result) => {
       const tagOnTraining =
@@ -440,7 +440,7 @@ function learnTagFromMail(messageId, tagName, isPositive) {
                   const updatedTags = Array.from(
                     new Set([...currentTags, tagKey])
                   );
-                  browser.messages
+                  messenger.messages
                     .update(messageId, {
                       tags: updatedTags,
                     })
@@ -454,7 +454,7 @@ function learnTagFromMail(messageId, tagName, isPositive) {
                   const updatedTags = currentTags.filter(
                     (key) => key !== tagKey
                   );
-                  browser.messages
+                  messenger.messages
                     .update(messageId, {
                       tags: updatedTags,
                     })
@@ -477,7 +477,7 @@ function learnTagFromMail(messageId, tagName, isPositive) {
               });
           }
 
-          browser.storage.local
+          messenger.storage.local
             .set({ bayesData })
             .then(() => {
               const probabilityAfter = calculateBayesProbability(
@@ -548,7 +548,7 @@ function classifyEmail(messageId) {
           updatedTags = Array.from(updatedTags);
 
           if (tagsToAdd.length > 0 || tagsToRemove.length > 0) {
-            browser.messages
+            messenger.messages
               .update(messageId, { tags: updatedTags })
               .then(() => {
                 if (tagsToAdd.length > 0) {
@@ -613,7 +613,7 @@ function classifyNewEmail(messageId) {
             const updatedTags = Array.from(
               new Set([...currentTags, ...tagsToAdd])
             );
-            browser.messages
+            messenger.messages
               .update(messageId, { tags: updatedTags })
               .then(() => {
                 console.log(
@@ -693,11 +693,11 @@ function showEMailInfo(messageId) {
         }
       });
 
-      browser.storage.local
+      messenger.storage.local
         .set({ bayesInfoData: probabilities })
         .then(() => {
           console.log("Bayes info data saved.");
-          browser.windows
+          messenger.windows
             .create({
               url: "email_info.html",
               type: "popup",
@@ -717,9 +717,9 @@ function showEMailInfo(messageId) {
     });
 }
 
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "refreshBayesData") {
-    browser.storage.local
+    messenger.storage.local
       .get("bayesData")
       .then((result) => {
         bayesData = result.bayesData || {};
@@ -733,7 +733,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.action === "updateContextMenu") {
-    browser.storage.local
+    messenger.storage.local
       .get(["selectedTags", "selectedAccounts"])
       .then((result) => {
         selectedTags = result.selectedTags || [];

@@ -1,7 +1,7 @@
 // email_info.js
 
 function trans(messageName, placeholders = {}) {
-  const message = browser.i18n.getMessage(messageName, Object.values(placeholders));
+  const message = messenger.i18n.getMessage(messageName, Object.values(placeholders));
 
   if (!message) {
     console.warn(`No translation found for key "${messageName}".`);
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('emailinfo_label_known_tokens').textContent = trans("emailinfo_label_known_tokens");
 
   Promise.all([
-    browser.storage.local.get(["bayesInfoData", "bayesData"]),
-    browser.messages.listTags()
+    messenger.storage.local.get(["bayesInfoData", "bayesData"]),
+    messenger.messages.listTags()
   ]).then(([result, tags]) => {
     const probabilities = result.bayesInfoData || [];
     const bayesData = result.bayesData || {};
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Entferne bayesInfoData nach der Anzeige
-    browser.storage.local.remove(["bayesInfoData"]);
+    messenger.storage.local.remove(["bayesInfoData"]);
 
     // Fenstergröße nach dem Laden des Inhalts anpassen
     adjustWindowSize();
@@ -179,8 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
         html.clientWidth, html.scrollWidth, html.offsetWidth
       );
 
-      browser.windows.getCurrent().then((windowInfo) => {
-        browser.windows.update(windowInfo.id, {
+      messenger.windows.getCurrent().then((windowInfo) => {
+        messenger.windows.update(windowInfo.id, {
           width: Math.min(width, 800), // Keine zusätzliche Breite hinzufügen
           height: Math.min(height + 50, 600) // Höhe auf maximal 600px begrenzen
         });

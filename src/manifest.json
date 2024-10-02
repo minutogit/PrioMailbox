@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "PrioMailbox",
-  "version": "0.11.6",
+  "version": "0.11.7",
   "default_locale": "en",
   "description": "PrioMailbox organisiert Ihre E-Mails in Thunderbird mit intelligenten, trainierbaren Schlagwörtern. Wichtiges wird hervorgehoben, Unwichtiges ausgeblendet.",
   "icons": {
