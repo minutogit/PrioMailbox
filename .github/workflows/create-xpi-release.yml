@@ -1,0 +1,97 @@
+name: Create XPI and Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'   # Startet den Workflow bei neuen Versionstags
+  workflow_dispatch:  # Ermöglicht das manuelle Starten des Workflows
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Extract name and version from manifest.json
+      id: get_name_version
+      run: |
+        NAME=$(grep '"name"' src/manifest.json | sed -E 's/.*"name": "([^"]+)".*/\1/')
+        VERSION=$(grep '"version"' src/manifest.json | sed -E 's/.*"version": "([^"]+)".*/\1/')
+        echo "NAME=${NAME}" >> $GITHUB_ENV
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+    - name: Build XPI
+      run: |
+        mkdir -p build/PrioMailbox
+        # Kopiere nur die notwendigen Dateien, um die XPI zu erstellen
+        rsync -av --exclude="assets" --exclude=".*" --exclude="*.sh" ./src/ build/PrioMailbox/
+        # Manifest Datei anpassen
+        sed -i 's/"name": "[^"]*"/"name": "PrioMailbox"/' build/PrioMailbox/manifest.json
+        # XPI-Datei erstellen
+        cd build/PrioMailbox
+        zip -r ../${NAME}_v${VERSION}.xpi . -x ".*" "*.sh" "assets/*"
+        cd ../..
+
+    - name: Verify XPI File
+      run: |
+        if [ ! -f "./build/${NAME}_v${VERSION}.xpi" ]; then
+          echo "XPI file not found!"
+          exit 1
+        else
+          echo "XPI file found at ./build/${NAME}_v${VERSION}.xpi"
+        fi
+
+    - name: Check if release exists
+      id: check_release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const releases = await github.rest.repos.listReleases({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          });
+          const release = releases.data.find(release => release.tag_name === `v${process.env.VERSION}`);
+          if (release) {
+            core.setOutput('release_id', release.id);
+            core.setOutput('upload_url', release.upload_url);
+          } else {
+            core.setOutput('release_id', '');
+            core.setOutput('upload_url', '');
+          }
+      env:
+        VERSION: ${{ env.VERSION }}
+
+    - name: Create Release
+      if: ${{ steps.check_release.outputs.release_id == '' }}
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ env.VERSION }}
+        release_name: "${{ env.NAME }} v${{ env.VERSION }}"
+        draft: false
+        prerelease: false
+
+    - name: Upload XPI to Release
+      if: ${{ steps.check_release.outputs.release_id == '' }}
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build/${{ env.NAME }}_v${{ env.VERSION }}.xpi
+        asset_name: ${{ env.NAME }}_v${{ env.VERSION }}.xpi
+        asset_content_type: application/x-xpinstall
+
+    - name: Notify Release Exists
+      if: ${{ steps.check_release.outputs.release_id != '' }}
+      run: echo "Release v${{ env.VERSION }} already exists. Skipping asset upload."
