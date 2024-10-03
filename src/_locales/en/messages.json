@@ -1,246 +1,185 @@
 {
+  "selectTagMenu": {
+    "message": "Select Tag"
+  },
   "emailInfoMenu": {
-    "message": "🔍 Email Info",
-    "description": "Context menu entry for showing email information"
+    "message": "🔍 Email Info"
   },
   "classifyMenu": {
-    "message": "📄 Classify Email",
-    "description": "Context menu entry for classifying an email"
+    "message": "📄 Classify Email"
   },
   "trainTagMenu": {
-    "message": "Train: $1",
-    "description": "Context menu entry for training an email with a specific tag"
+    "message": "Train: $1"
   },
   "learnTagMenu": {
-    "message": "✔️ Learn as $1",
-    "description": "Submenu entry for marking an email as a specific tag"
+    "message": "✔️ Learn as $1"
   },
   "unlearnTagMenu": {
-    "message": "❌ Unlearn as $1",
-    "description": "Submenu entry for marking an email as not a specific tag"
+    "message": "❌ Learn as not $1"
   },
   "trainingCompleteMessage": {
-    "message": "Trained as: $1",
-    "description": "Popup message after completing training for a tag"
+    "message": "Trained as: $1"
   },
   "untrainingCompleteMessage": {
-    "message": "Trained as: NOT-$1",
-    "description": "Popup message after completing untraining for a tag"
+    "message": "Trained as: NOT-$1"
   },
   "classificationCompleteMessage": {
-    "message": "Classification complete",
-    "description": "Popup message after completing classification"
+    "message": "Classification Complete"
   },
   "popup_settingsButton": {
-    "message": "Settings",
-    "description": "Text for the settings button in the popup"
+    "message": "Settings"
   },
   "popup_helpButton": {
-    "message": "Help",
-    "description": "Text for the Help button in the popup"
+    "message": "Help"
   },
   "setting_title": {
-    "message": "PrioMailbox Settings",
-    "description": "Title of the settings page"
+    "message": "PrioMailbox Settings"
   },
   "setting_autoTagTitle": {
-    "message": "Automatic Tagging of New Emails",
-    "description": "Title for automatic tagging of emails"
+    "message": "Automatically Tag New Emails"
   },
   "setting_autoTagTooltip": {
-    "message": "Check new emails for learned tags and tag them accordingly.",
-    "description": "Tooltip for automatic tagging"
+    "message": "Check new emails for learned tags and apply tags."
   },
   "setting_allAccountsLabel": {
-    "message": "Enabled for all accounts",
-    "description": "Label for the 'All accounts' checkbox"
+    "message": "Enabled for All Accounts"
   },
   "setting_selectTagsTitle": {
-    "message": "Select Tags",
-    "description": "Title for selecting tags"
+    "message": "Select Tags"
   },
   "setting_selectTagsTooltip": {
-    "message": "Select the tags to be used for training and automatic tagging.",
-    "description": "Tooltip for tag selection"
+    "message": "Choose the tags used for training and automatic tagging."
   },
   "setting_thresholdTitle": {
-    "message": "Threshold for Automatic Tagging",
-    "description": "Title for the threshold setting"
+    "message": "Threshold for Automatic Tagging"
   },
   "setting_thresholdTooltip": {
-    "message": "This value defines the probability at which a tag will be applied. It is recommended to keep the value at 99%.",
-    "description": "Tooltip for the threshold setting"
+    "message": "This value defines the probability at which a tag is applied. It is recommended to leave it at 99%."
   },
   "setting_thresholdLabel": {
-    "message": "Threshold (%)",
-    "description": "Label for the threshold input field"
+    "message": "Threshold (%)"
   },
   "setting_setTagsTitle": {
-    "message": "Apply Tags",
-    "description": "Title for the apply tags section"
+    "message": "Set Tags"
   },
   "setting_tagOnTrainingLabel": {
-    "message": "Set/remove tag during training",
-    "description": "Label for automatically applying tags during training"
+    "message": "Apply/Remove Tag When Training"
   },
   "setting_tagOnTrainingTooltip": {
-    "message": "If enabled, the corresponding tag will be applied or removed during training.",
-    "description": "Tooltip for applying tags during training"
+    "message": "If enabled, the relevant tag is applied or removed during training."
   },
   "setting_removeOnClassifyLabel": {
-    "message": "Remove set tags when classifying if probability is below threshold",
-    "description": "Label for removing tags during classification"
+    "message": "Remove Tags When Classifying If Below Threshold"
   },
   "setting_removeOnClassifyTooltip": {
-    "message": "If enabled, applied tags will be removed if the probability is below the threshold.",
-    "description": "Tooltip for removing tags during classification"
+    "message": "If enabled, tags are removed when the probability is below the threshold."
   },
   "setting_backupRestoreTitle": {
-    "message": "Backup and Restore Training Data",
-    "description": "Title for the backup and restore section"
+    "message": "Backup and Restore Training Data"
   },
   "setting_backupButton": {
-    "message": "Backup Training Data",
-    "description": "Button for backing up training data"
+    "message": "Backup Training Data"
   },
   "setting_restoreButton": {
-    "message": "Restore Training Data",
-    "description": "Button for restoring training data"
+    "message": "Restore Training Data"
   },
   "setting_saveButton": {
-    "message": "Save",
-    "description": "Button for saving settings"
+    "message": "Save"
   },
   "settings_defaultOption": {
-    "message": "--- Please choose ---",
-    "description": "Default option in the dropdown list"
+    "message": "--- Please Select ---"
   },
   "settings_deleteTrainingData": {
-    "message": "Delete Training Data",
-    "description": "Button for deleting training data"
+    "message": "Delete Training Data"
   },
   "settings_stopDeletion": {
-    "message": "Stop deletion ($1s)",
-    "description": "Button text during the deletion countdown"
+    "message": "Stop Deletion ($1s)"
   },
   "settings_noTrainingData": {
-    "message": "No training data for $1 available.",
-    "description": "Warning when no training data exists for the selected tag"
+    "message": "No training data available for $1."
   },
   "settings_loadTrainingDataError": {
-    "message": "Error loading training data. Please try again.",
-    "description": "Error message when loading training data"
+    "message": "Error loading training data. Please try again."
   },
   "settings_trainingDataDeleted": {
-    "message": "Training data for $1 has been deleted.",
-    "description": "Confirmation message after training data is deleted"
+    "message": "Training data for $1 deleted."
   },
   "settings_deleteTrainingDataError": {
-    "message": "Error deleting training data for $1.",
-    "description": "Error message when deleting training data"
+    "message": "Error deleting training data for $1."
   },
   "settings_invalidThreshold": {
-    "message": "Please enter a valid threshold between 1 and 99.",
-    "description": "Warning when an invalid threshold is entered"
+    "message": "Please enter a valid threshold between 1 and 99."
   },
   "settings_saved": {
-    "message": "Settings saved.",
-    "description": "Confirmation message after settings are saved"
+    "message": "Settings saved."
   },
   "settings_saveError": {
-    "message": "Error saving settings. Please try again.",
-    "description": "Error message when saving settings"
+    "message": "Error saving settings. Please try again."
   },
   "settingsx_defaultOption": {
-    "message": "--- Please choose ---",
-    "description": "Default option in the dropdown list"
+    "message": "--- Please Select ---"
   },
   "settingsx_deleteTrainingData": {
-    "message": "Delete Training Data",
-    "description": "Button for deleting training data"
+    "message": "Delete Training Data"
   },
   "settingsx_stopDeletion": {
-    "message": "Stop deletion ($1s)",
-    "description": "Button text during the deletion countdown"
-  },
-  "settingsx_backupSuccess": {
-    "message": "Training data successfully backed up.",
-    "description": "Confirmation message after training data is successfully backed up"
+    "message": "Stop Deletion ($1s)"
   },
   "settingsx_backupError": {
-    "message": "Error backing up training data. Please try again.",
-    "description": "Error message during backup failure"
+    "message": "Error backing up training data. Please try again."
   },
   "settingsx_restoreSuccess": {
-    "message": "Training data successfully restored.",
-    "description": "Confirmation message after training data is successfully restored"
+    "message": "Training data successfully restored."
   },
   "settingsx_restoreError": {
-    "message": "Error restoring training data. Please try again.",
-    "description": "Error message during restoration failure"
+    "message": "Error restoring training data. Please try again."
   },
   "settingsx_invalidDataError": {
-    "message": "Invalid data structure.",
-    "description": "Error message for invalid data structure in the restored file"
+    "message": "Invalid data structure."
   },
   "settingsx_invalidZipError": {
-    "message": "Error processing ZIP file. Please ensure it is a valid ZIP file.",
-    "description": "Error message for an invalid ZIP file"
+    "message": "Error processing ZIP file. Please ensure it is a valid ZIP file."
   },
   "settingsx_noTrainingData": {
-    "message": "No training data for $1 available.",
-    "description": "Warning when no training data exists for the selected tag"
+    "message": "No training data available for $1."
   },
   "settingsx_loadTrainingDataError": {
-    "message": "Error loading training data. Please try again.",
-    "description": "Error message when loading training data"
+    "message": "Error loading training data. Please try again."
   },
   "settingsx_trainingDataDeleted": {
-    "message": "Training data for $1 has been deleted.",
-    "description": "Confirmation message after training data is deleted"
+    "message": "Training data for $1 deleted."
   },
   "settingsx_deleteTrainingDataError": {
-    "message": "Error deleting training data for $1.",
-    "description": "Error message when deleting training data"
+    "message": "Error deleting training data for $1."
   },
   "emailinfo_title": {
-    "message": "PrioMailbox - Email Info",
-    "description": "Title for the email info page"
+    "message": "PrioMailbox - Email Info"
   },
   "emailinfo_label_tag": {
-    "message": "Tag",
-    "description": "Label for the tag column"
+    "message": "Tag"
   },
   "emailinfo_label_probability": {
-    "message": "Probability",
-    "description": "Label for the probability column"
+    "message": "Probability"
   },
   "emailinfo_label_known_tokens": {
-  "message": "Known Tokens",
-  "description": "Label for the column showing the percentage of known tokens"
+    "message": "Known Tokens"
   },
   "emailinfo_top_tokens": {
-    "message": "Top tokens for tag \"$1\"",
-    "description": "Title of the token table for a specific tag"
+    "message": "Top Tokens for Tag \"$1\""
   },
   "emailinfo_token": {
-    "message": "Token",
-    "description": "Column header for the token column"
+    "message": "Token"
   },
   "emailinfo_probability": {
-    "message": "Probability",
-    "description": "Column header for the probability column"
+    "message": "Probability"
   },
   "emailinfo_type": {
-    "message": "Type",
-    "description": "Column header for the type (Positive/Negative)"
+    "message": "Type"
   },
   "emailinfo_positive": {
-    "message": "Positive",
-    "description": "Label for positive tokens"
+    "message": "Positive"
   },
   "emailinfo_negative": {
-    "message": "Negative",
-    "description": "Label for negative tokens"
+    "message": "Negative"
   }
 }

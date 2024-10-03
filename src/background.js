@@ -1,3 +1,5 @@
+//background.js
+
 let selectedTags = [];
 let bayesData = {};
 let allTags = [];
@@ -155,61 +157,69 @@ function createContextMenu() {
         contexts: ["message_list"],
       });
 
-      // Untermenüeintrag für E-Mail-Infos
-      messenger.menus.create({
-        id: "show_info",
-        parentId: "priomailbox",
-        title: trans("emailInfoMenu"),
-        contexts: ["message_list"],
-      });
+      if (selectedTags.length === 0) {
+        // Menüeintrag "Schlagwort auswählen" wenn keine Tags ausgewählt sind
+        messenger.menus.create({
+          id: "select_tag",
+          parentId: "priomailbox",
+          title: trans("selectTagMenu"),
+          contexts: ["message_list"],
+        });
+      } else {
+        // Untermenüeintrag für E-Mail-Infos
+        messenger.menus.create({
+          id: "show_info",
+          parentId: "priomailbox",
+          title: trans("emailInfoMenu"),
+          contexts: ["message_list"],
+        });
 
-      // Untermenüeintrag für Klassifizieren
-      messenger.menus.create({
-        id: "classify",
-        parentId: "priomailbox",
-        title: trans("classifyMenu"),
-        contexts: ["message_list"],
-      });
+        // Untermenüeintrag für Klassifizieren
+        messenger.menus.create({
+          id: "classify",
+          parentId: "priomailbox",
+          title: trans("classifyMenu"),
+          contexts: ["message_list"],
+        });
 
-      // Trenner im Menü
-      messenger.menus.create({
-        id: "separator_top",
-        parentId: "priomailbox",
-        type: "separator",
-        contexts: ["message_list"],
-      });
+        // Trenner im Menü
+        messenger.menus.create({
+          id: "separator_top",
+          parentId: "priomailbox",
+          type: "separator",
+          contexts: ["message_list"],
+        });
 
-      
+        // Erstelle Menüeinträge für ausgewählte Tags
+        selectedTags.forEach((tagName) => {
+          const tagKey = tagNameToKeyMap[tagName];
+          if (tagKey) {
+            // Hauptmenüeintrag für das Schlagwort mit Platzhalter
+            messenger.menus.create({
+              id: `tag_${tagKey}`,
+              parentId: "priomailbox",
+              title: trans("trainTagMenu", [tagName]),
+              contexts: ["message_list"],
+            });
 
-      // Erstelle Menüeinträge für ausgewählte Tags
-      selectedTags.forEach((tagName) => {
-        const tagKey = tagNameToKeyMap[tagName];
-        if (tagKey) {
-          // Hauptmenüeintrag für das Schlagwort mit Platzhalter
-          messenger.menus.create({
-            id: `tag_${tagKey}`,
-            parentId: "priomailbox",
-            title: trans("trainTagMenu", [tagName]),
-            contexts: ["message_list"],
-          });
+            // Untermenüeintrag: Lerne als [Schlagwort]
+            messenger.menus.create({
+              id: `learn_${tagKey}`,
+              parentId: `tag_${tagKey}`,
+              title: trans("learnTagMenu", [tagName]),
+              contexts: ["message_list"],
+            });
 
-          // Untermenüeintrag: Lerne als [Schlagwort]
-          messenger.menus.create({
-            id: `learn_${tagKey}`,
-            parentId: `tag_${tagKey}`,
-            title: trans("learnTagMenu", [tagName]),
-            contexts: ["message_list"],
-          });
-
-          // Untermenüeintrag: Lerne als nicht [Schlagwort]
-          messenger.menus.create({
-            id: `unlearn_${tagKey}`,
-            parentId: `tag_${tagKey}`,
-            title: trans("unlearnTagMenu", [tagName]),
-            contexts: ["message_list"],
-          });
-        }
-      });
+            // Untermenüeintrag: Lerne als nicht [Schlagwort]
+            messenger.menus.create({
+              id: `unlearn_${tagKey}`,
+              parentId: `tag_${tagKey}`,
+              title: trans("unlearnTagMenu", [tagName]),
+              contexts: ["message_list"],
+            });
+          }
+        });
+      }
     })
     .catch((error) => {
       console.error("Error creating context menu:", error);
@@ -245,8 +255,17 @@ messenger.storage.onChanged.addListener((changes, area) => {
 messenger.menus.onClicked.addListener((info, tab) => {
   console.log("Menu item clicked:", info.menuItemId);
   console.log("Info object:", info);
+  
   if (info.selectedMessages && info.selectedMessages.messages.length > 0) {
     const messageId = info.selectedMessages.messages[0].id;
+    
+    if (info.menuItemId === "select_tag") {
+      messenger.runtime.openOptionsPage().catch((error) => {
+        console.error("Error opening settings page:", error);
+      });
+      return;
+    }
+    
     selectMessage(messageId)
       .then(() => {
         handleMenuClick(info, messageId);

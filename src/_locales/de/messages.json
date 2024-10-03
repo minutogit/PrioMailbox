@@ -1,247 +1,185 @@
 {
-    "emailInfoMenu": {
-      "message": "🔍 E-Mail-Infos",
-      "description": "Kontextmenüeintrag für das Anzeigen von E-Mail-Informationen"
-    },
-    "classifyMenu": {
-      "message": "📄 Klassifiziere E-Mail",
-      "description": "Kontextmenüeintrag für das Klassifizieren einer E-Mail"
-    },
-    "trainTagMenu": {
-      "message": "Trainiere: $1",
-      "description": "Kontextmenüeintrag für das Trainieren einer E-Mail mit einem bestimmten Tag"
-    },
-    "learnTagMenu": {
-      "message": "✔️ Lerne als $1",
-      "description": "Untermenüeintrag für das Markieren einer E-Mail als ein bestimmtes Tag"
-    },
-    "unlearnTagMenu": {
-      "message": "❌ Lerne als nicht $1",
-      "description": "Untermenüeintrag für das Markieren einer E-Mail als nicht ein bestimmtes Tag"
-    },
-    "trainingCompleteMessage": {
-      "message": "Trainiert als: $1",
-      "description": "Popup-Nachricht nach abgeschlossenem Training für ein Tag"
-    },
-    "untrainingCompleteMessage": {
-      "message": "Trainiert als: NICHT-$1",
-      "description": "Popup-Nachricht nach abgeschlossenem Nicht-Training für ein Tag"
-    },
-    "classificationCompleteMessage": {
-      "message": "Klassifizierung abgeschlossen",
-      "description": "Popup-Nachricht nach abgeschlossener Klassifizierung"
-    },
-    "popup_settingsButton": {
-        "message": "Einstellungen",
-        "description": "Text für den Einstellungen-Button im Popup"
-      },
-    "popup_helpButton": {
-      "message": "Hilfe",
-      "description": "Text für den Hilfe-Button im Popup"
-    },
-    "setting_title": {
-      "message": "PrioMailbox Einstellungen",
-      "description": "Titel der Einstellungsseite"
-    },
-    "setting_autoTagTitle": {
-      "message": "Automatisches Taggen neuer E-Mails",
-      "description": "Titel für das automatische Taggen von E-Mails"
-    },
-    "setting_autoTagTooltip": {
-      "message": "Neue E-Mails auf die gelernten Schlagwörter prüfen und taggen.",
-      "description": "Tooltip für automatisches Taggen"
-    },
-    "setting_allAccountsLabel": {
-      "message": "Für alle Konten aktiviert",
-      "description": "Label für die Checkbox 'Alle Konten'"
-    },
-    "setting_selectTagsTitle": {
-      "message": "Schlagwörter auswählen",
-      "description": "Titel für die Auswahl der Schlagwörter"
-    },
-    "setting_selectTagsTooltip": {
-      "message": "Wählen Sie die Schlagwörter aus, die zum Trainieren und automatischen Taggen verwendet werden.",
-      "description": "Tooltip für die Auswahl der Schlagwörter"
-    },
-    "setting_thresholdTitle": {
-      "message": "Schwellwert für automatisches Taggen",
-      "description": "Titel für den Schwellwert"
-    },
-    "setting_thresholdTooltip": {
-      "message": "Dieser Wert legt die Wahrscheinlichkeit fest, ab der ein Tag gesetzt wird. Es wird empfohlen, den Wert bei 99% zu belassen.",
-      "description": "Tooltip für den Schwellwert"
-    },
-    "setting_thresholdLabel": {
-      "message": "Schwellwert (%)",
-      "description": "Label für das Schwellwert-Feld"
-    },
-    "setting_setTagsTitle": {
-      "message": "Schlagwörter setzen",
-      "description": "Titel für das Setzen von Schlagwörtern"
-    },
-    "setting_tagOnTrainingLabel": {
-      "message": "Schlagwort beim Trainieren setzen/entfernen",
-      "description": "Label für das automatische Setzen von Schlagwörtern beim Trainieren"
-    },
-    "setting_tagOnTrainingTooltip": {
-      "message": "Wenn aktiviert, wird beim Trainieren das entsprechende Schlagwort gesetzt oder entfernt.",
-      "description": "Tooltip für das Setzen von Schlagwörtern beim Trainieren"
-    },
-    "setting_removeOnClassifyLabel": {
-      "message": "Entferne gesetzte Schlagwörter beim Klassifizieren wenn Wahrscheinlichkeit unter Schwellwert",
-      "description": "Label für das Entfernen von Schlagwörtern"
-    },
-    "setting_removeOnClassifyTooltip": {
-      "message": "Wenn aktiviert, werden gesetzte Schlagwörter entfernt, wenn die Wahrscheinlichkeit unter dem Schwellwert liegt.",
-      "description": "Tooltip für das Entfernen von Schlagwörtern beim Klassifizieren"
-    },
-    "setting_backupRestoreTitle": {
-      "message": "Trainingsdaten sichern und wiederherstellen",
-      "description": "Titel für den Backup- und Wiederherstellungsbereich"
-    },
-    "setting_backupButton": {
-      "message": "Trainingsdaten sichern",
-      "description": "Button für das Sichern von Trainingsdaten"
-    },
-    "setting_restoreButton": {
-      "message": "Trainingsdaten wiederherstellen",
-      "description": "Button für das Wiederherstellen von Trainingsdaten"
-    },
-    "setting_saveButton": {
-      "message": "Speichern",
-      "description": "Button für das Speichern von Einstellungen"
-    },
-    "settings_defaultOption": {
-      "message": "--- Bitte wählen ---",
-      "description": "Standardoption in der Dropdown-Liste"
-    },
-    "settings_deleteTrainingData": {
-      "message": "Trainingsdaten löschen",
-      "description": "Button zum Löschen der Trainingsdaten"
-    },
-    "settings_stopDeletion": {
-      "message": "Löschen stoppen ($1s)",
-      "description": "Buttontext während des Lösch-Countdowns"
-    },
-    "settings_noTrainingData": {
-      "message": "Keine Trainingsdaten für $1 vorhanden.",
-      "description": "Warnung, wenn keine Trainingsdaten für ein ausgewähltes Tag existieren"
-    },
-    "settings_loadTrainingDataError": {
-      "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut.",
-      "description": "Fehlermeldung beim Laden der Trainingsdaten"
-    },
-    "settings_trainingDataDeleted": {
-      "message": "Trainingsdaten für $1 wurden gelöscht.",
-      "description": "Bestätigungsmeldung nach dem Löschen der Trainingsdaten"
-    },
-    "settings_deleteTrainingDataError": {
-      "message": "Fehler beim Löschen der Trainingsdaten für $1.",
-      "description": "Fehlermeldung beim Löschen der Trainingsdaten"
-    },
-    "settings_invalidThreshold": {
-      "message": "Bitte geben Sie einen gültigen Schwellwert zwischen 1 und 99 ein.",
-      "description": "Warnung bei ungültigem Schwellwert"
-    },
-    "settings_saved": {
-      "message": "Einstellungen gespeichert.",
-      "description": "Bestätigungsmeldung nach dem Speichern der Einstellungen"
-    },
-    "settings_saveError": {
-      "message": "Fehler beim Speichern der Einstellungen. Bitte versuchen Sie es erneut.",
-      "description": "Fehlermeldung beim Speichern der Einstellungen"
-    },
-    "settingsx_defaultOption": {
-      "message": "--- Bitte wählen ---",
-      "description": "Standardoption in der Dropdown-Liste"
-    },
-    "settingsx_deleteTrainingData": {
-      "message": "Trainingsdaten löschen",
-      "description": "Button zum Löschen der Trainingsdaten"
-    },
-    "settingsx_stopDeletion": {
-      "message": "Löschen stoppen ($1s)",
-      "description": "Buttontext während des Lösch-Countdowns"
-    },
-    "settingsx_backupSuccess": {
-      "message": "Trainingsdaten wurden erfolgreich gesichert.",
-      "description": "Bestätigungsmeldung nach erfolgreicher Sicherung der Trainingsdaten"
-    },
-    "settingsx_backupError": {
-      "message": "Fehler beim Sichern der Trainingsdaten. Bitte versuchen Sie es erneut.",
-      "description": "Fehlermeldung bei einem Backup-Fehler"
-    },
-    "settingsx_restoreSuccess": {
-      "message": "Trainingsdaten wurden erfolgreich wiederhergestellt.",
-      "description": "Bestätigungsmeldung nach erfolgreicher Wiederherstellung der Trainingsdaten"
-    },
-    "settingsx_restoreError": {
-      "message": "Fehler beim Wiederherstellen der Trainingsdaten. Bitte versuchen Sie es erneut.",
-      "description": "Fehlermeldung bei einem Wiederherstellungs-Fehler"
-    },
-    "settingsx_invalidDataError": {
-      "message": "Ungültige Datenstruktur.",
-      "description": "Fehlermeldung bei ungültiger Datenstruktur in der wiederhergestellten Datei"
-    },
-    "settingsx_invalidZipError": {
-      "message": "Fehler beim Verarbeiten der ZIP-Datei. Bitte stellen Sie sicher, dass es sich um eine gültige ZIP-Datei handelt.",
-      "description": "Fehlermeldung bei einer ungültigen ZIP-Datei"
-    },
-    "settingsx_noTrainingData": {
-      "message": "Keine Trainingsdaten für $1 vorhanden.",
-      "description": "Warnung, wenn keine Trainingsdaten für ein ausgewähltes Tag existieren"
-    },
-    "settingsx_loadTrainingDataError": {
-      "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut.",
-      "description": "Fehlermeldung beim Laden der Trainingsdaten"
-    },
-    "settingsx_trainingDataDeleted": {
-      "message": "Trainingsdaten für $1 wurden gelöscht.",
-      "description": "Bestätigungsmeldung nach dem Löschen der Trainingsdaten"
-    },
-    "settingsx_deleteTrainingDataError": {
-      "message": "Fehler beim Löschen der Trainingsdaten für $1.",
-      "description": "Fehlermeldung beim Löschen der Trainingsdaten"
-    },
-    "emailinfo_title": {
-      "message": "PrioMailbox - E-Mail Info",
-      "description": "Titel für die E-Mail Info Seite"
-    },
-    "emailinfo_label_tag": {
-      "message": "Schlagwort",
-      "description": "Label für die Spalte mit den Tags"
-    },
-    "emailinfo_label_probability": {
-      "message": "Wahrscheinlichkeit",
-      "description": "Label für die Spalte mit der Wahrscheinlichkeit"
-    },
-    "emailinfo_label_known_tokens": {
-      "message": "Bekannte Tokens",
-      "description": "Label für die Spalte mit dem Prozentsatz der bekannten Tokens"
-    },
-    "emailinfo_top_tokens": {
-      "message": "Top Tokens für Schlagwort \"$1\"",
-      "description": "Titel der Token-Tabelle für ein bestimmtes Schlagwort"
-    },
-    "emailinfo_token": {
-      "message": "Token",
-      "description": "Spaltenüberschrift für die Token-Spalte"
-    },
-    "emailinfo_probability": {
-      "message": "Wahrscheinlichkeit",
-      "description": "Spaltenüberschrift für die Wahrscheinlichkeitsspalte"
-    },
-    "emailinfo_type": {
-      "message": "Typ",
-      "description": "Spaltenüberschrift für den Typ (Positiv/Negativ)"
-    },
-    "emailinfo_positive": {
-      "message": "Positiv",
-      "description": "Label für positive Tokens"
-    },
-    "emailinfo_negative": {
-      "message": "Negativ",
-      "description": "Label für negative Tokens"
-    }
+  "selectTagMenu": {
+    "message": "Schlagwort auswählen"
+  },
+  "emailInfoMenu": {
+    "message": "🔍 E-Mail-Infos"
+  },
+  "classifyMenu": {
+    "message": "📄 Klassifiziere E-Mail"
+  },
+  "trainTagMenu": {
+    "message": "Trainiere: $1"
+  },
+  "learnTagMenu": {
+    "message": "✔️ Lerne als $1"
+  },
+  "unlearnTagMenu": {
+    "message": "❌ Lerne als nicht $1"
+  },
+  "trainingCompleteMessage": {
+    "message": "Trainiert als: $1"
+  },
+  "untrainingCompleteMessage": {
+    "message": "Trainiert als: NICHT-$1"
+  },
+  "classificationCompleteMessage": {
+    "message": "Klassifizierung abgeschlossen"
+  },
+  "popup_settingsButton": {
+    "message": "Einstellungen"
+  },
+  "popup_helpButton": {
+    "message": "Hilfe"
+  },
+  "setting_title": {
+    "message": "PrioMailbox Einstellungen"
+  },
+  "setting_autoTagTitle": {
+    "message": "Automatisches Taggen neuer E-Mails"
+  },
+  "setting_autoTagTooltip": {
+    "message": "Neue E-Mails auf die gelernten Schlagwörter prüfen und taggen."
+  },
+  "setting_allAccountsLabel": {
+    "message": "Für alle Konten aktiviert"
+  },
+  "setting_selectTagsTitle": {
+    "message": "Schlagwörter auswählen"
+  },
+  "setting_selectTagsTooltip": {
+    "message": "Wählen Sie die Schlagwörter aus, die zum Trainieren und automatischen Taggen verwendet werden."
+  },
+  "setting_thresholdTitle": {
+    "message": "Schwellwert für automatisches Taggen"
+  },
+  "setting_thresholdTooltip": {
+    "message": "Dieser Wert legt die Wahrscheinlichkeit fest, ab der ein Tag gesetzt wird. Es wird empfohlen, den Wert bei 99% zu belassen."
+  },
+  "setting_thresholdLabel": {
+    "message": "Schwellwert (%)"
+  },
+  "setting_setTagsTitle": {
+    "message": "Schlagwörter setzen"
+  },
+  "setting_tagOnTrainingLabel": {
+    "message": "Schlagwort beim Trainieren setzen/entfernen"
+  },
+  "setting_tagOnTrainingTooltip": {
+    "message": "Wenn aktiviert, wird beim Trainieren das entsprechende Schlagwort gesetzt oder entfernt."
+  },
+  "setting_removeOnClassifyLabel": {
+    "message": "Entferne gesetzte Schlagwörter beim Klassifizieren wenn Wahrscheinlichkeit unter Schwellwert"
+  },
+  "setting_removeOnClassifyTooltip": {
+    "message": "Wenn aktiviert, werden gesetzte Schlagwörter entfernt, wenn die Wahrscheinlichkeit unter dem Schwellwert liegt."
+  },
+  "setting_backupRestoreTitle": {
+    "message": "Trainingsdaten sichern und wiederherstellen"
+  },
+  "setting_backupButton": {
+    "message": "Trainingsdaten sichern"
+  },
+  "setting_restoreButton": {
+    "message": "Trainingsdaten wiederherstellen"
+  },
+  "setting_saveButton": {
+    "message": "Speichern"
+  },
+  "settings_defaultOption": {
+    "message": "--- Bitte wählen ---"
+  },
+  "settings_deleteTrainingData": {
+    "message": "Trainingsdaten löschen"
+  },
+  "settings_stopDeletion": {
+    "message": "Löschen stoppen ($1s)"
+  },
+  "settings_noTrainingData": {
+    "message": "Keine Trainingsdaten für $1 vorhanden."
+  },
+  "settings_loadTrainingDataError": {
+    "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut."
+  },
+  "settings_trainingDataDeleted": {
+    "message": "Trainingsdaten für $1 wurden gelöscht."
+  },
+  "settings_deleteTrainingDataError": {
+    "message": "Fehler beim Löschen der Trainingsdaten für $1."
+  },
+  "settings_invalidThreshold": {
+    "message": "Bitte geben Sie einen gültigen Schwellwert zwischen 1 und 99 ein."
+  },
+  "settings_saved": {
+    "message": "Einstellungen gespeichert."
+  },
+  "settings_saveError": {
+    "message": "Fehler beim Speichern der Einstellungen. Bitte versuchen Sie es erneut."
+  },
+  "settingsx_defaultOption": {
+    "message": "--- Bitte wählen ---"
+  },
+  "settingsx_deleteTrainingData": {
+    "message": "Trainingsdaten löschen"
+  },
+  "settingsx_stopDeletion": {
+    "message": "Löschen stoppen ($1s)"
+  },
+  "settingsx_backupError": {
+    "message": "Fehler beim Sichern der Trainingsdaten. Bitte versuchen Sie es erneut."
+  },
+  "settingsx_restoreSuccess": {
+    "message": "Trainingsdaten wurden erfolgreich wiederhergestellt."
+  },
+  "settingsx_restoreError": {
+    "message": "Fehler beim Wiederherstellen der Trainingsdaten. Bitte versuchen Sie es erneut."
+  },
+  "settingsx_invalidDataError": {
+    "message": "Ungültige Datenstruktur."
+  },
+  "settingsx_invalidZipError": {
+    "message": "Fehler beim Verarbeiten der ZIP-Datei. Bitte stellen Sie sicher, dass es sich um eine gültige ZIP-Datei handelt."
+  },
+  "settingsx_noTrainingData": {
+    "message": "Keine Trainingsdaten für $1 vorhanden."
+  },
+  "settingsx_loadTrainingDataError": {
+    "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut."
+  },
+  "settingsx_trainingDataDeleted": {
+    "message": "Trainingsdaten für $1 wurden gelöscht."
+  },
+  "settingsx_deleteTrainingDataError": {
+    "message": "Fehler beim Löschen der Trainingsdaten für $1."
+  },
+  "emailinfo_title": {
+    "message": "PrioMailbox - E-Mail Info"
+  },
+  "emailinfo_label_tag": {
+    "message": "Schlagwort"
+  },
+  "emailinfo_label_probability": {
+    "message": "Wahrscheinlichkeit"
+  },
+  "emailinfo_label_known_tokens": {
+    "message": "Bekannte Tokens"
+  },
+  "emailinfo_top_tokens": {
+    "message": "Top Tokens für Schlagwort \"$1\""
+  },
+  "emailinfo_token": {
+    "message": "Token"
+  },
+  "emailinfo_probability": {
+    "message": "Wahrscheinlichkeit"
+  },
+  "emailinfo_type": {
+    "message": "Typ"
+  },
+  "emailinfo_positive": {
+    "message": "Positiv"
+  },
+  "emailinfo_negative": {
+    "message": "Negativ"
   }
-  
+}

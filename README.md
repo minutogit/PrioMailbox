@@ -40,17 +40,22 @@ To test the filter's effectiveness:
 
 Here are some visuals of PrioMailbox in action:
 
-**Email list showing applied keywords.**  
+***
+**Email list showing applied tags.**  
 <a href="assets/screen1.png"><img src="assets/screen1.png" alt="Email list showing applied keywords" width="80%"></a>
 
+***
+**Training a tag with an email.**  
+<a href="assets/screen4.png"><img src="assets/screen4.png" alt="Training a tag with an email." width="80%"></a>
+
+***
 **Addon settings panel.**  
 <a href="assets/screen2.png"><img src="assets/screen2.png" alt="Addon settings panel" width="80%"></a>
 
-**Statistical information on email classification.**  
-<a href="assets/screen3.png"><img src="assets/screen3.png" alt="Statistical information on email classification" width="80%"></a>
+***
+**Statistical insights into email classification for interested users.**  
+<a href="assets/screen3.png"><img src="assets/screen3.png" alt="Statistical insights into email classification for interested users." width="80%"></a>
 
-**Training an email with PrioMailbox.**  
-<a href="assets/screen4.png"><img src="assets/screen4.png" alt="Training an email with PrioMailbox" width="80%"></a>
 
 ## Contributing
 
