@@ -22,6 +22,8 @@ function trans(messageName, placeholders = []) {
   return message;
 }
 
+console.log("Available functions in messenger.messages:", Object.keys(messenger.messages));
+
 
 function initialize() {
   console.log("Initializing...");
@@ -332,13 +334,16 @@ function selectMessage(messageId) {
 }
 
 function getMessageTags(messageId) {
-  return messenger.messages.get(messageId).then((message) => message.tags || []);
+  return messenger.messages.get(messageId).then((message) => {
+    console.log(`Retrieved tags for message ${messageId}:`, message.tags);
+    return message.tags || [];
+  });
 }
 
+
+// learnTagFromMail Funktion
 function learnTagFromMail(messageId, tagName, isPositive) {
-  console.log(
-    `Training with message ID: ${messageId} and tag: ${tagName}`
-  );
+  console.log(`Training with message ID: ${messageId} and tag: ${tagName}`);
 
   const tagKey = tagNameToKeyMap[tagName];
 
@@ -350,8 +355,7 @@ function learnTagFromMail(messageId, tagName, isPositive) {
   messenger.storage.local
     .get(["bayesData", "tagOnTraining"])
     .then((result) => {
-      const tagOnTraining =
-        result.tagOnTraining !== undefined ? result.tagOnTraining : true;
+      const tagOnTraining = result.tagOnTraining !== undefined ? result.tagOnTraining : true;
       bayesData = result.bayesData || {};
 
       bayesData[tagName] = bayesData[tagName] || {
@@ -378,16 +382,10 @@ function learnTagFromMail(messageId, tagName, isPositive) {
 
           const uniqueTokens = Object.keys(tokenCounts);
 
-          const probabilityData = calculateBayesProbability(
-            tokens,
-            bayesData[tagName]
-          );
+          const probabilityData = calculateBayesProbability(tokens, bayesData[tagName]);
           const probabilityBefore = probabilityData.probability;
 
-          const knownTokenData = getKnownTokenPercentage(
-            tokens,
-            bayesData[tagName].tokenList
-          );
+          const knownTokenData = getKnownTokenPercentage(tokens, bayesData[tagName].tokenList);
 
           if (knownTokenData.knownPercentage === 100) {
             console.log("Aborting: mail already trained (all tokens known).");
@@ -399,18 +397,14 @@ function learnTagFromMail(messageId, tagName, isPositive) {
             probabilityBefore > 0.9999 &&
             knownTokenData.knownPercentage >= 90
           ) {
-            console.log(
-              "Overfitting stop: Probability already > 99.99% and over 90% tokens known."
-            );
+            console.log("Overfitting stop: Probability already > 99.99% and over 90% tokens known.");
             return;
           } else if (
             !isPositive &&
             probabilityBefore < 0.0001 &&
             knownTokenData.knownPercentage >= 90
           ) {
-            console.log(
-              "Overfitting stop: Probability already < 0.01% and over 90% tokens known."
-            );
+            console.log("Overfitting stop: Probability already < 0.01% and over 90% tokens known.");
             return;
           }
 
@@ -431,8 +425,7 @@ function learnTagFromMail(messageId, tagName, isPositive) {
               bayesData[tagName].tokenList[token][5] += 1; // negativeTrainCount
             }
 
-            bayesData[tagName].tokenList[token][6] =
-              bayesData[tagName].trainingCount;
+            bayesData[tagName].tokenList[token][6] = bayesData[tagName].trainingCount;
           });
 
           uniqueTokens.forEach((token) => {
@@ -455,63 +448,34 @@ function learnTagFromMail(messageId, tagName, isPositive) {
           if (tagOnTraining) {
             getMessageTags(messageId)
               .then((currentTags) => {
+                let updatedTags;
                 if (isPositive) {
-                  const updatedTags = Array.from(
-                    new Set([...currentTags, tagKey])
-                  );
-                  messenger.messages
-                    .update(messageId, {
-                      tags: updatedTags,
-                    })
-                    .then(() => {
-                      console.log(`Tag "${tagName}" added to the email.`);
-                    })
-                    .catch((error) => {
-                      console.error(`Error adding tag "${tagName}":`, error);
-                    });
+                  updatedTags = Array.from(new Set([...currentTags, tagKey]));
                 } else {
-                  const updatedTags = currentTags.filter(
-                    (key) => key !== tagKey
-                  );
-                  messenger.messages
-                    .update(messageId, {
-                      tags: updatedTags,
-                    })
-                    .then(() => {
-                      console.log(`Tag "${tagName}" removed from the email.`);
-                    })
-                    .catch((error) => {
-                      console.error(
-                        `Error removing tag "${tagName}":`,
-                        error
-                      );
-                    });
+                  updatedTags = currentTags.filter((key) => key !== tagKey);
                 }
+
+                messenger.messages
+                  .update(messageId, { tags: updatedTags })
+                  .then(() => {
+                    console.log(`Tag "${tagName}" ${isPositive ? "added to" : "removed from"} the email.`);
+                  })
+                  .catch((error) => {
+                    console.error(`Error updating tag "${tagName}":`, error);
+                  });
               })
               .catch((error) => {
-                console.error(
-                  `Error retrieving tags for message ${messageId}:`,
-                  error
-                );
+                console.error(`Error retrieving tags for message ${messageId}:`, error);
               });
           }
 
           messenger.storage.local
             .set({ bayesData })
             .then(() => {
-              const probabilityAfter = calculateBayesProbability(
-                tokens,
-                bayesData[tagName]
-              ).probability;
-              const trainingResult = isPositive
-                ? `as ${tagName}`
-                : `as NOT ${tagName}`;
+              const probabilityAfter = calculateBayesProbability(tokens, bayesData[tagName]).probability;
+              const trainingResult = isPositive ? `als ${tagName}` : `als NICHT ${tagName}`;
               console.log(
-                `Mail trained ${trainingResult}. (Before -> After Training: ${(
-                  probabilityBefore * 100
-                ).toFixed(2)}% -> ${(
-                  probabilityAfter * 100
-                ).toFixed(2)}%)`
+                `Mail wurde ${trainingResult} trainiert. (Vorher -> Nachher: ${(probabilityBefore * 100).toFixed(2)}% -> ${(probabilityAfter * 100).toFixed(2)}%)`
               );
             })
             .catch((error) => {
@@ -527,6 +491,11 @@ function learnTagFromMail(messageId, tagName, isPositive) {
     });
 }
 
+
+
+
+
+// classifyEmail Funktion
 function classifyEmail(messageId) {
   console.log(`Classifying message with ID: ${messageId}`);
   getEmailContent(messageId)
@@ -538,14 +507,9 @@ function classifyEmail(messageId) {
       selectedTags.forEach((tagName) => {
         const tagKey = tagNameToKeyMap[tagName];
         if (tagKey && bayesData[tagName]) {
-          const probabilityData = calculateBayesProbability(
-            tokens,
-            bayesData[tagName]
-          );
+          const probabilityData = calculateBayesProbability(tokens, bayesData[tagName]);
           const probability = probabilityData.probability;
-          console.log(
-            `Probability for ${tagName}: ${(probability * 100).toFixed(2)}%`
-          );
+          console.log(`Probability for ${tagName}: ${(probability * 100).toFixed(2)}%`);
 
           if (probability >= threshold) {
             tagsToAdd.push(tagKey);
@@ -571,15 +535,11 @@ function classifyEmail(messageId) {
               .update(messageId, { tags: updatedTags })
               .then(() => {
                 if (tagsToAdd.length > 0) {
-                  const addedTagNames = tagsToAdd.map(
-                    (key) => tagKeyToNameMap[key]
-                  );
+                  const addedTagNames = tagsToAdd.map((key) => tagKeyToNameMap[key]);
                   console.log("Tags added:", addedTagNames);
                 }
                 if (tagsToRemove.length > 0) {
-                  const removedTagNames = tagsToRemove.map(
-                    (key) => tagKeyToNameMap[key]
-                  );
+                  const removedTagNames = tagsToRemove.map((key) => tagKeyToNameMap[key]);
                   console.log("Tags removed:", removedTagNames);
                 }
               })
@@ -591,16 +551,15 @@ function classifyEmail(messageId) {
           }
         })
         .catch((error) => {
-          console.error(
-            `Error retrieving tags for message ${messageId}:`,
-            error
-          );
+          console.error(`Error retrieving tags for message ${messageId}:`, error);
         });
     })
     .catch((error) => {
       console.error("Error classifying email:", error);
     });
 }
+
+
 
 function classifyNewEmail(messageId) {
   getEmailContent(messageId)
@@ -611,14 +570,9 @@ function classifyNewEmail(messageId) {
       selectedTags.forEach((tagName) => {
         const tagKey = tagNameToKeyMap[tagName];
         if (tagKey && bayesData[tagName]) {
-          const probabilityData = calculateBayesProbability(
-            tokens,
-            bayesData[tagName]
-          );
+          const probabilityData = calculateBayesProbability(tokens, bayesData[tagName]);
           const probability = probabilityData.probability;
-          console.log(
-            `Probability for ${tagName}: ${(probability * 100).toFixed(2)}%`
-          );
+          console.log(`Probability for ${tagName}: ${(probability * 100).toFixed(2)}%`);
 
           if (probability >= threshold) {
             tagsToAdd.push(tagKey);
@@ -629,9 +583,7 @@ function classifyNewEmail(messageId) {
       if (tagsToAdd.length > 0) {
         getMessageTags(messageId)
           .then((currentTags) => {
-            const updatedTags = Array.from(
-              new Set([...currentTags, ...tagsToAdd])
-            );
+            const updatedTags = Array.from(new Set([...currentTags, ...tagsToAdd]));
             messenger.messages
               .update(messageId, { tags: updatedTags })
               .then(() => {
@@ -645,10 +597,7 @@ function classifyNewEmail(messageId) {
               });
           })
           .catch((error) => {
-            console.error(
-              `Error retrieving tags for message ${messageId}:`,
-              error
-            );
+            console.error(`Error retrieving tags for message ${messageId}:`, error);
           });
       } else {
         console.log("No tags added.");
@@ -658,6 +607,11 @@ function classifyNewEmail(messageId) {
       console.error("Error classifying new email:", error);
     });
 }
+
+
+
+
+
 
 function onNewMailReceived(folder, messages) {
   const accountId = folder.accountId;

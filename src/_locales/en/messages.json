@@ -6,7 +6,7 @@
     "message": "🔍 Email Info"
   },
   "classifyMenu": {
-    "message": "📄 Classify Email"
+    "message": "📄 Classify Email(s)"
   },
   "trainTagMenu": {
     "message": "Train: $1"
