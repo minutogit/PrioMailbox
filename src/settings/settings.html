@@ -108,7 +108,7 @@
       display: none;
     }
 
-    /* Zusätzliche CSS für den Trenner und den Rahmen */
+    /* Additional CSS for the separator and frame */
     #all-accounts-section {
       padding-bottom: 10px;
       margin-bottom: 10px;
@@ -116,7 +116,7 @@
       align-items: center;
     }
 
-    /* Stil für die spezielle "Alle Konten" Checkbox */
+    /* Style for the special "All Accounts" checkbox */
     #all-accounts-checkbox {
       transform: scale(1.2);
       margin-right: 10px;
@@ -127,7 +127,7 @@
       color: #2c3e50;
     }
 
-    /* Rahmen für die individuellen Konten-Checkboxen */
+    /* Frame for individual account checkboxes */
     #individual-accounts-container {
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -135,7 +135,7 @@
       background-color: #f9f9f9;
     }
 
-    /* Optional: Stil für die individuellen Konten-Checkboxen */
+    /* Optional: Style for individual account checkboxes */
     .account-item input[type='checkbox'] {
       transform: scale(1.1);
       margin-right: 10px;
@@ -150,16 +150,16 @@
 <body>
   <h1 id="settings-title"></h1>
   <form id="settings-form">
-    <!-- Automatisches Taggen -->
+    <!-- Automatic Tagging -->
     <h2 id="auto-tag-title"></h2>
     <div id="accounts-container">
-      <!-- Abschnitt für "Alle Konten auswählen" mit Trenner -->
+      <!-- Section for "Select All Accounts" with separator -->
       <div id="all-accounts-section" class="account-item">
         <input type="checkbox" id="all-accounts-checkbox">
         <label for="all-accounts-checkbox" id="all-accounts-label"></label>
       </div>
       
-      <!-- Individuelle Kontenliste mit Rahmen -->
+      <!-- Individual accounts list with frame -->
       <div id="individual-accounts-container" style="display: none;"></div>
     </div>
 
@@ -196,7 +196,6 @@
   
   <script src="../libs/jszip.min.js"></script>
   <script src="settings.js"></script>
-  <script src="settingsx.js"></script>
   
 </body>
 </html>

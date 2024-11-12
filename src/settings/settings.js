@@ -5,24 +5,29 @@ function trans(messageName, placeholders = {}) {
 
   if (!message) {
     console.warn(`No translation found for key "${messageName}".`);
-    return messageName; // Fallback auf den Schlüssel, wenn keine Übersetzung gefunden wurde
+    return messageName; // Fallback to the key if no translation is found
   }
 
   return message;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Elemente aus dem DOM
+  // Elements from the DOM
   const tagsContainer = document.getElementById("tags-container");
   const thresholdInput = document.getElementById("threshold");
   const tagOnTrainingCheckbox = document.getElementById("tagOnTraining");
   const removeOnClassifyCheckbox = document.getElementById("removeOnClassify");
   const form = document.getElementById("settings-form");
   const allAccountsCheckbox = document.getElementById("all-accounts-checkbox");
+  const backupSection = document.getElementById("backup-restore-section");
+  const backupButton = document.getElementById("backup-button");
+  const restoreButton = document.getElementById("restore-button");
+  const restoreFileInput = document.getElementById("restore-file-input");
+  const individualAccountsContainer = document.getElementById("individual-accounts-container");
 
   document.getElementById("settings-title").textContent = trans("setting_title");
   
-  // Sicheres Hinzufügen von Tooltip-Inhalten ohne innerHTML
+  // Securely adding tooltip content without innerHTML
   const autoTagTitle = document.getElementById("auto-tag-title");
   autoTagTitle.textContent = trans("setting_autoTagTitle");
   const autoTagTooltip = document.createElement("span");
@@ -33,16 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("all-accounts-label").textContent = trans("setting_allAccountsLabel");
   
-  // Sicheres Hinzufügen des Tooltip-Inhalts für select-tags-title
+  // Securely adding tooltip content for select-tags-title
   const selectTagsTitle = document.getElementById("select-tags-title");
   selectTagsTitle.textContent = trans("setting_selectTagsTitle");
   const selectTagsTooltip = document.createElement("span");
   selectTagsTooltip.className = "info-icon";
   selectTagsTooltip.setAttribute("data-tooltip", trans("setting_selectTagsTooltip"));
-  selectTagsTooltip.textContent = "ⓘ";
   selectTagsTitle.appendChild(selectTagsTooltip);
 
-  // Sicheres Hinzufügen des Tooltip-Inhalts für threshold-title
+  // Securely adding tooltip content for threshold-title
   const thresholdTitle = document.getElementById("threshold-title");
   thresholdTitle.textContent = trans("setting_thresholdTitle");
   const thresholdTooltip = document.createElement("span");
@@ -60,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("restore-button").textContent = trans("setting_restoreButton");
   document.getElementById("save-button").textContent = trans("setting_saveButton");
 
-  // Variablen deklarieren und an window binden
+  // Initialize variables and bind to window
   window.allTags = [];
   window.selectedTags = [];
   window.bayesData = {};
@@ -73,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.tagKeyToNameMap = {};
   window.tagNameToKeyMap = {};
 
-  // Lade alle verfügbaren Tags, Konten und Einstellungen
+  // Load all available tags, accounts, and settings
   Promise.all([
     messenger.messages.listTags(),
     messenger.accounts.list(),
@@ -102,61 +106,140 @@ document.addEventListener("DOMContentLoaded", () => {
           ? result.removeOnClassify
           : false;
 
-      // Setze den Status der Checkboxen
+      // Set the status of checkboxes
       tagOnTrainingCheckbox.checked = window.tagOnTraining;
       removeOnClassifyCheckbox.checked = window.removeOnClassify;
 
-      // Mapping erstellen
+      // Create mapping
       window.allTags.forEach((tag) => {
         window.tagKeyToNameMap[tag.key] = tag.tag;
         window.tagNameToKeyMap[tag.tag] = tag.key;
       });
 
-      // Konvertiere selectedTags von Tag-Keys zu Tag-Namen
+      // Convert selectedTags from tag keys to tag names
       const storedSelectedTags = result.selectedTags || [];
       window.selectedTags = storedSelectedTags.map(
         (tagKey) => window.tagKeyToNameMap[tagKey] || null
       );
 
-      // Überprüfe, ob alle Konten ausgewählt sind
+      // Check if all accounts are selected
       let allAccountsSelected =
         window.selectedAccounts.length === window.allAccounts.length;
       allAccountsCheckbox.checked = allAccountsSelected;
 
+      // Show backup-restore section
+      if (backupSection) {
+        backupSection.style.display = "block";
+      }
+
+      // Show "All Accounts" checkbox and individual accounts list
+      if (allAccountsCheckbox && individualAccountsContainer) {
+        allAccountsCheckbox.parentElement.style.display = "block";
+        individualAccountsContainer.style.display = "block";
+      }
+
       window.renderTags();
       window.renderThreshold();
+
+      // Load accounts and render individual accounts
+      renderIndividualAccounts();
+      updateAllAccountsCheckbox(); // Update the state of "All Accounts" checkbox after rendering
+
     })
     .catch((error) => {
       console.error("Error loading settings:", error);
     });
 
-  // Funktionen an window binden
+  // Functions
+  function renderIndividualAccounts() {
+    individualAccountsContainer.innerHTML = "";
+    window.allAccounts.forEach((account) => {
+      const div = document.createElement("div");
+      div.className = "account-item";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = `account-${account.id}`;
+      checkbox.checked = window.selectedAccounts.includes(account.id);
+
+      const label = document.createElement("label");
+      label.htmlFor = `account-${account.id}`;
+      label.textContent = account.name;
+
+      // Event listener for individual account checkbox
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          if (!window.selectedAccounts.includes(account.id)) {
+            window.selectedAccounts.push(account.id);
+          }
+        } else {
+          window.selectedAccounts = window.selectedAccounts.filter(id => id !== account.id);
+        }
+
+        saveSelectedAccounts();
+        updateAllAccountsCheckbox();
+      });
+
+      div.appendChild(checkbox);
+      div.appendChild(label);
+      individualAccountsContainer.appendChild(div);
+    });
+  }
+
+  // Function to save selected accounts to local storage
+  function saveSelectedAccounts() {
+    messenger.storage.local.set({ selectedAccounts: window.selectedAccounts }).then(() => {
+      console.log("Selected accounts saved:", window.selectedAccounts);
+    }).catch((error) => {
+      console.error("Error saving selected accounts:", error);
+    });
+  }
+
+  // Function to update the state of "All Accounts" checkbox
+  function updateAllAccountsCheckbox() {
+    if (!allAccountsCheckbox) return;
+    if (window.selectedAccounts.length === window.allAccounts.length && window.allAccounts.length > 0) {
+      allAccountsCheckbox.checked = true;
+      allAccountsCheckbox.indeterminate = false;
+    } else if (window.selectedAccounts.length > 0 && window.selectedAccounts.length < window.allAccounts.length) {
+      allAccountsCheckbox.checked = false;
+      allAccountsCheckbox.indeterminate = true;
+    } else {
+      allAccountsCheckbox.checked = false;
+      allAccountsCheckbox.indeterminate = false;
+    }
+  }
+
+  // Override renderTags function to allow dynamic number of dropdowns
   window.renderTags = function () {
     tagsContainer.innerHTML = "";
 
-    // Begrenze die Anzahl der Dropdowns auf maximal 3 (im Standardfall)
-    const maxDropdowns = 3;
-
-    // Erstelle eine Liste der bereits ausgewählten Tags
+    // Create a list of already selected tags
     const usedTagNames = window.selectedTags.filter((tagName) => tagName);
 
-    for (let i = 0; i < 3; i++) {
+    // Calculate the number of needed dropdowns: number of selected tags + 1, up to all tags
+    let dropdownCount = usedTagNames.length + 1;
+    if (dropdownCount > window.allTags.length) {
+      dropdownCount = window.allTags.length;
+    }
+
+    for (let i = 0; i < dropdownCount; i++) {
       const div = document.createElement("div");
       div.className = "tag-item";
 
-      // Dropdown-Menü (Select)
+      // Dropdown menu (Select)
       const select = document.createElement("select");
       select.id = `tag-select-${i}`;
       select.dataset.index = i;
       select.style.minWidth = "200px";
 
-      // Standardoption
+      // Default option
       const defaultOption = document.createElement("option");
       defaultOption.value = "";
       defaultOption.textContent = trans("settings_defaultOption");
       select.appendChild(defaultOption);
 
-      // Optionen hinzufügen, ausschließend bereits ausgewählte Tags
+      // Add options, excluding already selected tags except for the current dropdown
       window.allTags.forEach((tag) => {
         if (
           !usedTagNames.includes(tag.tag) ||
@@ -169,38 +252,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Setze den ausgewählten Wert
+      // Set the selected value
       if (window.selectedTags[i]) {
         select.value = window.selectedTags[i];
       } else {
         window.selectedTags[i] = null;
       }
 
-      // Event Listener für Dropdown-Änderungen
+      // Event listener for dropdown changes
       select.addEventListener("change", (e) => {
         const index = parseInt(e.target.dataset.index);
         window.selectedTags[index] = e.target.value || null;
 
-        // Re-render die Dropdowns, um die verfügbaren Optionen zu aktualisieren
+        // Re-render the dropdowns to update available options
         window.renderTags();
       });
 
-      // Span für die Tokenanzahl
+      // Span for token count
       const tokenCountSpan = document.createElement("span");
       tokenCountSpan.className = "token-count";
       tokenCountSpan.style.marginLeft = "auto";
 
-      // Button zum Löschen der Trainingsdaten
+      // Button to delete training data
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = trans("settings_deleteTrainingData");
 
-      // Initialisiere Zustandsvariablen für den Löschvorgang
+      // Initialize state variables for deletion process
       button.deletionPending = false;
       button.deletionTimeout = null;
       button.countdownInterval = null;
 
-      // Wenn ein Tag ausgewählt ist, Tokenanzahl anzeigen und Button aktivieren
+      // If a tag is selected, display token count and enable button
       if (window.selectedTags[i]) {
         const tagName = window.selectedTags[i];
         const totalUniqueTokens =
@@ -210,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.disabled = totalUniqueTokens <= 0;
 
         button.addEventListener("click", () => {
-          // Lade die neuesten bayesData aus dem Speicher
+          // Load the latest bayesData from storage
           messenger.storage.local
             .get("bayesData")
             .then((result) => {
@@ -221,33 +304,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.bayesData[tagName].trainingCount > 0
               ) {
                 if (button.deletionPending) {
-                  // Löschvorgang abbrechen
+                  // Cancel deletion process
                   clearTimeout(button.deletionTimeout);
                   clearInterval(button.countdownInterval);
                   button.textContent = trans("settings_deleteTrainingData");
-                  button.style.backgroundColor = "#e74c3c"; // Ursprüngliche Farbe
+                  button.style.backgroundColor = "#e74c3c"; // Original color
                   button.deletionPending = false;
                   console.log(
                     `Deletion of training data for "${tagName}" has been canceled.`
                   );
                 } else {
-                  // Startet den 5-Sekunden-Countdown
+                  // Start 5-second countdown
                   button.deletionPending = true;
                   let countdown = 5;
-                  button.textContent = trans("settings_stopDeletion", {countdown});
-                  button.style.backgroundColor = "#f39c12"; // Orange Farbe während des Countdowns
+                  button.textContent = trans("settings_stopDeletion", { countdown });
+                  button.style.backgroundColor = "#f39c12"; // Orange color during countdown
 
                   button.countdownInterval = setInterval(() => {
                     countdown--;
                     if (countdown > 0) {
-                      button.textContent = trans("settings_stopDeletion", {countdown});
+                      button.textContent = trans("settings_stopDeletion", { countdown });
                     } else {
                       clearInterval(button.countdownInterval);
                     }
                   }, 1000);
 
                   button.deletionTimeout = setTimeout(() => {
-                    // Trainingsdaten löschen
+                    // Delete training data
                     window.deleteTrainingDataForTag(
                       tagName,
                       tokenCountSpan,
@@ -256,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     button.deletionPending = false;
                     button.textContent = trans("settings_deleteTrainingData");
-                    button.style.backgroundColor = "#e74c3c"; // Ursprüngliche Farbe
+                    button.style.backgroundColor = "#e74c3c"; // Original color
                   }, 5000);
                 }
               } else {
@@ -276,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.disabled = true;
       }
 
-      // Füge Elemente zum Div hinzu
+      // Append elements to div
       div.appendChild(select);
       div.appendChild(tokenCountSpan);
       div.appendChild(button);
@@ -285,52 +368,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  window.deleteTrainingDataForTag = function (
-    tagName,
-    tokenCountSpan,
-    button
-  ) {
-    // Setze die bayesData-Struktur für das Tag zurück
-    window.bayesData[tagName] = {
-      tokenList: {},
-      trainingCount: 0,
-      totalPositiveTokens: 0,
-      totalNegativeTokens: 0,
-      uniquePositiveTokens: 0,
-      uniqueNegativeTokens: 0,
-      totalUniqueTokens: 0,
+  // Delete training data function
+  if (typeof window.deleteTrainingDataForTag !== 'function') {
+    window.deleteTrainingDataForTag = function (
+      tagName,
+      tokenCountSpan,
+      button
+    ) {
+      // Reset bayesData structure for the tag
+      window.bayesData[tagName] = {
+        tokenList: {},
+        trainingCount: 0,
+        totalPositiveTokens: 0,
+        totalNegativeTokens: 0,
+        uniquePositiveTokens: 0,
+        uniqueNegativeTokens: 0,
+        totalUniqueTokens: 0,
+      };
+
+      // Save updated bayesData
+      messenger.storage.local
+        .set({ bayesData: window.bayesData })
+        .then(() => {
+          alert(trans("settings_trainingDataDeleted", { tagName }));
+          console.log(
+            `Training data for "${tagName}" has been successfully deleted.`
+          );
+
+          // Send message to background.js to reload bayesData
+          messenger.runtime.sendMessage({ action: "refreshBayesData" });
+
+          // Update display
+          tokenCountSpan.textContent = `0 Tokens `;
+          button.disabled = true;
+        })
+        .catch((error) => {
+          console.error(
+            `Error deleting training data for "${tagName}":`,
+            error
+          );
+          alert(trans("settings_deleteTrainingDataError", { tagName }));
+        });
     };
+  }
 
-    // Speichere die aktualisierten bayesData
-    messenger.storage.local
-      .set({ bayesData: window.bayesData })
-      .then(() => {
-        alert(trans("settings_trainingDataDeleted", { tagName }));
-        console.log(
-          `Training data for "${tagName}" has been successfully deleted.`
-        );
-
-        // Sende eine Nachricht an background.js, um bayesData neu zu laden
-        messenger.runtime.sendMessage({ action: "refreshBayesData" });
-
-        // Aktualisiere die Anzeige
-        tokenCountSpan.textContent = `0 Tokens `;
-        button.disabled = true;
-      })
-      .catch((error) => {
-        console.error(
-          `Error deleting training data for "${tagName}":`,
-          error
-        );
-        alert(trans("settings_deleteTrainingDataError", { tagName }));
-      });
-  };
-
+  // Override renderThreshold function
   window.renderThreshold = function () {
-    thresholdInput.value = window.threshold;
+    if (thresholdInput) {
+      thresholdInput.value = window.threshold;
+    } else {
+      console.error("thresholdInput is not present in the DOM.");
+    }
   };
 
-  // Eingabevalidierung für Threshold
+  // Input validation for Threshold
   thresholdInput.addEventListener("input", () => {
     let value = thresholdInput.value;
     value = value.replace(/\D/g, "");
@@ -344,9 +435,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Form submission handling
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    // Sammle die ausgewählten Tags aus den Dropdowns
+    // Collect selected tags from the dropdowns
     window.selectedTags = [];
     const selects = document.querySelectorAll("#tags-container select");
     selects.forEach((select, index) => {
@@ -355,22 +447,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Überprüfe, ob die individuelle Kontenliste sichtbar ist
-    const individualAccountsContainer = document.getElementById(
-      "individual-accounts-container"
-    );
+    // Check if the individual accounts list is visible
     if (
       individualAccountsContainer &&
       individualAccountsContainer.style.display !== "none"
     ) {
-      // Sammle ausgewählte Konten aus der individuellen Liste
+      // Collect selected accounts from the individual list
       window.selectedAccounts = Array.from(
         document.querySelectorAll(
           "#individual-accounts-container input[type=checkbox]:checked"
         )
       ).map((input) => input.id.replace(/^account-/, ""));
     } else {
-      // Verwende den Status der "Alle Konten" Checkbox
+      // Use the status of the "All Accounts" checkbox
       if (allAccountsCheckbox.checked) {
         window.selectedAccounts = window.allAccounts.map(
           (account) => account.id
@@ -382,7 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.threshold = parseInt(thresholdInput.value, 10);
 
-    // Validierung des Threshold-Wertes
+    // Validation of threshold value
     if (
       isNaN(window.threshold) ||
       window.threshold < 1 ||
@@ -392,8 +481,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Speichere die Einstellungen
-    // Konvertiere selectedTags von Tag-Namen zu Tag-Keys
+    // Save settings
+    // Convert selectedTags from tag names to tag keys
     const selectedTagKeys = window.selectedTags.map(
       (tagName) => window.tagNameToKeyMap[tagName] || tagName
     );
@@ -409,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(() => {
         alert(trans("settings_saved"));
 
-        // Senden der Nachrichten, um die Änderungen in background.js zu aktualisieren
+        // Send messages to update changes in background.js
         messenger.runtime.sendMessage({ action: "updateContextMenu" });
         messenger.runtime.sendMessage({
           action: "updateThreshold",
@@ -434,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // Funktion zum Neuladen der Einstellungen
+  // Function to reload settings
   window.reloadSettings = function () {
     console.log("Reloading settings...");
     messenger.storage.local
@@ -460,17 +549,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ? result.removeOnClassify
             : false;
 
-        // Setze den Status der Checkboxen
+        // Set the status of checkboxes
         tagOnTrainingCheckbox.checked = window.tagOnTraining;
         removeOnClassifyCheckbox.checked = window.removeOnClassify;
 
-        // Konvertiere selectedTags von Tag-Keys zu Tag-Namen
+        // Convert selectedTags from tag keys to tag names
         const storedSelectedTags = result.selectedTags || [];
         window.selectedTags = storedSelectedTags.map(
           (tagKey) => window.tagKeyToNameMap[tagKey] || null
         );
 
-        // Überprüfe, ob alle Konten ausgewählt sind
+        // Check if all accounts are selected
         window.selectedAccounts = result.selectedAccounts || [];
         let allAccountsSelected =
           window.selectedAccounts.length === window.allAccounts.length;
@@ -478,13 +567,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.renderTags();
         window.renderThreshold();
+        renderIndividualAccounts();
+        updateAllAccountsCheckbox();
+
       })
       .catch((error) => {
         console.error("Error reloading settings:", error);
       });
   };
 
-  // Event-Listener zum Neuladen der Einstellungen
+  // Event listeners to reload settings
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") {
       console.log(
@@ -500,4 +592,101 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     window.reloadSettings();
   });
+
+  // Backup functionality
+  backupButton.addEventListener("click", () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}${month}${day}`;
+    const fileName = `PrioMailbox-TrainDB-${formattedDate}.zip`;
+
+    messenger.storage.local.get("bayesData").then((result) => {
+      const bayesData = result.bayesData || {};
+      const jsonData = JSON.stringify(bayesData, null, 2);
+
+      const zip = new JSZip();
+      zip.file("bayesData.json", jsonData);
+
+      zip.generateAsync({ type: "blob" }).then((content) => {
+        const url = URL.createObjectURL(content);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }).catch((error) => {
+        console.error("Error creating ZIP backup:", error);
+        alert(trans("settings_backupError"));
+      });
+    }).catch((error) => {
+      console.error("Error backing up training data:", error);
+      alert(trans("settings_backupError"));
+    });
+  });
+
+  // Restore functionality
+  restoreButton.addEventListener("click", () => {
+    restoreFileInput.click();
+  });
+
+  restoreFileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const arrayBuffer = e.target.result;
+
+      JSZip.loadAsync(arrayBuffer).then((zip) => {
+        return zip.file("bayesData.json").async("string");
+      }).then((jsonData) => {
+        const importedBayesData = JSON.parse(jsonData);
+
+        if (typeof importedBayesData !== 'object') {
+          throw new Error(trans("settings_invalidDataError"));
+        }
+
+        // Save the restored data
+        messenger.storage.local.set({ bayesData: importedBayesData }).then(() => {
+          alert(trans("settings_restoreSuccess"));
+          console.log("Training data has been successfully restored.");
+
+          // Send message to background.js to reload bayesData
+          messenger.runtime.sendMessage({ action: "refreshBayesData" });
+
+          // Update display
+          window.reloadSettings();
+        }).catch((error) => {
+          console.error("Error saving training data:", error);
+          alert(trans("settings_restoreError"));
+        });
+      }).catch((error) => {
+        console.error("Error processing ZIP file:", error);
+        alert(trans("settings_invalidZipError"));
+      });
+    };
+
+    reader.readAsArrayBuffer(file);
+  });
+
+  // Event listener for "All Accounts" checkbox
+  allAccountsCheckbox.addEventListener("change", () => {
+    const isChecked = allAccountsCheckbox.checked;
+    const accountCheckboxes = individualAccountsContainer.querySelectorAll("input[type='checkbox']");
+    accountCheckboxes.forEach((checkbox) => {
+      checkbox.checked = isChecked;
+    });
+
+    // Update selected accounts
+    window.selectedAccounts = isChecked ? window.allAccounts.map(account => account.id) : [];
+    saveSelectedAccounts();
+  });
+
 });
