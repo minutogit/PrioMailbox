@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "PrioMailbox",
-  "version": "1.00.0",
+  "version": "1.0.1",
   "default_locale": "en",
   "description": "PrioMailbox organizes your emails in Thunderbird with intelligent, trainable tags. Important messages are highlighted, while unimportant ones are hidden.",
   "icons": {
