@@ -126,6 +126,7 @@ function initialize() {
 
       createContextMenu();
       messenger.messages.onNewMailReceived.addListener(onNewMailReceived);
+      messenger.mailTabs.onDisplayedFolderChanged.addListener(onFolderDisplayed);
     })
     .catch((error) => {
       console.error("Error during initialization:", error);
@@ -339,6 +340,128 @@ function getMessageTags(messageId) {
     return message.tags || [];
   });
 }
+
+/**
+ * workarround to check all new mails
+ * Listener function that checks for new emails in the displayed folder and classifies them.
+ * On the first visit to a folder, it stores the date of the newest email but does not process any emails.
+ * 
+ * @param {object} tab - Information about the active tab.
+ * @param {object} folder - Information about the displayed folder.
+ */
+
+async function onFolderDisplayed(tab, folder) {
+  if (folder && folder.accountId && folder.path) {
+    const accountId = folder.accountId;
+
+    // Check if the account is in the list of selected accounts
+    if (!selectedAccounts.includes(accountId)) {
+      console.log(`Account ${accountId} is not selected. Skipping folder ${folder.path}.`);
+      return;
+    }
+
+    console.log(`Displayed Folder: ${accountId}:${folder.path}`);
+
+    try {
+      const folderKey = `${accountId}:${folder.path}`;
+
+      // Load the last processed date for this folder from storage
+      let result = await messenger.storage.local.get("folderLastProcessed");
+      let folderLastProcessed = result.folderLastProcessed || {};
+      let lastProcessedDate = folderLastProcessed[folderKey] ? new Date(folderLastProcessed[folderKey]) : null;
+
+      // Prepare the folder object for messages.list
+      const folderToQuery = {
+        accountId: folder.accountId,
+        path: folder.path,
+      };
+
+      // Get messages in the folder, handling pagination
+      let page = await messenger.messages.list(folderToQuery);
+
+      if (!lastProcessedDate) {
+        // First visit: Store the date of the newest email without processing
+        let newestMessageDate = null;
+
+        while (true) {
+          if (page.messages && page.messages.length > 0) {
+            for (let message of page.messages) {
+              let messageDate = new Date(message.date);
+              if (!newestMessageDate || messageDate > new Date(newestMessageDate)) {
+                newestMessageDate = message.date;
+              }
+            }
+          }
+
+          if (page.id) {
+            // Get the next page
+            page = await messenger.messages.continueList(page.id);
+          } else {
+            // No more pages
+            break;
+          }
+        }
+
+        if (newestMessageDate) {
+          folderLastProcessed[folderKey] = newestMessageDate;
+          await messenger.storage.local.set({ folderLastProcessed });
+          console.log(`Initialized last processed date for folder ${folderKey} to ${newestMessageDate}.`);
+        } else {
+          console.log(`Folder ${folderKey} is empty. No date to store.`);
+        }
+      } else {
+        // Process messages newer than the last processed date
+        let newMessages = [];
+        // Restart pagination
+        page = await messenger.messages.list(folderToQuery);
+
+        while (true) {
+          if (page.messages && page.messages.length > 0) {
+            for (let message of page.messages) {
+              let messageDate = new Date(message.date);
+              if (messageDate > lastProcessedDate) {
+                newMessages.push(message);
+              }
+            }
+          }
+
+          if (page.id) {
+            // Get the next page
+            page = await messenger.messages.continueList(page.id);
+          } else {
+            // No more pages
+            break;
+          }
+        }
+
+        console.log(`Found ${newMessages.length} new messages to classify in folder ${folderKey}.`);
+
+        // Classify new messages
+        for (let message of newMessages) {
+          await classifyNewEmail(message.id);
+        }
+
+        if (newMessages.length > 0) {
+          // Update the last processed date with the newest message date
+          let newestMessageDate = newMessages.reduce((latest, msg) => {
+            return new Date(msg.date) > new Date(latest.date) ? msg : latest;
+          }).date;
+
+          folderLastProcessed[folderKey] = newestMessageDate;
+          await messenger.storage.local.set({ folderLastProcessed });
+
+          console.log(`Updated last processed date for folder ${folderKey} to ${newestMessageDate}.`);
+        } else {
+          console.log(`No new messages to classify in folder ${folderKey}.`);
+        }
+      }
+    } catch (error) {
+      console.error("Error processing new emails in folder:", error);
+    }
+  }
+}
+
+
 
 
 // learnTagFromMail Funktion
@@ -610,17 +733,16 @@ function classifyNewEmail(messageId) {
 
 
 
-
-
-
 function onNewMailReceived(folder, messages) {
   const accountId = folder.accountId;
   if (selectedAccounts.includes(accountId)) {
+    console.log(`New Mail Received: ${messages.messages.length} new message(s).`);
     messages.messages.forEach((message) => {
       classifyNewEmail(message.id);
     });
   }
 }
+
 
 function showEMailInfo(messageId) {
   console.log(`Displaying Bayes info for message ID: ${messageId}`);
