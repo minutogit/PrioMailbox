@@ -31,7 +31,7 @@
       "default_icon": "icons/icon.png"
   },
   "background": {
-    "scripts": ["bayes.js", "background.js", "tokenutils.js", "optimize_token_data.js","utils.js"]
+    "scripts": ["bayes.js", "background.js", "tokenutils.js", "optimize_token_data.js","utils.js","donation_handler.js"]
   },
   "options_ui": {
     "page": "settings/settings.html",

@@ -60,7 +60,36 @@ function initialize() {
         storageResult.removeOnClassify !== undefined
           ? storageResult.removeOnClassify
           : false;
+      
+      /// Überprüfe und initialisiere oder lade donation_handler
+      messenger.storage.local.get('donation_handler').then(storageResult => {
+        if (!storageResult.donation_handler) {
+            // Wenn donation_handler nicht existiert, initialisiere ihn
+            const today = new Date().toISOString().split('T')[0]; // Aktuelles Datum im Format YYYY-MM-DD
+            const defaultDonationData = {
+                donation_key: '',
+                donation_mail: '',
+                last_check_date: today, // Aktuelles Datum ohne Uhrzeit
+                usage_counter: 0
+            };
 
+            // Generiere die Checksum und speichere die Daten
+            generateChecksum(defaultDonationData.usage_counter, defaultDonationData.last_check_date)
+                .then(checksum => {
+                    defaultDonationData.checksum = checksum; // Setze die generierte Checksum
+                    messenger.storage.local.set({ donation_handler: defaultDonationData });
+                })
+                .catch(error => {
+                    console.error("Error generating checksum:", error);
+                });
+        } else {
+            // Wenn donation_handler existiert, lade die vorhandenen Daten
+            const donationHandler = storageResult.donation_handler;
+        }
+      }).catch(error => {
+        console.error("Error accessing donation data:", error);
+      });
+            
       // Speichere Standardwerte, wenn sie nicht existieren
       let settingsToSave = {};
       if (storageResult.tagOnTraining === undefined) {
@@ -321,8 +350,6 @@ function handleMenuClick(info, messageId) {
     });
 }
 
-
-
 function selectMessage(messageId) {
   return messenger.mailTabs
     .setSelectedMessages([messageId])
@@ -360,7 +387,7 @@ async function onFolderDisplayed(tab, folder) {
       return;
     }
 
-    console.log(`Displayed Folder: ${accountId}:${folder.path}`);
+    updateUsageData();
 
     try {
       const folderKey = `${accountId}:${folder.path}`;
@@ -451,8 +478,6 @@ async function onFolderDisplayed(tab, folder) {
           await messenger.storage.local.set({ folderLastProcessed });
 
           console.log(`Updated last processed date for folder ${folderKey} to ${newestMessageDate}.`);
-        } else {
-          console.log(`No new messages to classify in folder ${folderKey}.`);
         }
       }
     } catch (error) {

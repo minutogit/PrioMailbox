@@ -26,6 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const individualAccountsContainer = document.getElementById("individual-accounts-container");
 
   document.getElementById("settings-title").textContent = trans("setting_title");
+
+  // Referenzen zu den neuen DOM-Elementen
+  const donationEmailInput = document.getElementById("donation-email");
+  const checkDonationButton = document.getElementById("check-donation-button");
+  const donationMessage = document.getElementById("donation-message");
+  const donationError = document.getElementById("donation-error");
+
+
   
   // Securely adding tooltip content without innerHTML
   const autoTagTitle = document.getElementById("auto-tag-title");
@@ -88,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "threshold",
       "tagOnTraining",
       "removeOnClassify",
+      "donation_handler" 
     ]),
   ])
     .then(([tags, accounts, result]) => {
@@ -109,6 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
       // Set the status of checkboxes
       tagOnTrainingCheckbox.checked = window.tagOnTraining;
       removeOnClassifyCheckbox.checked = window.removeOnClassify;
+
+      // Laden der vorhandenen donation_handler Daten
+      window.donationHandler = result.donation_handler;
+      console.log("Donation data loaded:", window.donationHandler);
+
+      // Setze das E-Mail-Feld auf die gespeicherte donation_mail
+      if (window.donationHandler && window.donationHandler.donation_mail) {
+        donationEmailInput.value = window.donationHandler.donation_mail;
+      } else {
+        // Optional: Fallback, falls donation_mail nicht gesetzt ist
+        donationEmailInput.value = '';
+        console.warn("Keine donation_mail in donation_handler gefunden.");
+      }
 
       // Create mapping
       window.allTags.forEach((tag) => {
@@ -149,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((error) => {
       console.error("Error loading settings:", error);
     });
+  
 
   // Functions
   function renderIndividualAccounts() {
@@ -687,6 +710,45 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update selected accounts
     window.selectedAccounts = isChecked ? window.allAccounts.map(account => account.id) : [];
     saveSelectedAccounts();
+  });
+
+  checkDonationButton.addEventListener("click", async () => {
+    let email = donationEmailInput.value.trim().toLowerCase();
+    donationEmailInput.value = email; // Update the input field with normalized email
+  
+    // Entferne Leerzeichen und stelle sicher, dass die E-Mail-Adresse klein geschrieben ist
+    email = email.replace(/\s+/g, '');
+  
+    if (!email) {
+      alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+      return;
+    }
+  
+    // Sende Nachricht zur Spendenprüfung
+    try {
+      const response = await messenger.runtime.sendMessage({
+        action: "checkDonation",
+        email: email
+      });
+  
+      if (response.success) {
+        donationMessage.textContent = "Vielen Dank für Ihre Spende!";
+        donationMessage.style.display = "block";
+        donationError.style.display = "none";
+      } else {
+        donationError.textContent = "Keine Spende gefunden.";
+        donationError.style.display = "block";
+        donationMessage.style.display = "none";
+  
+        // Blende die Fehlermeldung nach 5 Sekunden aus
+        setTimeout(() => {
+          donationError.style.display = "none";
+        }, 5000);
+      }
+    } catch (error) {
+      console.error("Fehler bei der Spendenprüfung:", error);
+      alert("Es ist ein Fehler bei der Überprüfung der Spende aufgetreten.");
+    }
   });
 
 });

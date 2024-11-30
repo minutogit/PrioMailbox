@@ -21,7 +21,7 @@
       color: #34495e;
     }
     
-    #tags-container, #accounts-container, #threshold-container, #backup-restore-section, #tagOnTraining-container {
+    #tags-container, #accounts-container, #threshold-container, #backup-restore-section, #tagOnTraining-container, #donation-section {
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 8px;
@@ -88,7 +88,7 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
 
-    button[type="submit"], #backup-button, #restore-button {
+    button[type="submit"], #backup-button, #restore-button, #check-donation-button {
       background-color: #27ae60;
       color: #fff;
       border: none;
@@ -100,7 +100,7 @@
       margin-right: 10px;
     }
 
-    button[type="submit"]:hover, #backup-button:hover, #restore-button:hover {
+    button[type="submit"]:hover, #backup-button:hover, #restore-button:hover, #check-donation-button:hover {
       background-color: #2ecc71;
     }
 
@@ -144,6 +144,34 @@
     .account-item label {
       font-size: 16px;
       color: #2c3e50;
+    }
+
+    /* Styles for the donation section */
+    #donation-section {
+      text-align: center;
+    }
+
+    #donation-section input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #donation-message {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #27ae60;
+      display: none;
+    }
+
+    #donation-error {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #e74c3c;
+      display: none;
     }
   </style>
 </head>
@@ -193,6 +221,15 @@
 
     <button type="submit" id="save-button"></button>
   </form>
+
+  <!-- Donation Section -->
+  <div id="donation-section">
+    <h2 id="donation-title">Spendenprüfung</h2>
+    <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
+    <button type="button" id="check-donation-button">Spende prüfen</button>
+    <div id="donation-message"></div>
+    <div id="donation-error"></div>
+  </div>
   
   <script src="../libs/jszip.min.js"></script>
   <script src="settings.js"></script>
