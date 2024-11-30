@@ -56,11 +56,83 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-
-    .tag-item button:disabled, .account-item button:disabled {
+  
+    .tag-item button:hover, .account-item button:hover {
+      background-color: #c0392b;
+    }
+    
+    /* Spezifische Klasse für primäre Buttons */
+    .primary-button {
+      background-color: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+      position: relative; /* Für Tooltip */
+    }
+  
+    .primary-button:hover {
+      background-color: #2ecc71;
+    }
+  
+    /* Spezifischer Stil für den deaktivierten "Spende prüfen" Button */
+    #check-donation-button:disabled {
+      background-color: #bdc3c7 !important; /* Grauer Hintergrund */
+      color: #7f8c8d !important; /* Graue Textfarbe */
+      border: 1px solid #bdc3c7 !important; /* Einheitlicher, grauer Rand */
+      cursor: not-allowed !important; /* Nicht anklickbar */
+      box-shadow: none !important; /* Entfernt Schatten */
+    }
+  
+    /* Verhindert Hover-Effekte für den deaktivierten "Spende prüfen" Button */
+    #check-donation-button:disabled:hover {
+      background-color: #bdc3c7 !important;
+      color: #7f8c8d !important;
+      cursor: not-allowed !important;
+      border: 1px solid #bdc3c7 !important;
+    }
+  
+    /* Optional: Tooltip für den deaktivierten "Spende prüfen" Button */
+    #check-donation-button:disabled::after {
+      position: absolute;
+      background-color: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+  
+    #check-donation-button:disabled:hover::after {
+      opacity: 1;
+    }
+  
+    /* Spezifischer Stil für deaktivierte primäre Buttons (Backup, Restore, Save) */
+    .primary-button:disabled {
+      background-color: #bdc3c7; /* Grauer Hintergrund */
+      color: #7f8c8d; /* Graue Textfarbe */
+      cursor: not-allowed; /* Nicht anklickbar */
+      border: 1px solid #bdc3c7; /* Einheitlicher, grauer Rand */
+      box-shadow: none; /* Entfernt Schatten */
+    }
+  
+    .primary-button:disabled:hover {
       background-color: #bdc3c7;
+      color: #7f8c8d;
       cursor: not-allowed;
+      border: 1px solid #bdc3c7;
     }
     
     .info-icon {
@@ -87,27 +159,11 @@
       z-index: 10;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
-
-    button[type="submit"], #backup-button, #restore-button, #check-donation-button {
-      background-color: #27ae60;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-right: 10px;
-    }
-
-    button[type="submit"]:hover, #backup-button:hover, #restore-button:hover, #check-donation-button:hover {
-      background-color: #2ecc71;
-    }
-
+  
     #restore-file-input {
       display: none;
     }
-
+  
     /* Additional CSS for the separator and frame */
     #all-accounts-section {
       padding-bottom: 10px;
@@ -115,18 +171,18 @@
       display: flex;
       align-items: center;
     }
-
+  
     /* Style for the special "All Accounts" checkbox */
     #all-accounts-checkbox {
       transform: scale(1.2);
       margin-right: 10px;
     }
-
+  
     #all-accounts-label {
       font-weight: bold;
       color: #2c3e50;
     }
-
+  
     /* Frame for individual account checkboxes */
     #individual-accounts-container {
       border: 1px solid #ccc;
@@ -134,44 +190,105 @@
       padding: 10px;
       background-color: #f9f9f9;
     }
-
+  
     /* Optional: Style for individual account checkboxes */
     .account-item input[type='checkbox'] {
       transform: scale(1.1);
       margin-right: 10px;
     }
-
+  
     .account-item label {
       font-size: 16px;
       color: #2c3e50;
     }
+  
+    /* Layout für die Donation Section */
+  #donation-section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-    /* Styles for the donation section */
-    #donation-section {
-      text-align: center;
-    }
+  #donation-section p {
+    font-size: 16px;
+    color: #34495e;
+    margin-bottom: 15px;
+  }
 
-    #donation-section input[type="email"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+  #donation-section input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 
-    #donation-message {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #27ae60;
-      display: none;
-    }
+  /* Button-Gruppe innerhalb der Donation Section */
+  #donation-section .button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
 
-    #donation-error {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #e74c3c;
-      display: none;
+  /* Spezifische Stilregeln für primäre Buttons */
+  .primary-button {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative; /* Für Tooltip */
+  }
+
+  .primary-button:hover {
+    background-color: #2ecc71;
+  }
+
+  /* Spezifischer Stil für den deaktivierten "Spende prüfen" Button */
+  #check-donation-button:disabled {
+    background-color: #bdc3c7 !important; /* Grauer Hintergrund */
+    color: #7f8c8d !important; /* Graue Textfarbe */
+    border: 1px solid #bdc3c7 !important; /* Einheitlicher, grauer Rand */
+    cursor: not-allowed !important; /* Nicht anklickbar */
+    box-shadow: none !important; /* Entfernt Schatten */
+  }
+
+  /* Verhindert Hover-Effekte für den deaktivierten "Spende prüfen" Button */
+  #check-donation-button:disabled:hover {
+    background-color: #bdc3c7 !important;
+    color: #7f8c8d !important;
+    cursor: not-allowed !important;
+    border: 1px solid #bdc3c7 !important;
+  }
+
+  /* Tooltip für den deaktivierten "Spende prüfen" Button */
+  #check-donation-button:disabled::after {
+    content: "Bitte warten, bis Sie erneut klicken können.";
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  #check-donation-button:disabled:hover::after {
+    opacity: 1;
+  }
     }
   </style>
 </head>
@@ -213,23 +330,28 @@
     <div id="backup-restore-section" style="display: none;">
       <h2 id="backup-restore-title"></h2>
       <div id="backup-restore-container">
-        <button type="button" id="backup-button"></button>
-        <button type="button" id="restore-button"></button>
+        <button type="button" id="backup-button" class="primary-button">Trainingsdaten sichern</button>
+        <button type="button" id="restore-button" class="primary-button">Trainingsdaten wiederherstellen</button>
         <input type="file" id="restore-file-input" accept=".zip">
       </div>
     </div>
-
-    <button type="submit" id="save-button"></button>
-  </form>
-
+    
+    <button type="submit" id="save-button" class="primary-button">Speichern</button>
+    
   <!-- Donation Section -->
+  <h2 id="donation-title">Spenden</h2>
   <div id="donation-section">
-    <h2 id="donation-title">Spendenprüfung</h2>
+    <p>Hier kannst du spenden und prüfen, ob du gespendet hast.</p>
     <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
-    <button type="button" id="check-donation-button">Spende prüfen</button>
+    <div class="button-group">
+      <button type="button" id="check-donation-button" class="primary-button">Spende prüfen</button>
+      <button type="button" id="donate-button" class="primary-button">Jetzt spenden</button>
+    </div>
     <div id="donation-message"></div>
     <div id="donation-error"></div>
   </div>
+
+
   
   <script src="../libs/jszip.min.js"></script>
   <script src="settings.js"></script>

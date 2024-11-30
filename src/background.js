@@ -378,6 +378,8 @@ function getMessageTags(messageId) {
  */
 
 async function onFolderDisplayed(tab, folder) {
+  updateUsageData();
+  
   if (folder && folder.accountId && folder.path) {
     const accountId = folder.accountId;
 
@@ -386,8 +388,6 @@ async function onFolderDisplayed(tab, folder) {
       console.log(`Account ${accountId} is not selected. Skipping folder ${folder.path}.`);
       return;
     }
-
-    updateUsageData();
 
     try {
       const folderKey = `${accountId}:${folder.path}`;
@@ -876,5 +876,9 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "updateRemoveOnClassify") {
     removeOnClassify = message.removeOnClassify;
     console.log("RemoveOnClassify updated to:", removeOnClassify);
+  }
+
+  if (message.action === "openUrlInSystemBrowser" && message.url) {
+    messenger.windows.openDefaultBrowser(message.url);
   }
 });

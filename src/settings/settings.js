@@ -127,9 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (window.donationHandler && window.donationHandler.donation_mail) {
         donationEmailInput.value = window.donationHandler.donation_mail;
       } else {
-        // Optional: Fallback, falls donation_mail nicht gesetzt ist
         donationEmailInput.value = '';
-        console.warn("Keine donation_mail in donation_handler gefunden.");
       }
 
       // Create mapping
@@ -712,43 +710,71 @@ document.addEventListener("DOMContentLoaded", () => {
     saveSelectedAccounts();
   });
 
+  let isCheckDonationAllowed = true; // Status, ob der Button aktiviert ist
+
   checkDonationButton.addEventListener("click", async () => {
-    let email = donationEmailInput.value.trim().toLowerCase();
-    donationEmailInput.value = email; // Update the input field with normalized email
-  
-    // Entferne Leerzeichen und stelle sicher, dass die E-Mail-Adresse klein geschrieben ist
-    email = email.replace(/\s+/g, '');
-  
-    if (!email) {
-      alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
-      return;
-    }
-  
-    // Sende Nachricht zur Spendenprüfung
-    try {
-      const response = await messenger.runtime.sendMessage({
-        action: "checkDonation",
-        email: email
-      });
-  
-      if (response.success) {
-        donationMessage.textContent = "Vielen Dank für Ihre Spende!";
-        donationMessage.style.display = "block";
-        donationError.style.display = "none";
-      } else {
-        donationError.textContent = "Keine Spende gefunden.";
-        donationError.style.display = "block";
-        donationMessage.style.display = "none";
-  
-        // Blende die Fehlermeldung nach 5 Sekunden aus
-        setTimeout(() => {
-          donationError.style.display = "none";
-        }, 5000);
+      if (!isCheckDonationAllowed) {
+          alert("Bitte warten Sie 10 Sekunden, bevor Sie erneut klicken.");
+          return;
       }
-    } catch (error) {
-      console.error("Fehler bei der Spendenprüfung:", error);
-      alert("Es ist ein Fehler bei der Überprüfung der Spende aufgetreten.");
-    }
+
+      let email = donationEmailInput.value.trim().toLowerCase();
+      donationEmailInput.value = email; // Update das Eingabefeld mit der normalisierten E-Mail
+
+      // Entferne Leerzeichen und stelle sicher, dass die E-Mail-Adresse klein geschrieben ist
+      email = email.replace(/\s+/g, '');
+
+      if (!email) {
+          alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+          return;
+      }
+
+      // Deaktiviere den Button für 10 Sekunden
+      isCheckDonationAllowed = false;
+      checkDonationButton.disabled = true;
+      //checkDonationButton.textContent = "Bitte warten..."; // Ändere den Text des Buttons
+
+      // Sende Nachricht zur Spendenprüfung
+      try {
+          const response = await messenger.runtime.sendMessage({
+              action: "checkDonation",
+              email: email
+          });
+
+          if (response.success) {
+              donationMessage.textContent = "Vielen Dank für Ihre Spende!";
+              donationMessage.style.display = "block";
+              donationError.style.display = "none";
+          } else {
+              donationError.textContent = "Keine Spende gefunden.";
+              donationError.style.display = "block";
+              donationMessage.style.display = "none";
+
+              // Blende die Fehlermeldung nach 5 Sekunden aus
+              setTimeout(() => {
+                  donationError.style.display = "none";
+              }, 5000);
+          }
+      } catch (error) {
+          console.error("Fehler bei der Spendenprüfung:", error);
+      } finally {
+          // Aktiviere den Button nach 10 Sekunden wieder
+          setTimeout(() => {
+              isCheckDonationAllowed = true;
+              checkDonationButton.disabled = false;
+          }, 10000);
+      }
   });
+
+  // Öffnet die Spendenseite im Systembrowser
+  document.getElementById("donate-button").addEventListener("click", () => {
+    const donationUrl = "https://priomailbox.innere-leichtigkeit.de/donation.html"; 
+    messenger.runtime.sendMessage({
+      action: "openUrlInSystemBrowser",
+      url: donationUrl
+    });
+  });
+
+
 
 });
