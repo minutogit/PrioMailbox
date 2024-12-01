@@ -182,76 +182,87 @@ function createContextMenu() {
   messenger.menus
     .removeAll()
     .then(() => {
-      // Hauptmenüeintrag für PrioMailbox
-      messenger.menus.create({
-        id: "priomailbox",
-        title: "PrioMailbox",
-        contexts: ["message_list"],
+      // Aktuelle Tags abrufen und Mappings aktualisieren
+      messenger.messages.listTags().then((tags) => {
+        allTags = tags;
+        tagKeyToNameMap = {};
+        tagNameToKeyMap = {};
+        allTags.forEach((tag) => {
+          tagKeyToNameMap[tag.key] = tag.tag;
+          tagNameToKeyMap[tag.tag] = tag.key;
+        });
+
+        // Hauptmenüeintrag für PrioMailbox
+        messenger.menus.create({
+          id: "priomailbox",
+          title: "PrioMailbox",
+          contexts: ["message_list"],
+        });
+
+        if (selectedTags.length === 0) {
+          // Menüeintrag "Schlagwort auswählen" wenn keine Tags ausgewählt sind
+          messenger.menus.create({
+            id: "select_tag",
+            parentId: "priomailbox",
+            title: trans("selectTagMenu"),
+            contexts: ["message_list"],
+          });
+        } else {
+          // Untermenüeintrag für E-Mail-Infos
+          messenger.menus.create({
+            id: "show_info",
+            parentId: "priomailbox",
+            title: trans("emailInfoMenu"),
+            contexts: ["message_list"],
+          });
+
+          // Untermenüeintrag für Klassifizieren
+          messenger.menus.create({
+            id: "classify",
+            parentId: "priomailbox",
+            title: trans("classifyMenu"),
+            contexts: ["message_list"],
+          });
+
+          // Trenner im Menü
+          messenger.menus.create({
+            id: "separator_top",
+            parentId: "priomailbox",
+            type: "separator",
+            contexts: ["message_list"],
+          });
+
+          // Erstelle Menüeinträge für ausgewählte Tags
+          selectedTags.forEach((tagName) => {
+            const tagKey = tagNameToKeyMap[tagName];
+            if (tagKey) {
+              // Hauptmenüeintrag für das Schlagwort mit Platzhalter
+              messenger.menus.create({
+                id: `tag_${tagKey}`,
+                parentId: "priomailbox",
+                title: trans("trainTagMenu", [tagName]),
+                contexts: ["message_list"],
+              });
+
+              // Untermenüeintrag: Lerne als [Schlagwort]
+              messenger.menus.create({
+                id: `learn_${tagKey}`,
+                parentId: `tag_${tagKey}`,
+                title: trans("learnTagMenu", [tagName]),
+                contexts: ["message_list"],
+              });
+
+              // Untermenüeintrag: Lerne als nicht [Schlagwort]
+              messenger.menus.create({
+                id: `unlearn_${tagKey}`,
+                parentId: `tag_${tagKey}`,
+                title: trans("unlearnTagMenu", [tagName]),
+                contexts: ["message_list"],
+              });
+            }
+          });
+        }
       });
-
-      if (selectedTags.length === 0) {
-        // Menüeintrag "Schlagwort auswählen" wenn keine Tags ausgewählt sind
-        messenger.menus.create({
-          id: "select_tag",
-          parentId: "priomailbox",
-          title: trans("selectTagMenu"),
-          contexts: ["message_list"],
-        });
-      } else {
-        // Untermenüeintrag für E-Mail-Infos
-        messenger.menus.create({
-          id: "show_info",
-          parentId: "priomailbox",
-          title: trans("emailInfoMenu"),
-          contexts: ["message_list"],
-        });
-
-        // Untermenüeintrag für Klassifizieren
-        messenger.menus.create({
-          id: "classify",
-          parentId: "priomailbox",
-          title: trans("classifyMenu"),
-          contexts: ["message_list"],
-        });
-
-        // Trenner im Menü
-        messenger.menus.create({
-          id: "separator_top",
-          parentId: "priomailbox",
-          type: "separator",
-          contexts: ["message_list"],
-        });
-
-        // Erstelle Menüeinträge für ausgewählte Tags
-        selectedTags.forEach((tagName) => {
-          const tagKey = tagNameToKeyMap[tagName];
-          if (tagKey) {
-            // Hauptmenüeintrag für das Schlagwort mit Platzhalter
-            messenger.menus.create({
-              id: `tag_${tagKey}`,
-              parentId: "priomailbox",
-              title: trans("trainTagMenu", [tagName]),
-              contexts: ["message_list"],
-            });
-
-            // Untermenüeintrag: Lerne als [Schlagwort]
-            messenger.menus.create({
-              id: `learn_${tagKey}`,
-              parentId: `tag_${tagKey}`,
-              title: trans("learnTagMenu", [tagName]),
-              contexts: ["message_list"],
-            });
-
-            // Untermenüeintrag: Lerne als nicht [Schlagwort]
-            messenger.menus.create({
-              id: `unlearn_${tagKey}`,
-              parentId: `tag_${tagKey}`,
-              title: trans("unlearnTagMenu", [tagName]),
-              contexts: ["message_list"],
-            });
-          }
-        });
-      }
     })
     .catch((error) => {
       console.error("Error creating context menu:", error);
@@ -269,7 +280,17 @@ messenger.storage.onChanged.addListener((changes, area) => {
       selectedTags = changes.selectedTags.newValue.map(
         (tagKey) => tagKeyToNameMap[tagKey] || tagKey
       );
-      createContextMenu();
+      // Aktualisiere die Tags und Mappings
+      messenger.messages.listTags().then((tags) => {
+        allTags = tags;
+        tagKeyToNameMap = {};
+        tagNameToKeyMap = {};
+        allTags.forEach((tag) => {
+          tagKeyToNameMap[tag.key] = tag.tag;
+          tagNameToKeyMap[tag.tag] = tag.key;
+        });
+        createContextMenu();
+      });
     }
     if (changes.selectedAccounts) {
       selectedAccounts = changes.selectedAccounts.newValue;
@@ -317,33 +338,44 @@ function handleMenuClick(info, messageId) {
     .then((result) => {
       bayesData = result.bayesData || {}; // Stelle sicher, dass die neuesten Daten geladen sind
 
-      const messages = info.selectedMessages.messages;
+      // Aktualisiere die Tags und Mappings
+      messenger.messages.listTags().then((tags) => {
+        allTags = tags;
+        tagKeyToNameMap = {};
+        tagNameToKeyMap = {};
+        allTags.forEach((tag) => {
+          tagKeyToNameMap[tag.key] = tag.tag;
+          tagNameToKeyMap[tag.tag] = tag.key;
+        });
 
-      if (info.menuItemId.startsWith("learn_") || info.menuItemId.startsWith("unlearn_")) {
-        const isPositive = info.menuItemId.startsWith("learn_");
-        const tagKey = info.menuItemId.split("_")[1]; // Extrahiere den tagKey
-        const tagName = tagKeyToNameMap[tagKey]; // Hole den korrekten tagName aus der Map
+        const messages = info.selectedMessages.messages;
 
-        if (!tagName) {
-          console.warn(`No valid tag name for key "${tagKey}" found.`);
-          return;
-        }
+        if (info.menuItemId.startsWith("learn_") || info.menuItemId.startsWith("unlearn_")) {
+          const isPositive = info.menuItemId.startsWith("learn_");
+          const tagKey = info.menuItemId.split("_")[1]; // Extrahiere den tagKey
+          const tagName = tagKeyToNameMap[tagKey]; // Hole den korrekten tagName aus der Map
 
-        messages.forEach((message) => {
-          learnTagFromMail(message.id, tagName, isPositive);
-          const popupMessage = trans(isPositive ? 'trainingCompleteMessage' : 'untrainingCompleteMessage', [tagName]);
+          if (!tagName) {
+            console.warn(`No valid tag name for key "${tagKey}" found.`);
+            return;
+          }
+
+          messages.forEach((message) => {
+            learnTagFromMail(message.id, tagName, isPositive);
+            const popupMessage = trans(isPositive ? 'trainingCompleteMessage' : 'untrainingCompleteMessage', [tagName]);
+            openPopupWithMessage(popupMessage);
+          });
+        } else if (info.menuItemId === "classify") {
+          messages.forEach((message) => {
+            classifyEmail(message.id);
+          });
+          const popupMessage = trans("classificationCompleteMessage");
           openPopupWithMessage(popupMessage);
-        });
-      } else if (info.menuItemId === "classify") {
-        messages.forEach((message) => {
-          classifyEmail(message.id);
-        });
-        const popupMessage = trans("classificationCompleteMessage");
-        openPopupWithMessage(popupMessage);
-      } else if (info.menuItemId === "show_info") {
-        const messageId = messages[0].id;
-        showEMailInfo(messageId);
-      }
+        } else if (info.menuItemId === "show_info") {
+          const messageId = messages[0].id;
+          showEMailInfo(messageId);
+        }
+      });
     })
     .catch((error) => {
       console.error("Error loading bayesData:", error);
@@ -845,7 +877,17 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
         bayesData = result.bayesData || {};
         console.log("Bayes data successfully reloaded:", bayesData);
 
-        createContextMenu();
+        // Aktualisiere die Tags und Mappings
+        messenger.messages.listTags().then((tags) => {
+          allTags = tags;
+          tagKeyToNameMap = {};
+          tagNameToKeyMap = {};
+          allTags.forEach((tag) => {
+            tagKeyToNameMap[tag.key] = tag.tag;
+            tagNameToKeyMap[tag.tag] = tag.key;
+          });
+          createContextMenu();
+        });
       })
       .catch((error) => {
         console.error("Error reloading bayesData:", error);
@@ -861,7 +903,18 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
           (tagKey) => tagKeyToNameMap[tagKey] || tagKey
         );
         selectedAccounts = result.selectedAccounts || [];
-        createContextMenu();
+
+        // Aktualisiere die Tags und Mappings
+        messenger.messages.listTags().then((tags) => {
+          allTags = tags;
+          tagKeyToNameMap = {};
+          tagNameToKeyMap = {};
+          allTags.forEach((tag) => {
+            tagKeyToNameMap[tag.key] = tag.tag;
+            tagNameToKeyMap[tag.tag] = tag.key;
+          });
+          createContextMenu();
+        });
       })
       .catch((error) => {
         console.error("Error updating context menu:", error);
