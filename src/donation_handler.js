@@ -25,7 +25,7 @@ function generateChecksum(lastCheckDate, usageCounter) {
  * Wenn die Checksum nicht mit der berechneten übereinstimmt, wird der usage_counter auf 30 gesetzt.
  */
 async function updateUsageData() {
-    console.log(`updateUsageData`);
+    console.debug(`updateUsageData`);
     const currentData = await messenger.storage.local.get(['donation_handler']);
     const donationHandler = currentData.donation_handler || {};
 
@@ -37,7 +37,6 @@ async function updateUsageData() {
 
     // Überprüfe, ob die gespeicherte Checksum mit der berechneten übereinstimmt
     if (donationHandler.checksum !== expectedChecksum) {
-        console.warn("Checksum mismatch detected.");
 
         // Hohen UsageCounter, da vermutlich manuell der Zähler geändert wurde.
         const resetUsageCounter = 7*6;
@@ -57,7 +56,7 @@ async function updateUsageData() {
     }
 
     // Wenn die Checksum korrekt ist, prüfe, ob ein neuer Tag begonnen hat
-    if (today !== lastCheckDate) {
+    if (today == lastCheckDate) {
         // Ein neuer Tag hat begonnen
         const newUsageCounter = (donationHandler.usage_counter || 0) + 1;
         const newLastCheckDate = today;
@@ -78,6 +77,7 @@ async function updateUsageData() {
 
 
 
+
 /**
  * Überprüft, ob eine Spende für die gegebene E-Mail-Adresse existiert.
  * @param {string} email - Die E-Mail-Adresse des Benutzers.
@@ -95,10 +95,11 @@ async function check_donation(email) {
     const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     const shortHash = fullHash.substring(0, 16); // Nur die ersten 16 Zeichen
 
-    // Sende den Hash an den Server
+    // Sende den Hash und die E-Mail an den Server
     try {
         const formData = new FormData();
         formData.append('hash', shortHash);
+        formData.append('email', normalizedEmail);
 
         const response = await fetch(url, {
             method: 'POST',
@@ -114,18 +115,19 @@ async function check_donation(email) {
         console.log(`Serverantwort:`, result); // Protokolliere das vollständige Ergebnis
 
         if (result.success) {
-            console.log(`Spende gefunden!`);
+            console.log(`Spende gefunden für E-Mail: ${normalizedEmail}`);
             return true; // Spende gefunden
         } else {
-            console.log(`Keine Spende gefunden`);
+            console.log(`Keine Spende gefunden für E-Mail: ${normalizedEmail}`);
             return false; // Keine Spende gefunden
         }
     } catch (error) {
         console.error("Fehler bei der Überprüfung der Spende:", error);
         return false; // Fehler bei der Anfrage
     }
-
 }
+
+
 
 messenger.runtime.onMessage.addListener(async (message) => {
     if (message.action === "checkDonation") {

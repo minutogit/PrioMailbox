@@ -12,8 +12,8 @@
       padding: 10px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;    /* Vertikales Scrollen aktivieren */
-      width: 800px; /* Feste Breite für das Fenster */
+      overflow-y: auto;
+      width: 650px;
     }
 
     h2 {
@@ -27,7 +27,6 @@
       border-collapse: collapse;
       margin-top: 10px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      table-layout: fixed; /* Feste Tabellenlayout */
     }
 
     th, td {
@@ -95,10 +94,44 @@
       display: block;
       margin: 10px auto;
     }
+
+    /* Stile für das Spenden-Nachricht-Feld */
+    #donation-message {
+      margin: 20px;
+      text-align: center;
+    }
+
+    #donation-text {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    #wait-button {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+
+    #wait-button[disabled] {
+      cursor: not-allowed;
+    }
+
+    #wait-button:not([disabled]) {
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h2 id="email-info-title"></h2>
+
+  <!-- Spenden-Nachricht und Button -->
+  <div id="donation-message" style="display: none;">
+    <p id="donation-text">
+      Danke für die Nutzung. Die Wartung des Add-ons kostet viel Zeit. Bitte unterstütze es mit einer Spende. (Nach der Spende verschwindet dieser Hinweis) Auf der Seite für die PrioMailbox-Einstellungen findest du die Infos zum Spenden.
+    </p>
+    <button id="wait-button" disabled>OK</button>
+  </div>
+
+  <!-- Hauptinhalt -->
   <table>
     <thead>
       <tr>
@@ -118,6 +151,5 @@
   <div id="token-tables-container"></div>
 
   <script src="email_info.js"></script>
-  
 </body>
 </html>
