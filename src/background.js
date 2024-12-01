@@ -155,7 +155,39 @@ function initialize() {
 
       createContextMenu();
       messenger.messages.onNewMailReceived.addListener(onNewMailReceived);
-      messenger.mailTabs.onDisplayedFolderChanged.addListener(onFolderDisplayed);
+
+    // Listener to handle new mails (workaround since onNewMailReceived is unreliable)
+
+    // Check new mails when the displayed folder changes
+    messenger.mailTabs.onDisplayedFolderChanged.addListener(onFolderDisplayed);
+
+    // Check new mails when the Thunderbird window gains focus
+    messenger.windows.onFocusChanged.addListener((windowId) => {
+      if (windowId === messenger.windows.WINDOW_ID_NONE) {
+        return; // No active window
+      }
+      messenger.mailTabs.query({ active: true }).then((tabs) => {
+        if (tabs.length > 0 && tabs[0].displayedFolder) {
+          onFolderDisplayed(tabs[0], tabs[0].displayedFolder);
+        }
+      }).catch(() => console.error("Error in onFocusChanged listener."));
+    });
+
+    // Check new mails when switching to a tab with a folder
+    messenger.tabs.onActivated.addListener(async (activeInfo) => {
+      try {
+        const tab = await messenger.tabs.get(activeInfo.tabId);
+        if (tab && tab.mailTab) {
+          const mailTab = await messenger.mailTabs.get(tab.id);
+          if (mailTab.displayedFolder) {
+            onFolderDisplayed(mailTab, mailTab.displayedFolder);
+          }
+        }
+      } catch (error) {
+        console.error("Error in onActivated listener:", error);
+      }
+    });
+
     })
     .catch((error) => {
       console.error("Error during initialization:", error);
