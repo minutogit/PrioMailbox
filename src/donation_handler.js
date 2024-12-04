@@ -1,4 +1,3 @@
-
 // donation_handler.js
 
 /**
@@ -18,6 +17,19 @@ function generateChecksum(lastCheckDate, usageCounter) {
         const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         return fullHash.substring(0, 8);
     }).catch(() => '00000000'); // Fallback bei Fehler
+}
+
+async function verifyDonationCode(cryptedemail, code) {
+    // Berechne SHA-256 Hash der cryptedemail
+    const encoder = new TextEncoder();
+    const data = encoder.encode(cryptedemail);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const computedCode = fullHash.substring(0, 16);
+
+    // Vergleiche den berechneten Code mit dem eingegebenen Code
+    return computedCode === code;
 }
 
 /**
@@ -127,19 +139,56 @@ async function check_donation(email) {
     }
 }
 
+// Listener für Nachrichten
+messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "requestDonationCode") {
+        const { email } = message;
+        if (!email) {
+            sendResponse({ success: false, message: "E-Mail-Adresse fehlt." });
+            return;
+        }
 
-
-messenger.runtime.onMessage.addListener(async (message) => {
-    if (message.action === "checkDonation") {
-      const { email } = message;
-      if (!email) {
-        return { success: false, message: "E-Mail-Adresse fehlt." };
-      }
-  
-      // Rufe die Funktion check_donation auf
-      const hasDonated = await check_donation(email);
-  
-      return { success: hasDonated };
+        // Rufe die Funktion check_donation auf
+        check_donation(email)
+            .then((hasDonated) => {
+                if (hasDonated) {
+                    // Wenn eine Spende gefunden wurde, sende die Anfrage zur PHP-Datei
+                    // Dies könnte eine zusätzliche Aktion erfordern, z.B. das Senden einer E-Mail
+                    // Abhängig von deiner Backend-Implementierung
+                    sendResponse({ success: true, message: "Spenden-Code wurde per E-Mail gesendet." });
+                } else {
+                    sendResponse({ success: false, message: "Keine Spende gefunden." });
+                }
+            })
+            .catch((error) => {
+                console.error("Error checking donation:", error);
+                sendResponse({ success: false, message: "Fehler bei der Spendenprüfung." });
+            });
+        return true; // Ermöglicht eine asynchrone Antwort
     }
-  });
-  
+
+    if (message.action === "verifyDonationCode") {
+        const { cryptedemail, code } = message; // Destrukturiere zuerst die Nachricht
+        console.log("message.action verifyDonationCode", message);
+
+        if (!cryptedemail || !code) {
+            sendResponse(false);
+            console.debug("!cryptedemail || !code");
+            return;
+        }
+
+        verifyDonationCode(cryptedemail, code)
+            .then((isValid) => {
+                sendResponse(isValid);
+            })
+            .catch((error) => {
+                console.error("Error verifying donation code:", error);
+                sendResponse(false);
+            });
+        return true; // Ermöglicht eine asynchrone Antwort
+    }
+
+    // Weitere Nachrichten können hier verarbeitet werden
+
+    return false; // Keine Aktion für andere Nachrichten
+});

@@ -338,20 +338,20 @@
     
     <button type="submit" id="save-button" class="primary-button">Speichern</button>
     
-  <!-- Donation Section -->
-  <h2 id="donation-title">Spenden</h2>
-  <div id="donation-section">
-    <p>Hier kannst du spenden und prüfen, ob du gespendet hast.</p>
-    <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
-    <div class="button-group">
-      <button type="button" id="check-donation-button" class="primary-button">Spende prüfen</button>
-      <button type="button" id="donate-button" class="primary-button">Jetzt spenden</button>
-    </div>
-    <div id="donation-message"></div>
-    <div id="donation-error"></div>
+<!-- Donation Section -->
+<h2 id="donation-title">Spenden</h2>
+<div id="donation-section">
+  <p>Hier kannst du spenden und deinen Spenden-Code prüfen.</p>
+  <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
+  <div class="button-group">
+    <button type="button" id="request-donation-code-button" class="primary-button">Spenden-Code anfordern</button>
+    <button type="button" id="donate-button" class="primary-button">Jetzt spenden</button>
   </div>
-
-
+  <input type="text" id="donation-code-input" placeholder="Spenden-Code eingeben" style="margin-top: 15px; width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
+  <button type="button" id="verify-donation-code-button" class="primary-button" style="margin-top: 10px;">Spenden-Code prüfen</button>
+  <div id="donation-message"></div>
+  <div id="donation-error"></div>
+</div>
   
   <script src="../libs/jszip.min.js"></script>
   <script src="settings.js"></script>
