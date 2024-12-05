@@ -19,16 +19,28 @@ function generateChecksum(lastCheckDate, usageCounter) {
     }).catch(() => '00000000'); // Fallback bei Fehler
 }
 
-async function verifyDonationCode(cryptedemail, code) {
-    // Berechne SHA-256 Hash der cryptedemail
+/**
+ * Berechnet den SHA-256 Hash eines Strings und gibt die ersten 16 Zeichen zurück.
+ * @param {string} input - Der Eingabestring.
+ * @returns {Promise<string>} - Die ersten 16 Zeichen des SHA-256 Hashes.
+ */
+async function short_sha256(input) {
     const encoder = new TextEncoder();
-    const data = encoder.encode(cryptedemail);
+    const data = encoder.encode(input);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    const computedCode = fullHash.substring(0, 16);
+    return fullHash.substring(0, 16);
+}
 
-    // Vergleiche den berechneten Code mit dem eingegebenen Code
+/**
+ * Verifiziert, ob der berechnete Hash mit dem angegebenen Code übereinstimmt.
+ * @param {string} cryptedemail - Der verschlüsselte E-Mail-String.
+ * @param {string} code - Der zu überprüfende Code.
+ * @returns {Promise<boolean>} - True, wenn der Code übereinstimmt, sonst false.
+ */
+async function verifyDonationCode(cryptedemail, code) {
+    const computedCode = await short_sha256(cryptedemail);
     return computedCode === code;
 }
 
@@ -41,6 +53,16 @@ async function updateUsageData() {
     const currentData = await messenger.storage.local.get(['donation_handler']);
     const donationHandler = currentData.donation_handler || {};
 
+    // Überprüfe, ob ein donation_key vorhanden ist und gültig ist
+    if (donationHandler.donation_key && donationHandler.donation_mail) {
+        const shortHash = await short_sha256(donationHandler.donation_mail);
+        const isValid = await verifyDonationCode(shortHash, donationHandler.donation_key);
+        if (isValid) {
+            console.debug("Gültiger donation_key. updateUsageData.");
+            return;
+        }
+    }
+
     const today = new Date().toISOString().split('T')[0]; // Heutiges Datum im Format YYYY-MM-DD
     const lastCheckDate = donationHandler.last_check_date ? donationHandler.last_check_date.split('T')[0] : '';
 
@@ -49,9 +71,7 @@ async function updateUsageData() {
 
     // Überprüfe, ob die gespeicherte Checksum mit der berechneten übereinstimmt
     if (donationHandler.checksum !== expectedChecksum) {
-
-        // Hohen UsageCounter, da vermutlich manuell der Zähler geändert wurde.
-        const resetUsageCounter = 7*6;
+        const resetUsageCounter = 7 * 6; // Hohen UsageCounter setzen, da Zähler geändert wurde
         const newChecksum = await generateChecksum(resetUsageCounter, lastCheckDate);
 
         // Aktualisiere die lokalen Daten mit dem neuen usage_counter und checksum
@@ -60,7 +80,7 @@ async function updateUsageData() {
                 ...donationHandler,
                 last_check_date: today,
                 usage_counter: resetUsageCounter,
-                checksum: newChecksum // Neue Checksum speichern
+                checksum: newChecksum
             }
         });
 
@@ -68,8 +88,7 @@ async function updateUsageData() {
     }
 
     // Wenn die Checksum korrekt ist, prüfe, ob ein neuer Tag begonnen hat
-    if (today == lastCheckDate) {
-        // Ein neuer Tag hat begonnen
+    if (today != lastCheckDate) {
         const newUsageCounter = (donationHandler.usage_counter || 0) + 1;
         const newLastCheckDate = today;
 
@@ -90,22 +109,17 @@ async function updateUsageData() {
 
 
 
+
 /**
- * Überprüft, ob eine Spende für die gegebene E-Mail-Adresse existiert.
+ * Überprüft, ob eine Spende für die gegebene E-Mail-Adresse bekannt ist und sendet einen Donation Code.
  * @param {string} email - Die E-Mail-Adresse des Benutzers.
  * @returns {Promise<boolean>} - Ein Promise, das `true` zurückgibt, wenn eine Spende gefunden wurde, sonst `false`.
  */
-async function check_donation(email) {
-    const url = 'https://priomailbox.innere-leichtigkeit.de/check_donation.php'; // URL zur PHP-Datei
+async function request_Donation_Code(email) {
+    const url = 'https://priomailbox.innere-leichtigkeit.de/request_Donation_Code.php'; // URL zur PHP-Datei
     const normalizedEmail = email.trim().toLowerCase(); // E-Mail normalisieren (klein schreiben, Leerzeichen entfernen)
 
-    // SHA-256 Hash generieren und die ersten 16 Zeichen extrahieren
-    const encoder = new TextEncoder();
-    const data = encoder.encode(normalizedEmail);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    const shortHash = fullHash.substring(0, 16); // Nur die ersten 16 Zeichen
+    const shortHash = await short_sha256(normalizedEmail);
 
     // Sende den Hash und die E-Mail an den Server
     try {
@@ -139,6 +153,7 @@ async function check_donation(email) {
     }
 }
 
+
 // Listener für Nachrichten
 messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "requestDonationCode") {
@@ -149,7 +164,7 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
 
         // Rufe die Funktion check_donation auf
-        check_donation(email)
+        request_Donation_Code(email)
             .then((hasDonated) => {
                 if (hasDonated) {
                     // Wenn eine Spende gefunden wurde, sende die Anfrage zur PHP-Datei

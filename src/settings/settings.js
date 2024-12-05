@@ -465,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // **Neuer Code zur automatischen Überprüfung des Spenden-Codes**
   donationCodeInput.addEventListener("input", async () => {
-    const code = donationCodeInput.value.trim();
+    const code = donationCodeInput.value.replace(/\s+/g, '').trim();
     if (code.length === 16) {
         const email = donationEmailInput.value.trim().toLowerCase();
         if (!email) {
