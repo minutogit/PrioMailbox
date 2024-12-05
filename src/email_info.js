@@ -23,6 +23,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   const donationData = donation_handler || { usage_counter: 0, donation_key: '' };
   const waitTime = getWaitTimeInSeconds(donationData);
 
+    // Spenden-Nachricht und Button setzen
+    const donationMessageDiv = document.getElementById('donation-message');
+    const donationText = document.getElementById('donation-text');
+    const waitButton = document.getElementById('wait-button');
+  
+    donationText.innerHTML = trans("emailinfo_donation_message");
+    waitButton.textContent = trans("emailinfo_donation_button_ok");
+  
+    // Event Listener für den Spenden-Link hinzufügen
+    const donationLink = document.getElementById('donation-link');
+    donationLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      messenger.runtime.openOptionsPage(); // Öffnet die Einstellungen
+    });
+
   if (waitTime === 0) {
     // Informationen sofort anzeigen
     displayEmailInfo();

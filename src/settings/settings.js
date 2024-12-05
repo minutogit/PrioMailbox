@@ -71,6 +71,25 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("restore-button").textContent = trans("setting_restoreButton");
   document.getElementById("save-button").textContent = trans("setting_saveButton");
 
+   // Elemente für die Donation Section
+   const donationTitle = document.getElementById("donation-title");
+   const donationText = document.getElementById("donation-text");
+   const donateButton = document.getElementById("donate-button");
+   const donationRequestCodeTitle = document.getElementById("donation-request-code-title");
+   const donationRequestCodeDescription = document.getElementById("donation-request-code-description");
+   
+ 
+   // Setze die übersetzten Texte für die Donation Section
+   donationTitle.innerHTML = trans("settings_donation_title");
+   donationText.innerHTML = trans("settings_donation_message");
+   donateButton.innerHTML = trans("settings_donate_button_text");
+   donationRequestCodeTitle.textContent = trans("settings_donation_request_code_title");
+   donationRequestCodeDescription.textContent = trans("settings_donation_request_code_description");
+   donationEmailInput.placeholder = trans("settings_donation_email_placeholder");
+   donationCodeInput.placeholder = trans("settings_donation_code_placeholder");
+   requestDonationCodeButton.textContent = trans("settings_donation_request_code_button");
+ 
+
   // Initialize variables and bind to window
   window.allTags = [];
   window.selectedTags = [];
@@ -469,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (code.length === 16) {
         const email = donationEmailInput.value.trim().toLowerCase();
         if (!email) {
-            donationError.textContent = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+            donationError.textContent = trans("settings_donation_invalid_email");
             donationError.style.display = "block";
             donationMessage.style.display = "none";
             return;
@@ -482,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         const cryptedemail = fullHash.substring(0, 16);
-        console.debug("cryptedemail :", cryptedemail, " code:", code);
+        console.debug("Computed cryptedemail:", cryptedemail, " Code:", code);
 
         try {
             const isValid = await messenger.runtime.sendMessage({
@@ -492,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (isValid) {
-                donationMessage.textContent = "Spenden-Code erfolgreich überprüft. Vielen Dank für Ihre Unterstützung!";
+                donationMessage.textContent = trans("settings_donation_code_verified");
                 donationMessage.style.display = "block";
                 donationError.style.display = "none";
 
@@ -506,18 +525,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     messenger.storage.local.set({ donation_handler: donationData })
                         .then(() => {
-                            console.log("Spenden-Code erfolgreich gespeichert.");
+                            console.log("Donation code successfully saved.");
                             // **Deaktiviere den "Spenden-Code anfordern" Button und die Eingabefelder**
                             requestDonationCodeButton.disabled = true;
                             donationEmailInput.disabled = true;
                             donationCodeInput.disabled = true;
                         })
                         .catch((error) => {
-                            console.error("Fehler beim Speichern des Spenden-Codes:", error);
+                            console.error("Error saving donation code:", error);
                         });
                 });
             } else {
-                donationError.textContent = "Der eingegebene Spenden-Code ist ungültig.";
+                donationError.textContent = trans("settings_donation_invalid_code");
                 donationError.style.display = "block";
                 donationMessage.style.display = "none";
 
@@ -527,8 +546,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 5000);
             }
         } catch (error) {
-            console.error("Fehler bei der Überprüfung des Spenden-Codes:", error);
-            donationError.textContent = "Ein unerwarteter Fehler ist aufgetreten.";
+            console.error("Error verifying donation code:", error);
+            donationError.textContent = trans("settings_donation_error");
             donationError.style.display = "block";
             donationMessage.style.display = "none";
         }
@@ -853,11 +872,11 @@ document.addEventListener("DOMContentLoaded", () => {
           });
 
           if (response.success) {
-              donationMessage.textContent = "Ein Spenden-Code wurde an Ihre E-Mail-Adresse gesendet.";
+              donationMessage.textContent = trans("settings_donation_code_sent");
               donationMessage.style.display = "block";
               donationError.style.display = "none";
           } else {
-              donationError.textContent = response.message || "Keine Spende gefunden.";
+              donationError.textContent = response.message || trans("settings_donation_no_donation");
               donationError.style.display = "block";
               donationMessage.style.display = "none";
 
@@ -868,7 +887,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       } catch (error) {
           console.error("Fehler beim Anfordern des Spenden-Codes:", error);
-          donationError.textContent = "Ein unerwarteter Fehler ist aufgetreten.";
+          donationError.textContent = trans("settings_donation_error");
           donationError.style.display = "block";
           donationMessage.style.display = "none";
       } finally {

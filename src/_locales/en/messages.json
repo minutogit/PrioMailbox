@@ -116,42 +116,6 @@
   "settings_saveError": {
     "message": "Error saving settings. Please try again."
   },
-  "settingsx_defaultOption": {
-    "message": "--- Please Select ---"
-  },
-  "settingsx_deleteTrainingData": {
-    "message": "Delete Training Data"
-  },
-  "settingsx_stopDeletion": {
-    "message": "Stop Deletion ($1s)"
-  },
-  "settingsx_backupError": {
-    "message": "Error backing up training data. Please try again."
-  },
-  "settingsx_restoreSuccess": {
-    "message": "Training data successfully restored."
-  },
-  "settingsx_restoreError": {
-    "message": "Error restoring training data. Please try again."
-  },
-  "settingsx_invalidDataError": {
-    "message": "Invalid data structure."
-  },
-  "settingsx_invalidZipError": {
-    "message": "Error processing ZIP file. Please ensure it is a valid ZIP file."
-  },
-  "settingsx_noTrainingData": {
-    "message": "No training data available for $1."
-  },
-  "settingsx_loadTrainingDataError": {
-    "message": "Error loading training data. Please try again."
-  },
-  "settingsx_trainingDataDeleted": {
-    "message": "Training data for $1 deleted."
-  },
-  "settingsx_deleteTrainingDataError": {
-    "message": "Error deleting training data for $1."
-  },
   "emailinfo_title": {
     "message": "PrioMailbox - Email Info"
   },
@@ -181,5 +145,56 @@
   },
   "emailinfo_negative": {
     "message": "Negative"
+  },
+  "emailinfo_donation_message": {
+    "message": "💖 Thank you for using PrioMailbox!<br>Maintaining this add-on requires a lot of time and effort.<br>Support PrioMailbox with a donation 💰<br>After donating and entering your code, this message will disappear.<br>👉 <a href=\"#\" id=\"donation-link\" style=\"color: #27ae60; text-decoration: none;\">Settings & Donations</a>"
+  },
+  "emailinfo_donation_button_ok": {
+    "message": "OK"
+  },
+  "settings_donation_title": {
+    "message": "Support PrioMailbox 💖"
+  },
+  "settings_donation_message": {
+    "message": "💖 Thank you for using PrioMailbox! Maintaining this add-on requires a lot of time and effort. Support PrioMailbox with a donation 💰</a>"
+  },
+  "settings_donate_button_text": {
+    "message": "Donate Now 💰"
+  },
+  "settings_donation_request_code_title": {
+    "message": "Request Donation Code 📧"
+  },
+  "settings_donation_request_code_description": {
+    "message": "If you have already donated, you can request your donation code via email here. Then enter your email address and donation code. As a thank you, no further donation reminders will appear in the program."
+  },
+  "settings_donation_email_placeholder": {
+    "message": "Your Email Address"
+  },
+  "settings_donation_code_placeholder": {
+    "message": "Enter Donation Code"
+  },
+  "settings_donation_request_code_button": {
+    "message": "Request Donation Code ✉️"
+  },
+  "settings_donation_code_sent": {
+    "message": "A donation code has been sent to your email address."
+  },
+  "settings_donation_no_donation": {
+    "message": "No donation found."
+  },
+  "settings_donation_invalid_code": {
+    "message": "The entered donation code is invalid."
+  },
+  "settings_donation_error": {
+    "message": "An unexpected error occurred."
+  },
+  "settings_donation_invalid_email": {
+    "message": "Please enter a valid email address."
+  },
+  "settings_donation_wait": {
+    "message": "Please wait 10 seconds before clicking again."
+  },
+  "settings_donation_code_verified": {
+    "message": "Donation code successfully verified. Thank you for your support!"
   }
 }

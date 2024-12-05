@@ -116,42 +116,6 @@
   "settings_saveError": {
     "message": "Fehler beim Speichern der Einstellungen. Bitte versuchen Sie es erneut."
   },
-  "settingsx_defaultOption": {
-    "message": "--- Bitte wählen ---"
-  },
-  "settingsx_deleteTrainingData": {
-    "message": "Trainingsdaten löschen"
-  },
-  "settingsx_stopDeletion": {
-    "message": "Löschen stoppen ($1s)"
-  },
-  "settingsx_backupError": {
-    "message": "Fehler beim Sichern der Trainingsdaten. Bitte versuchen Sie es erneut."
-  },
-  "settingsx_restoreSuccess": {
-    "message": "Trainingsdaten wurden erfolgreich wiederhergestellt."
-  },
-  "settingsx_restoreError": {
-    "message": "Fehler beim Wiederherstellen der Trainingsdaten. Bitte versuchen Sie es erneut."
-  },
-  "settingsx_invalidDataError": {
-    "message": "Ungültige Datenstruktur."
-  },
-  "settingsx_invalidZipError": {
-    "message": "Fehler beim Verarbeiten der ZIP-Datei. Bitte stellen Sie sicher, dass es sich um eine gültige ZIP-Datei handelt."
-  },
-  "settingsx_noTrainingData": {
-    "message": "Keine Trainingsdaten für $1 vorhanden."
-  },
-  "settingsx_loadTrainingDataError": {
-    "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut."
-  },
-  "settingsx_trainingDataDeleted": {
-    "message": "Trainingsdaten für $1 wurden gelöscht."
-  },
-  "settingsx_deleteTrainingDataError": {
-    "message": "Fehler beim Löschen der Trainingsdaten für $1."
-  },
   "emailinfo_title": {
     "message": "PrioMailbox - E-Mail Info"
   },
@@ -181,5 +145,56 @@
   },
   "emailinfo_negative": {
     "message": "Negativ"
+  },
+  "emailinfo_donation_message": {
+    "message": "💖 Danke, dass du PrioMailbox nutzt!<br>Die Wartung dieses Add-ons erfordert viel Zeit und Mühe.<br>Unterstütze PrioMailbox mit einer Spende 💰<br>Nach der Spende und Eingabe deines Codes verschwindet dieser Hinweis.<br>👉 <a href=\"#\" id=\"donation-link\" style=\"color: #27ae60; text-decoration: none;\">Einstellungen & Spenden</a>"
+  },
+  "emailinfo_donation_button_ok": {
+    "message": "OK"
+  },
+  "settings_donation_title": {
+    "message": "Unterstütze PrioMailbox 💖"
+  },
+  "settings_donation_message": {
+    "message": "💖 Danke, dass du PrioMailbox nutzt! Die Wartung dieses Add-ons erfordert viel Zeit und Mühe. Unterstütze PrioMailbox mit einer Spende 💰</a>"
+  },
+  "settings_donate_button_text": {
+    "message": "Jetzt spenden 💰"
+  },
+  "settings_donation_request_code_title": {
+    "message": "Spenden-Code anfordern 📧"
+  },
+  "settings_donation_request_code_description": {
+    "message": "Wenn du bereits gespendet hast, kannst du hier deinen Spenden-Code per E-Mail anfordern. Trage dann deine E-Mail-Adresse und den Spenden-Code ein. Als Dankeschön erhältst du keine weiteren Hinweise im Programm zu spenden."
+  },
+  "settings_donation_email_placeholder": {
+    "message": "Ihre E-Mail-Adresse"
+  },
+  "settings_donation_code_placeholder": {
+    "message": "Spenden-Code eingeben"
+  },
+  "settings_donation_request_code_button": {
+    "message": "Spenden-Code anfordern ✉️"
+  },
+  "settings_donation_code_sent": {
+    "message": "Ein Spenden-Code wurde an Ihre E-Mail-Adresse gesendet."
+  },
+  "settings_donation_no_donation": {
+    "message": "Keine Spende gefunden."
+  },
+  "settings_donation_invalid_code": {
+    "message": "Der eingegebene Spenden-Code ist ungültig."
+  },
+  "settings_donation_error": {
+    "message": "Ein unerwarteter Fehler ist aufgetreten."
+  },
+  "settings_donation_invalid_email": {
+    "message": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+  },
+  "settings_donation_wait": {
+    "message": "Bitte warten Sie 10 Sekunden, bevor Sie erneut klicken."
+  },
+  "settings_donation_code_verified": {
+    "message": "Spenden-Code erfolgreich überprüft. Vielen Dank für Ihre Unterstützung!"
   }
 }

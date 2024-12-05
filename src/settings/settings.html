@@ -278,26 +278,26 @@
 
     <!-- Donation Section -->
     <div id="donation-section">
-      <h2 id="donation-title">Unterstütze PrioMailbox</h2>
-      <p>Vielen Dank, dass du PrioMailbox nutzt! 😊 Es wurde viel Zeit und Mühe investiert, um dir das beste Erlebnis zu bieten. Wenn du mit dem Addon zufrieden bist und die Arbeit unterstützen möchtest, kannst du hier eine Spende tätigen. Jeder Beitrag hilft und motiviert, PrioMailbox weiter zu entwickeln. 🙏</p>
-      <button type="button" id="donate-button" class="primary-button">Jetzt spenden 💰</button>
+      <h2 id="donation-title" style="margin-top: 20px;"></h2>
+      <p id="donation-text"></p>
+      <button type="button" id="donate-button" class="primary-button"></button>
 
-      <h3>Spenden-Code anfordern</h3>
-      <p>Wenn du bereits gespendet hast, kannst du hier deinen Spenden-Code per E-Mail anfordern. Trage dann deine E-Mail-Adresse und den Spenden-Code ein. Als Dankeschön erhältst du keine weiteren Hinweise im Programm zu spenden.</p>
+      <h3 id="donation-request-code-title"></h3>
+      <p id="donation-request-code-description"></p>
 
       <div class="button-group">
         <!-- E-Mail-Feld -->
-        <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
+        <input type="email" id="donation-email" placeholder="">
         <!-- Spenden-Code-Feld -->
-        <input type="text" id="donation-code-input" placeholder="Spenden-Code eingeben">
+        <input type="text" id="donation-code-input" placeholder="">
       </div>
 
       <div>
-        <button type="button" id="request-donation-code-button" class="primary-button">Spenden-Code anfordern</button>
+        <button type="button" id="request-donation-code-button" class="primary-button"></button>
       </div>
 
-      <div id="donation-message"></div>
-      <div id="donation-error"></div>
+      <div id="donation-message" style="display: none;"></div>
+      <div id="donation-error" style="display: none;"></div>
     </div>
 
 
