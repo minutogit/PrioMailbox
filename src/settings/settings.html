@@ -20,6 +20,12 @@
       font-size: 20px;
       color: #34495e;
     }
+  
+    h3 {
+      font-size: 18px;
+      color: #34495e;
+      margin-top: 20px;
+    }
     
     #tags-container, #accounts-container, #threshold-container, #backup-restore-section, #tagOnTraining-container, #donation-section {
       background-color: #fff;
@@ -81,51 +87,13 @@
       background-color: #2ecc71;
     }
   
-    /* Spezifischer Stil für den deaktivierten "Spende prüfen" Button */
-    #check-donation-button:disabled {
-      background-color: #bdc3c7 !important; /* Grauer Hintergrund */
-      color: #7f8c8d !important; /* Graue Textfarbe */
-      border: 1px solid #bdc3c7 !important; /* Einheitlicher, grauer Rand */
-      cursor: not-allowed !important; /* Nicht anklickbar */
-      box-shadow: none !important; /* Entfernt Schatten */
-    }
-  
-    /* Verhindert Hover-Effekte für den deaktivierten "Spende prüfen" Button */
-    #check-donation-button:disabled:hover {
-      background-color: #bdc3c7 !important;
-      color: #7f8c8d !important;
-      cursor: not-allowed !important;
-      border: 1px solid #bdc3c7 !important;
-    }
-  
-    /* Optional: Tooltip für den deaktivierten "Spende prüfen" Button */
-    #check-donation-button:disabled::after {
-      position: absolute;
-      background-color: #333;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 5px;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      font-size: 12px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-  
-    #check-donation-button:disabled:hover::after {
-      opacity: 1;
-    }
-  
-    /* Spezifischer Stil für deaktivierte primäre Buttons (Backup, Restore, Save) */
+    /* Spezifischer Stil für deaktivierte primäre Buttons */
     .primary-button:disabled {
-      background-color: #bdc3c7; /* Grauer Hintergrund */
-      color: #7f8c8d; /* Graue Textfarbe */
-      cursor: not-allowed; /* Nicht anklickbar */
-      border: 1px solid #bdc3c7; /* Einheitlicher, grauer Rand */
-      box-shadow: none; /* Entfernt Schatten */
+      background-color: #bdc3c7;
+      color: #7f8c8d;
+      cursor: not-allowed;
+      border: 1px solid #bdc3c7;
+      box-shadow: none;
     }
   
     .primary-button:disabled:hover {
@@ -203,94 +171,59 @@
     }
   
     /* Layout für die Donation Section */
-  #donation-section {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  #donation-section p {
-    font-size: 16px;
-    color: #34495e;
-    margin-bottom: 15px;
-  }
-
-  #donation-section input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  /* Button-Gruppe innerhalb der Donation Section */
-  #donation-section .button-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-
-  /* Spezifische Stilregeln für primäre Buttons */
-  .primary-button {
-    background-color: #27ae60;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    position: relative; /* Für Tooltip */
-  }
-
-  .primary-button:hover {
-    background-color: #2ecc71;
-  }
-
-  /* Spezifischer Stil für den deaktivierten "Spende prüfen" Button */
-  #check-donation-button:disabled {
-    background-color: #bdc3c7 !important; /* Grauer Hintergrund */
-    color: #7f8c8d !important; /* Graue Textfarbe */
-    border: 1px solid #bdc3c7 !important; /* Einheitlicher, grauer Rand */
-    cursor: not-allowed !important; /* Nicht anklickbar */
-    box-shadow: none !important; /* Entfernt Schatten */
-  }
-
-  /* Verhindert Hover-Effekte für den deaktivierten "Spende prüfen" Button */
-  #check-donation-button:disabled:hover {
-    background-color: #bdc3c7 !important;
-    color: #7f8c8d !important;
-    cursor: not-allowed !important;
-    border: 1px solid #bdc3c7 !important;
-  }
-
-  /* Tooltip für den deaktivierten "Spende prüfen" Button */
-  #check-donation-button:disabled::after {
-    content: "Bitte warten, bis Sie erneut klicken können.";
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-size: 12px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-  }
-
-  #check-donation-button:disabled:hover::after {
-    opacity: 1;
-  }
+    #donation-section p {
+      font-size: 16px;
+      color: #34495e;
+      margin-bottom: 15px;
+    }
+  
+    #donation-section input[type="email"],
+    #donation-section input[type="text"] {
+      width: 100%;
+      max-width: 400px; /* Maximale Breite */
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 15px; /* Abstand zwischen den Feldern */
+      box-sizing: border-box; /* Inklusive Padding und Border in der Breite */
+    }
+  
+    /* Button-Gruppe innerhalb der Donation Section */
+    #donation-section .button-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+  
+    /* Responsive Layout für Donation Section */
+    @media (max-width: 600px) {
+      #donation-section .button-group {
+        flex-direction: column;
+      }
+  
+      #donation-section input[type="email"],
+      #donation-section input[type="text"] {
+        max-width: 100%;
+      }
+    }
+  
+    /* Spezifische Stilregeln für Meldungen */
+    #donation-message, #donation-error {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  
+    #donation-message {
+      color: #27ae60;
+    }
+  
+    #donation-error {
+      color: #e74c3c;
     }
   </style>
+  
 </head>
 <body>
   <h1 id="settings-title"></h1>
@@ -337,24 +270,35 @@
     </div>
     
     <button type="submit" id="save-button" class="primary-button">Speichern</button>
+
+    <!-- Donation Section -->
+    <h2 id="donation-title">Unterstütze PrioMailbox</h2>
+    <div id="donation-section">
+      <p>Hier kannst du spenden und das Programm unterstützen, wenn es dir gefällt.</p>
+      <button type="button" id="donate-button" class="primary-button">Jetzt spenden</button>
+
+      <h3>Spenden-Code anfordern</h3>
+      <p>Wenn du bereits gespendet hast, kannst du hier deinen Spenden-Code per E-Mail anfordern. Als Dankeschön erhältst du keine weiteren Hinweise im Programm zu spenden.</p>
+
+      <div class="button-group">
+        <!-- E-Mail-Feld -->
+        <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
+        <!-- Spenden-Code-Feld -->
+        <input type="text" id="donation-code-input" placeholder="Spenden-Code eingeben">
+      </div>
+
+      <div>
+        <button type="button" id="request-donation-code-button" class="primary-button">Spenden-Code anfordern</button>
+      </div>
+
+      <div id="donation-message"></div>
+      <div id="donation-error"></div>
+    </div>
+
+
+    <script src="../libs/jszip.min.js"></script>
+    <script src="settings.js"></script>
     
-<!-- Donation Section -->
-<h2 id="donation-title">Spenden</h2>
-<div id="donation-section">
-  <p>Hier kannst du spenden und deinen Spenden-Code prüfen.</p>
-  <input type="email" id="donation-email" placeholder="Ihre E-Mail-Adresse">
-  <div class="button-group">
-    <button type="button" id="request-donation-code-button" class="primary-button">Spenden-Code anfordern</button>
-    <button type="button" id="donate-button" class="primary-button">Jetzt spenden</button>
-  </div>
-  <input type="text" id="donation-code-input" placeholder="Spenden-Code eingeben" style="margin-top: 15px; width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
-  <button type="button" id="verify-donation-code-button" class="primary-button" style="margin-top: 10px;">Spenden-Code prüfen</button>
-  <div id="donation-message"></div>
-  <div id="donation-error"></div>
-</div>
-  
-  <script src="../libs/jszip.min.js"></script>
-  <script src="settings.js"></script>
-  
+  </form>
 </body>
 </html>
