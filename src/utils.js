@@ -62,3 +62,56 @@ function getKnownTokenPercentage(tokens, tokenList) {
 
   return { knownPercentage };
 }
+
+
+/**
+ * Calculates the percentage of known unigrams and bigrams in an email compared to the tokenList,
+ * with duplicates removed from the tokens.
+ * A token is considered a unigram if it does not contain an underscore "_",
+ * and a bigram if it contains an underscore "_".
+ *
+ * @param {Array} tokens - List of tokens in the email.
+ * @param {Object} tokenList - The existing token database for a specific tag (keyword).
+ * @returns {Object} - An object with the percentage of known unigrams and bigrams.
+ */
+function calculateKnownTokenTypesPercentage(tokens, tokenList) {
+  // Remove duplicates from the tokens
+  const uniqueTokens = new Set(tokens);
+
+  // Initialize counters
+  let knownUnigrams = 0;
+  let totalUnigrams = 0;
+  let knownBigrams = 0;
+  let totalBigrams = 0;
+
+  // Iterate through each unique token once
+  uniqueTokens.forEach(token => {
+      if (token.includes('_')) {
+          // It's a bigram
+          totalBigrams++;
+          if (tokenList[token]) {
+              knownBigrams++;
+          }
+      } else {
+          // It's a unigram
+          totalUnigrams++;
+          if (tokenList[token]) {
+              knownUnigrams++;
+          }
+      }
+  });
+
+  // Calculate percentages
+  const knownUnigramsPercentage = totalUnigrams > 0 ? (knownUnigrams / totalUnigrams) * 100 : 0;
+  const knownBigramsPercentage = totalBigrams > 0 ? (knownBigrams / totalBigrams) * 100 : 0;
+
+  // Log the results for debugging
+  console.log(`Known unigrams: ${knownUnigramsPercentage.toFixed(2)}% (Known: ${knownUnigrams}, Total: ${totalUnigrams})`);
+  console.log(`Known bigrams: ${knownBigramsPercentage.toFixed(2)}% (Known: ${knownBigrams}, Total: ${totalBigrams})`);
+
+  // Return the percentages
+  return { 
+      knownUnigramsPercentage,
+      knownBigramsPercentage
+  };
+}

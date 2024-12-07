@@ -833,6 +833,10 @@ function onNewMailReceived(folder, messages) {
 }
 
 
+/**
+ * Displays Bayes information for a specific email message.
+ * @param {string} messageId - The ID of the email message.
+ */
 function showEMailInfo(messageId) {
   console.log(`Displaying Bayes info for message ID: ${messageId}`);
 
@@ -854,10 +858,13 @@ function showEMailInfo(messageId) {
           const tokenContributions = probabilityData.tokenContributions;
 
           // Berechnung des bekannten Token-Prozentsatzes
-          let knownPercentage = 0;
+          let knownUnigramsPercentage = 0;
+          let knownBigramsPercentage = 0;
           if (bayesData[tagName].tokenList) {
-            const knownTokenData = getKnownTokenPercentage(tokens, bayesData[tagName].tokenList);
-            knownPercentage = knownTokenData.knownPercentage;
+            // Verwende die neue Funktion calculateKnownTokenTypesPercentage
+            const knownTokenData = calculateKnownTokenTypesPercentage(tokens, bayesData[tagName].tokenList);
+            knownUnigramsPercentage = knownTokenData.knownUnigramsPercentage;
+            knownBigramsPercentage = knownTokenData.knownBigramsPercentage;
           }
 
           probabilities.push({
@@ -865,15 +872,15 @@ function showEMailInfo(messageId) {
             tagKey: tagKey,
             probability: (probability * 100).toFixed(2),
             tokenContributions: tokenContributions,
-            knownTokenPercentage: knownPercentage.toFixed(2) 
+            knownUnigramsPercentage: knownUnigramsPercentage.toFixed(2),
+            knownBigramsPercentage: knownBigramsPercentage.toFixed(2)
           });
 
           console.log(
             `Probability for ${tagName}: ${(probability * 100).toFixed(2)}%`
           );
-          console.log(
-            `Known Token Percentage for ${tagName}: ${knownPercentage.toFixed(2)}%`
-          );
+          console.log(`Known Unigrams/Bigrams for ${tagName}: ${knownUnigramsPercentage.toFixed(2)}% / ${knownBigramsPercentage.toFixed(2)}%`);
+
         }
       });
 
@@ -900,6 +907,7 @@ function showEMailInfo(messageId) {
       console.error("Error displaying Bayes info:", error);
     });
 }
+
 
 messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "refreshBayesData") {

@@ -79,15 +79,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+
 function displayEmailInfo() {
   const tableBody = document.getElementById("probabilities-table");
   const tokenTablesContainer = document.getElementById("token-tables-container");
   const toggleButton = document.getElementById("toggle-tokens-button");
-  tokenTablesContainer.style.display = 'none'; // Token-Tabellen anfangs ausblenden
+  tokenTablesContainer.style.display = 'none'; // Initially hide token tables
+
   let tagKeyToNameMap = {};
   let tagNameToKeyMap = {};
-
-  // Setze HTML-Übersetzungen mit der trans-Funktion
+  // Set translated texts using the trans function
   document.getElementById('email-info-title').textContent = trans("emailinfo_title");
   document.getElementById('emailinfo_label_tag').textContent = trans("emailinfo_label_tag");
   document.getElementById('emailinfo_label_probability').textContent = trans("emailinfo_label_probability");
@@ -100,7 +101,7 @@ function displayEmailInfo() {
     const probabilities = result.bayesInfoData || [];
     const bayesData = result.bayesData || {};
 
-    // Mapping von Tag-Key zu Tag-Name und umgekehrt erstellen
+    // Create mappings from Tag-Key to Tag-Name and vice versa
     tags.forEach((tag) => {
       tagKeyToNameMap[tag.key] = tag.tag;
       tagNameToKeyMap[tag.tag] = tag.key;
@@ -109,12 +110,13 @@ function displayEmailInfo() {
     probabilities.forEach((item) => {
       const row = document.createElement("tr");
 
+      // Tag Cell
       const tagCell = document.createElement("td");
       tagCell.textContent = item.tag;
       row.appendChild(tagCell);
 
+      // Probability Cell
       const probCell = document.createElement("td");
-
       if (!bayesData[item.tag]) {
         probCell.textContent = "50%";
       } else if (!bayesData[item.tag].trainingCount) {
@@ -122,43 +124,43 @@ function displayEmailInfo() {
       } else {
         probCell.textContent = item.probability + "%";
       }
-
       row.appendChild(probCell);
 
-      // Hinzufügen der Zelle für bekannte Tokens
+      // Known Tokens Percentage Cell (Unigrams / Bigrams)
       const knownTokensCell = document.createElement("td");
-      if (item.knownTokenPercentage !== undefined) {
-        knownTokensCell.textContent = item.knownTokenPercentage + "%";
+      if (item.knownUnigramsPercentage !== undefined && item.knownBigramsPercentage !== undefined) {
+        knownTokensCell.textContent = `${item.knownUnigramsPercentage}% / ${item.knownBigramsPercentage}%`;
       } else {
-        knownTokensCell.textContent = "0.00%"; // Fallback, falls nicht definiert
+        knownTokensCell.textContent = "0.00% / 0.00%"; // Fallback if percentages are not defined
       }
       row.appendChild(knownTokensCell);
 
       tableBody.appendChild(row);
 
-      // Verarbeitung der TokenContributions, um Top 5 positive und negative Tokens zu finden
+      // Process Token Contributions to find Top 5 Positive and Negative Tokens
       const tokenContributions = item.tokenContributions || [];
 
-      // Filtere die Tokens, die in der E-Mail vorhanden sind
+      // Filter tokens present in the email
       const tokensInEmail = tokenContributions.filter(tc => tc.isPresent);
 
-      // Top 5 positive Tokens (höchste positive Beiträge)
+      // Top 10 Positive Tokens (highest positive contributions)
       const topPositiveTokens = tokensInEmail
         .filter(tc => tc.contribution > 0)
         .sort((a, b) => b.contribution - a.contribution)
-        .slice(0, 5);
+        .slice(0, 10);
 
-      // Top 5 negative Tokens (niedrigste negative Beiträge)
+      // Top 10 Negative Tokens (lowest negative contributions)
       const topNegativeTokens = tokensInEmail
         .filter(tc => tc.contribution < 0)
         .sort((a, b) => a.contribution - b.contribution)
-        .slice(0, 5);
+        .slice(0, 10);
 
-      // Erstelle eine Tabelle für das aktuelle Schlagwort
+      // Create a table for the current tag
       const tokenTable = document.createElement("table");
       tokenTable.style.marginTop = "15px";
       tokenTable.style.width = "100%";
 
+      // Table Header
       const tokenTableHeader = document.createElement("thead");
       const tokenTableHeaderRow = document.createElement("tr");
       const tokenTableHeaderCell = document.createElement("th");
@@ -169,6 +171,7 @@ function displayEmailInfo() {
       tokenTableHeader.appendChild(tokenTableHeaderRow);
       tokenTable.appendChild(tokenTableHeader);
 
+      // Table Subheader
       const tokenTableSubHeader = document.createElement("tr");
       const tokenSubHeaderToken = document.createElement("th");
       tokenSubHeaderToken.textContent = trans("emailinfo_token");
@@ -185,9 +188,10 @@ function displayEmailInfo() {
 
       const tokenTableBody = document.createElement("tbody");
 
-      // Füge die positiven Tokens hinzu
+      // Add Positive Tokens
       topPositiveTokens.forEach(tc => {
         const tr = document.createElement("tr");
+
         const tdToken = document.createElement("td");
         tdToken.textContent = tc.token;
         tdToken.classList.add("positive-token");
@@ -197,15 +201,17 @@ function displayEmailInfo() {
 
         const tdType = document.createElement("td");
         tdType.textContent = trans("emailinfo_positive");
+
         tr.appendChild(tdToken);
         tr.appendChild(tdContribution);
         tr.appendChild(tdType);
         tokenTableBody.appendChild(tr);
       });
 
-      // Füge die negativen Tokens hinzu
+      // Add Negative Tokens
       topNegativeTokens.forEach(tc => {
         const tr = document.createElement("tr");
+
         const tdToken = document.createElement("td");
         tdToken.textContent = tc.token;
         tdToken.classList.add("negative-token");
@@ -215,6 +221,7 @@ function displayEmailInfo() {
 
         const tdType = document.createElement("td");
         tdType.textContent = trans("emailinfo_negative");
+
         tr.appendChild(tdToken);
         tr.appendChild(tdContribution);
         tr.appendChild(tdType);
@@ -225,30 +232,31 @@ function displayEmailInfo() {
       tokenTablesContainer.appendChild(tokenTable);
     });
 
-    // Entferne bayesInfoData nach der Anzeige
+    // Remove bayesInfoData after display
     messenger.storage.local.remove(["bayesInfoData"]);
 
-    // Fenstergröße nach dem Laden des Inhalts anpassen
+    // Adjust window size after loading content
     adjustWindowSize();
   }).catch((error) => {
     console.error("Error loading Bayes info data:", error);
   });
 
-  // Event Listener für den Toggle-Button hinzufügen
+  // Add Event Listener to the Toggle Button
   if (toggleButton) {
     toggleButton.addEventListener('click', () => {
       if (tokenTablesContainer.style.display === 'none' || tokenTablesContainer.style.display === '') {
         tokenTablesContainer.style.display = 'block';
-        toggleButton.innerHTML = '&#9650;'; // Pfeil nach oben
+        toggleButton.innerHTML = '&#9650;'; // Up arrow
       } else {
         tokenTablesContainer.style.display = 'none';
-        toggleButton.innerHTML = '&#9660;'; // Pfeil nach unten
+        toggleButton.innerHTML = '&#9660;'; // Down arrow
       }
 
       adjustWindowSize();
     });
   }
 }
+
 
 function adjustWindowSize() {
   // Warten, bis der Inhalt gerendert wurde

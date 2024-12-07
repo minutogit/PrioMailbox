@@ -126,7 +126,7 @@
     "message": "Probability"
   },
   "emailinfo_label_known_tokens": {
-    "message": "Known Tokens"
+    "message": "Known Token (Uni-/Bigrams)"
   },
   "emailinfo_top_tokens": {
     "message": "Top Tokens for Tag \"$1\""
