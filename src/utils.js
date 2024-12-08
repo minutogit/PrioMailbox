@@ -105,11 +105,6 @@ function calculateKnownTokenTypesPercentage(tokens, tokenList) {
   const knownUnigramsPercentage = totalUnigrams > 0 ? (knownUnigrams / totalUnigrams) * 100 : 0;
   const knownBigramsPercentage = totalBigrams > 0 ? (knownBigrams / totalBigrams) * 100 : 0;
 
-  // Log the results for debugging
-  console.log(`Known unigrams: ${knownUnigramsPercentage.toFixed(2)}% (Known: ${knownUnigrams}, Total: ${totalUnigrams})`);
-  console.log(`Known bigrams: ${knownBigramsPercentage.toFixed(2)}% (Known: ${knownBigrams}, Total: ${totalBigrams})`);
-
-  // Return the percentages
   return { 
       knownUnigramsPercentage,
       knownBigramsPercentage

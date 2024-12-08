@@ -135,7 +135,7 @@ function calculateBayesProbability(tokens, data, returnTokenContributions = fals
 
   const probability = Math.exp(logProbPositive - logSumExp); // Normalisierte positive Wahrscheinlichkeit
 
-  console.log("Calculated probability:", probability);
+  console.debug("Calculated probability:", probability);
 
   // Rückgabe der Token-Beiträge, falls aktiviert
   if (returnTokenContributions) {

@@ -49,7 +49,6 @@ async function verifyDonationCode(cryptedemail, code) {
  * Wenn die Checksum nicht mit der berechneten übereinstimmt, wird der usage_counter auf 30 gesetzt.
  */
 async function updateUsageData() {
-    console.debug(`updateUsageData`);
     const currentData = await messenger.storage.local.get(['donation_handler']);
     const donationHandler = currentData.donation_handler || {};
 
@@ -58,7 +57,7 @@ async function updateUsageData() {
         const shortHash = await short_sha256(donationHandler.donation_mail);
         const isValid = await verifyDonationCode(shortHash, donationHandler.donation_key);
         if (isValid) {
-            console.debug("Gültiger donation_key. updateUsageData.");
+            console.debug("Valid donation_key found.");
             return;
         }
     }
@@ -89,6 +88,7 @@ async function updateUsageData() {
 
     // Wenn die Checksum korrekt ist, prüfe, ob ein neuer Tag begonnen hat
     if (today != lastCheckDate) {
+        console.debug(`updateUsageData (new day)`);
         const newUsageCounter = (donationHandler.usage_counter || 0) + 1;
         const newLastCheckDate = today;
 

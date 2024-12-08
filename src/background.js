@@ -9,6 +9,8 @@ let removeOnClassify = true; // Standardwert true
 const maxTokenCount = 10000; // Maximale Anzahl der Tokens in der Datenbank.
 let tagKeyToNameMap = {}; // Mapping von Tag-Key zu Tag-Name
 let tagNameToKeyMap = {}; // Mapping von Tag-Name zu Tag-Key
+const lastCheckTimestamps = {}; // Stores the last check timestamp for each folder to optimize performance (in milliseconds) 
+
 
 // translate-Funktion zur Nutzung von i18n
 function trans(messageName, placeholders = []) {
@@ -185,6 +187,14 @@ function initialize() {
         }
       } catch (error) {
         console.error("Error in onActivated listener:", error);
+      }
+    });
+
+    // Sheduler for updateUsageData
+    messenger.alarms.create("updateUsageDataAlarm", { periodInMinutes: 10 });
+    messenger.alarms.onAlarm.addListener((alarm) => {
+      if (alarm.name === "updateUsageDataAlarm") {
+        updateUsageData();
       }
     });
 
@@ -441,9 +451,14 @@ function getMessageTags(messageId) {
  * @param {object} folder - Information about the displayed folder.
  */
 
+/**
+ * Handles the display of a folder and checks for new emails.
+ * @param {Object} tab - The mail tab object.
+ * @param {Object} folder - The folder object.
+ */
 async function onFolderDisplayed(tab, folder) {
-  updateUsageData();
-  
+  const CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
+  console.debug("onFolderDisplayed")
   if (folder && folder.accountId && folder.path) {
     const accountId = folder.accountId;
 
@@ -455,6 +470,16 @@ async function onFolderDisplayed(tab, folder) {
 
     try {
       const folderKey = `${accountId}:${folder.path}`;
+
+      // To optimize performance, skip the check if the last one occurred recently.
+      const now = Date.now();
+      // Check the last time this folder was processed
+      const lastCheck = lastCheckTimestamps[folderKey] || 0;
+      if (now - lastCheck < CHECK_INTERVAL) {
+        return;
+      }
+      // Update the last check timestamp
+      lastCheckTimestamps[folderKey] = now;
 
       // Load the last processed date for this folder from storage
       let result = await messenger.storage.local.get("folderLastProcessed");
@@ -549,6 +574,8 @@ async function onFolderDisplayed(tab, folder) {
     }
   }
 }
+
+
 
 
 
