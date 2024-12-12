@@ -1,0 +1,38 @@
+{
+  "help_title": "PrioMailbox - Aide",
+  "instructions_title": "Instructions :",
+  "instructions_text_1": "Dans les paramètres de PrioMailbox, sélectionnez des étiquettes (par exemple, « Important », « Personnel ») qui doivent être appliquées automatiquement (sur la base de votre entraînement). Entraînez chaque étiquette en sélectionnant quelques courriels qui correspondent à cette étiquette et d'autres qui ne correspondent pas. Cliquez avec le bouton droit sur le courriel correspondant dans la liste, accédez au menu « PrioMailbox », sélectionnez l'étiquette correspondante et entraînez le courriel.",
+  "instructions_text_2": "Pour tester rapidement la reconnaissance, sélectionnez quelques courriels (qui n'ont pas encore été entraînés) et cliquez sur « Classifier le courriel » dans le menu PrioMailbox. Ces courriels seront analysés et, si les étiquettes correspondent aux données d'entraînement, elles seront appliquées automatiquement.",
+  "instructions_text_3": "Pour obtenir plus d'informations sur un courriel, cliquez sur « Infos sur le courriel » dans le menu PrioMailbox.",
+  
+  "usage_ideas_title": "Idées d'utilisation :",
+  "usage_idea_1_title": "Réduire la visibilité des courriels non importants :",
+  "usage_idea_1_text": "Créez une nouvelle étiquette comme « Publicité » ou « Non important » et attribuez-lui une couleur grise. Sélectionnez cette étiquette dans PrioMailbox et entraînez le filtre. Ainsi, vous pouvez rendre les courriels qui ne sont pas du spam mais qui ne sont pas non plus importants moins visibles, réduisant ainsi leur impact visuel.",
+  "usage_idea_2_title": "Mettre en évidence les courriels importants :",
+  "usage_idea_2_text": "Créez une étiquette pour les courriels importants, par exemple « Urgent », et choisissez une couleur vive. Entraînez le filtre dans PrioMailbox pour mettre en évidence immédiatement les courriels importants et vous assurer qu'ils ne passent pas inaperçus.",
+  "usage_idea_3_title": "Étiquettes pour les tâches à accomplir :",
+  "usage_idea_3_text": "Utilisez des étiquettes automatiques pour marquer les courriels nécessitant une action. Par exemple, si vous êtes responsable de la gestion des factures, créez l'étiquette « Facture » et entraînez-la. Après l'entraînement, les courriels contenant des factures seront automatiquement marqués. Une fois la facture traitée, vous pouvez retirer l'étiquette pour garder une vue d'ensemble.",
+  
+  "good_training_notes_title": "Conseils pour un bon entraînement :",
+  "good_training_text_1": "Voici un exemple avec l'étiquette « Important » :",
+  "good_training_text_2": "Au début, entraînez quelques courriels qui sont considérés comme « Importants » et d'autres qui ne le sont pas. Plus tard, il suffira d'entraîner uniquement les courriels où l'étiquette « Important » a été appliquée à tort (faux positif) ou qui n'ont pas été marqués comme « Importants » bien qu'ils auraient dû l'être (faux négatif).",
+  
+  "poor_training_title": "Mauvais entraînement (éviter le surapprentissage) :",
+  "poor_training_text_1": "Veillez à ne pas entraîner incorrectement les courriels. Il n'est pas utile de continuer à entraîner les courriels déjà reconnus correctement. Si un courriel a été correctement marqué comme « Important », il ne devrait pas être réentraîné comme « Important ». Il en va de même pour les courriels correctement reconnus comme « NON Important » : ils ne devraient pas être réentraînés comme « NON Important ».",
+  "poor_training_text_2": "Un entraînement incorrect répété peut entraîner un surapprentissage (overfitting), ce qui réduit la capacité d'apprentissage du filtre. En bref : entraînez uniquement les faux positifs et faux négatifs pour obtenir les meilleurs résultats.",
+  
+  "additional_notes_title": "Remarques :",
+  "note_1": "Les étiquettes sont entraînées indépendamment les unes des autres. Il est normal que des courriels aient plusieurs étiquettes. Cela est intentionnel.",
+  "note_2": "Appliquer ou retirer manuellement des étiquettes ne modifie pas les données d'entraînement. L'entraînement se fait uniquement via le menu PrioMailbox.",
+  "note_3": "Les courriels déjà entraînés ne peuvent pas être réentraînés pendant un certain temps pour éviter le surapprentissage.",
+  
+  "questions_title": "Questions :",
+  "question_1_title": "Où sont stockées les données ?",
+  "question_1_text": "Les données d'entraînement sont stockées localement sur votre appareil dans votre profil Thunderbird. Vos données restent donc entièrement sous votre contrôle et ne sont pas transmises à des tiers.",
+  
+  "question_2_title": "Comment fonctionne la reconnaissance ?",
+  "question_2_text": "La reconnaissance est basée sur un filtre bayésien. Les tokens (mots ou paires de mots) trouvés dans les courriels entraînés sont comptés, en distinguant ceux qui correspondent à l'étiquette et ceux qui ne le font pas. Pour les nouveaux courriels, l'analyse des tokens permet de calculer la probabilité qu'un courriel corresponde à l'étiquette. Si cette probabilité dépasse un certain seuil, l'étiquette est appliquée automatiquement.",
+  
+  "question_3_title": "Quels contenus d'un courriel sont pris en compte pour l'entraînement/la classification ?",
+  "question_3_text": "PrioMailbox analyse les 150 premiers tokens (mots) d'un courriel ainsi que l'objet, l'expéditeur, le destinataire, les CC et les noms de fichiers des pièces jointes."
+}

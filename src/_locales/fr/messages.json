@@ -1,0 +1,200 @@
+{
+  "selectTagMenu": {
+    "message": "Sélectionner une étiquette"
+  },
+  "emailInfoMenu": {
+    "message": "🔍 Infos sur l'e-mail"
+  },
+  "classifyMenu": {
+    "message": "📄 Classifier l'e-mail"
+  },
+  "trainTagMenu": {
+    "message": "Entraîner : $1"
+  },
+  "learnTagMenu": {
+    "message": "✔️ Apprendre comme $1"
+  },
+  "unlearnTagMenu": {
+    "message": "❌ Apprendre comme non $1"
+  },
+  "trainingCompleteMessage": {
+    "message": "Entraîné comme : $1"
+  },
+  "untrainingCompleteMessage": {
+    "message": "Entraîné comme : NON-$1"
+  },
+  "classificationCompleteMessage": {
+    "message": "Classification terminée"
+  },
+  "popup_settingsButton": {
+    "message": "Paramètres"
+  },
+  "popup_helpButton": {
+    "message": "Aide"
+  },
+  "setting_title": {
+    "message": "Paramètres de PrioMailbox"
+  },
+  "setting_autoTagTitle": {
+    "message": "Étiquetage automatique des nouveaux e-mails"
+  },
+  "setting_autoTagTooltip": {
+    "message": "Analyser les nouveaux e-mails et appliquer automatiquement les étiquettes apprises."
+  },
+  "setting_allAccountsLabel": {
+    "message": "Activé pour tous les comptes"
+  },
+  "setting_selectTagsTitle": {
+    "message": "Sélectionner des étiquettes"
+  },
+  "setting_selectTagsTooltip": {
+    "message": "Sélectionnez les étiquettes à utiliser pour l'entraînement et l'étiquetage automatique."
+  },
+  "setting_thresholdTitle": {
+    "message": "Seuil pour l'étiquetage automatique"
+  },
+  "setting_thresholdTooltip": {
+    "message": "Ce paramètre détermine la probabilité à partir de laquelle une étiquette est appliquée. Il est recommandé de le laisser à 99%."
+  },
+  "setting_thresholdLabel": {
+    "message": "Seuil (%)"
+  },
+  "setting_setTagsTitle": {
+    "message": "Appliquer des étiquettes"
+  },
+  "setting_tagOnTrainingLabel": {
+    "message": "Appliquer/retirer l'étiquette lors de l'entraînement"
+  },
+  "setting_tagOnTrainingTooltip": {
+    "message": "Si activé, l'étiquette correspondante sera appliquée ou retirée pendant l'entraînement."
+  },
+  "setting_removeOnClassifyLabel": {
+    "message": "Retirer les étiquettes appliquées si la probabilité est inférieure au seuil"
+  },
+  "setting_removeOnClassifyTooltip": {
+    "message": "Si activé, les étiquettes seront retirées si la probabilité est inférieure au seuil."
+  },
+  "setting_backupRestoreTitle": {
+    "message": "Sauvegarder et restaurer les données d'entraînement"
+  },
+  "setting_backupButton": {
+    "message": "Sauvegarder les données d'entraînement"
+  },
+  "setting_restoreButton": {
+    "message": "Restaurer les données d'entraînement"
+  },
+  "setting_saveButton": {
+    "message": "Enregistrer"
+  },
+  "settings_defaultOption": {
+    "message": "--- Veuillez sélectionner ---"
+  },
+  "settings_deleteTrainingData": {
+    "message": "Supprimer les données d'entraînement"
+  },
+  "settings_stopDeletion": {
+    "message": "Arrêter la suppression ($1s)"
+  },
+  "settings_noTrainingData": {
+    "message": "Aucune donnée d'entraînement disponible pour $1."
+  },
+  "settings_loadTrainingDataError": {
+    "message": "Erreur lors du chargement des données d'entraînement. Veuillez réessayer."
+  },
+  "settings_trainingDataDeleted": {
+    "message": "Données d'entraînement pour $1 supprimées."
+  },
+  "settings_deleteTrainingDataError": {
+    "message": "Erreur lors de la suppression des données d'entraînement pour $1."
+  },
+  "settings_invalidThreshold": {
+    "message": "Veuillez entrer un seuil valide entre 1 et 99."
+  },
+  "settings_saved": {
+    "message": "Paramètres enregistrés."
+  },
+  "settings_saveError": {
+    "message": "Erreur lors de l'enregistrement des paramètres. Veuillez réessayer."
+  },
+  "emailinfo_title": {
+    "message": "PrioMailbox - Infos sur l'e-mail"
+  },
+  "emailinfo_label_tag": {
+    "message": "Étiquette"
+  },
+  "emailinfo_label_probability": {
+    "message": "Probabilité"
+  },
+  "emailinfo_label_known_tokens": {
+    "message": "Tokens connus (Uni-/Bigrams)"
+  },
+  "emailinfo_top_tokens": {
+    "message": "Tokens principaux pour l'étiquette \"$1\""
+  },
+  "emailinfo_token": {
+    "message": "Token"
+  },
+  "emailinfo_probability": {
+    "message": "Probabilité"
+  },
+  "emailinfo_type": {
+    "message": "Type"
+  },
+  "emailinfo_positive": {
+    "message": "Positif"
+  },
+  "emailinfo_negative": {
+    "message": "Négatif"
+  },
+  "emailinfo_donation_message": {
+    "message": "💖 Merci d'utiliser PrioMailbox !<br>Maintenir cet add-on demande beaucoup de temps et d'efforts.<br>Soutenez PrioMailbox avec un don 💰<br>Après le don et l'entrée de votre code, ce message disparaîtra.<br>👉 <a href=\"#\" id=\"donation-link\" style=\"color: #27ae60; text-decoration: none;\">Paramètres & Dons</a>"
+  },
+  "emailinfo_donation_button_ok": {
+    "message": "OK"
+  },
+  "settings_donation_title": {
+    "message": "Soutenez PrioMailbox 💖"
+  },
+  "settings_donation_message": {
+    "message": "💖 Merci d'utiliser PrioMailbox ! Maintenir cet add-on demande beaucoup de temps et d'efforts. Soutenez PrioMailbox avec un don 💰"
+  },
+  "settings_donate_button_text": {
+    "message": "Faire un don 💰"
+  },
+  "settings_donation_request_code_title": {
+    "message": "Demander un code de don 📧"
+  },
+  "settings_donation_request_code_description": {
+    "message": "Si vous avez déjà fait un don, vous pouvez demander ici votre code de don par e-mail. Ensuite, entrez votre adresse e-mail et le code. En remerciement, vous ne recevrez plus d'autres demandes de don dans le programme."
+  },
+  "settings_donation_email_placeholder": {
+    "message": "Votre adresse e-mail"
+  },
+  "settings_donation_code_placeholder": {
+    "message": "Entrez le code de don"
+  },
+  "settings_donation_request_code_button": {
+    "message": "Demander le code de don ✉️"
+  },
+  "settings_donation_code_sent": {
+    "message": "Un code de don a été envoyé à votre adresse e-mail."
+  },
+  "settings_donation_no_donation": {
+    "message": "Aucun don trouvé."
+  },
+  "settings_donation_invalid_code": {
+    "message": "Le code de don entré n'est pas valide."
+  },
+  "settings_donation_error": {
+    "message": "Une erreur imprévue est survenue."
+  },
+  "settings_donation_invalid_email": {
+    "message": "Veuillez entrer une adresse e-mail valide."
+  },
+  "settings_donation_wait": {
+    "message": "Veuillez attendre 10 secondes avant de cliquer à nouveau."
+  },
+  "settings_donation_code_verified": {
+    "message": "Code de don vérifié avec succès. Merci pour votre soutien !"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "help_title": "PrioMailbox - Aiuto",
+  "instructions_title": "Istruzioni:",
+  "instructions_text_1": "Seleziona nelle impostazioni di PrioMailbox le etichette (ad esempio, \"Importante\", \"Personale\") che devono essere impostate automaticamente (in base al tuo addestramento). Addestra ogni etichetta selezionando alcune email che corrispondono a tale etichetta e altre che non corrispondono. Fai clic con il tasto destro del mouse sull'email desiderata nell'elenco delle email, vai nel menu \"PrioMailbox\", seleziona l'etichetta corrispondente e addestra l'email.",
+  "instructions_text_2": "Per testare rapidamente il riconoscimento, seleziona alcune email (che non sono ancora state addestrate) e fai clic su \"Classifica email\" nel menu di PrioMailbox. Queste email verranno analizzate e, se le etichette corrispondono ai dati di addestramento, verranno automaticamente impostate.",
+  "instructions_text_3": "Per ottenere ulteriori informazioni su un'email, fai clic su \"Informazioni email\" nel menu di PrioMailbox.",
+  
+  "usage_ideas_title": "Idee per l'utilizzo:",
+  "usage_idea_1_title": "Ridurre la visibilità delle email non importanti:",
+  "usage_idea_1_text": "Crea una nuova etichetta come \"Pubblicità\" o \"Non importante\" e assegnale un colore grigio. Seleziona l'etichetta in PrioMailbox e addestra il filtro. In questo modo, puoi rendere meno evidenti le email che non sono spam ma che non sono nemmeno rilevanti, riducendone l'attenzione visiva.",
+  "usage_idea_2_title": "Evidenziare le email importanti:",
+  "usage_idea_2_text": "Crea un'etichetta per le email importanti, ad esempio \"Urgente\", e scegli un colore vivace. Addestra il filtro in PrioMailbox per evidenziare immediatamente le email importanti, assicurandoti che non vengano trascurate.",
+  "usage_idea_3_title": "Etichette per compiti da svolgere:",
+  "usage_idea_3_text": "Utilizza etichette automatiche per contrassegnare le email che richiedono un'azione. Ad esempio, se sei responsabile della gestione delle fatture, crea l'etichetta \"Fattura\" e addestrala. Dopo l'addestramento, le email con fatture verranno automaticamente contrassegnate. Dopo averle gestite, puoi rimuovere l'etichetta per mantenere una visione d'insieme.",
+  
+  "good_training_notes_title": "Suggerimenti per un buon addestramento:",
+  "good_training_text_1": "Ecco un esempio con l'etichetta \"Importante\":",
+  "good_training_text_2": "All'inizio, addestra alcune email che sono considerate \"Importanti\" e alcune che non lo sono. In seguito, è sufficiente addestrare solo le email in cui l'etichetta \"Importante\" è stata impostata erroneamente (falso positivo) o che non sono state contrassegnate come \"Importanti\" anche se avrebbero dovuto esserlo (falso negativo).",
+  
+  "poor_training_title": "Cattivo addestramento (evitare il sovraaddestramento):",
+  "poor_training_text_1": "Assicurati di non addestrare erroneamente le email. Non è utile continuare ad addestrare email già riconosciute correttamente. Se un'email è stata correttamente contrassegnata come \"Importante\", non dovrebbe essere nuovamente addestrata come \"Importante\". Lo stesso vale per le email correttamente riconosciute come \"NON Importanti\": non dovrebbero essere addestrate nuovamente come \"NON Importanti\".",
+  "poor_training_text_2": "Un addestramento errato ripetuto può portare a un sovraaddestramento (overfitting), peggiorando la capacità di apprendimento del filtro. In breve: addestra solo le email con falsi positivi e falsi negativi per ottenere i migliori risultati.",
+  
+  "additional_notes_title": "Note:",
+  "note_1": "Le etichette vengono addestrate indipendentemente l'una dall'altra. È normale che le email abbiano più etichette contemporaneamente. Questo comportamento è intenzionale.",
+  "note_2": "Impostare o rimuovere manualmente le etichette non modifica i dati di addestramento. L'addestramento avviene esclusivamente tramite il menu di PrioMailbox.",
+  "note_3": "Le email già addestrate non possono essere addestrate nuovamente per un certo periodo di tempo, per evitare il sovraaddestramento.",
+  
+  "questions_title": "Domande:",
+  "question_1_title": "Dove vengono memorizzati i dati?",
+  "question_1_text": "I dati di addestramento vengono memorizzati localmente sul tuo dispositivo nel tuo profilo Thunderbird. I tuoi dati sono quindi completamente sotto il tuo controllo e non vengono trasmessi esternamente.",
+  
+  "question_2_title": "Come funziona il riconoscimento?",
+  "question_2_text": "Il riconoscimento si basa su un filtro bayesiano. Viene effettuato un conteggio dei token (parole / coppie di parole) presenti nelle email addestrate, distinguendo tra quelle che corrispondono all'etichetta e quelle che non lo fanno. Per le nuove email, analizzando i token contenuti, viene calcolata la probabilità che l'email corrisponda all'etichetta. Se il valore di probabilità supera una certa soglia, l'etichetta viene automaticamente impostata.",
+  
+  "question_3_title": "Quali contenuti di un'email vengono considerati durante l'addestramento / la classificazione?",
+  "question_3_text": "PrioMailbox analizza i primi 150 token (parole) di un'email, nonché l'oggetto, il mittente, il destinatario, i CC e i nomi dei file degli allegati."
+}

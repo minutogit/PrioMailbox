@@ -1,0 +1,38 @@
+{
+  "help_title": "PrioMailbox - Ayuda",
+  "instructions_title": "Instrucciones:",
+  "instructions_text_1": "En la configuración de PrioMailbox, selecciona etiquetas (por ejemplo, «Importante», «Personal») que deben aplicarse automáticamente (basado en tu entrenamiento). Entrena cada etiqueta seleccionando algunos correos que correspondan a esa etiqueta y otros que no. Haz clic derecho sobre el correo correspondiente en la lista, accede al menú «PrioMailbox», selecciona la etiqueta correspondiente y entrena el correo.",
+  "instructions_text_2": "Para probar rápidamente el reconocimiento, selecciona algunos correos (que aún no hayan sido entrenados) y haz clic en «Clasificar correo» en el menú PrioMailbox. Estos correos serán analizados y, si las etiquetas coinciden con los datos de entrenamiento, se aplicarán automáticamente.",
+  "instructions_text_3": "Para obtener más información sobre un correo, haz clic en «Información del correo» en el menú PrioMailbox.",
+  
+  "usage_ideas_title": "Ideas de uso:",
+  "usage_idea_1_title": "Reducir la visibilidad de correos no importantes:",
+  "usage_idea_1_text": "Crea una nueva etiqueta como «Publicidad» o «No importante» y asígnale un color gris. Selecciona esta etiqueta en PrioMailbox y entrena el filtro. Así, puedes hacer que los correos que no son spam pero tampoco importantes sean menos visibles, reduciendo su impacto visual.",
+  "usage_idea_2_title": "Destacar correos importantes:",
+  "usage_idea_2_text": "Crea una etiqueta para los correos importantes, como «Urgente», y elige un color llamativo. Entrena el filtro en PrioMailbox para resaltar inmediatamente los correos importantes y asegurarte de que no pasen desapercibidos.",
+  "usage_idea_3_title": "Etiquetas para tareas pendientes:",
+  "usage_idea_3_text": "Utiliza etiquetas automáticas para marcar los correos que requieren acción. Por ejemplo, si eres responsable de gestionar facturas, crea la etiqueta «Factura» y entrena el filtro. Después del entrenamiento, los correos con facturas se marcarán automáticamente. Una vez gestionadas, puedes quitar la etiqueta para mantener el orden.",
+  
+  "good_training_notes_title": "Consejos para un buen entrenamiento:",
+  "good_training_text_1": "Aquí un ejemplo con la etiqueta «Importante»:",
+  "good_training_text_2": "Al principio, entrena algunos correos que se consideren «Importantes» y otros que no. Más tarde, solo será necesario entrenar los correos donde la etiqueta «Importante» se haya aplicado erróneamente (falso positivo) o que no hayan sido marcados como «Importantes» aunque debieron serlo (falso negativo).",
+  
+  "poor_training_title": "Mal entrenamiento (evitar el sobreajuste):",
+  "poor_training_text_1": "Asegúrate de no entrenar correos de manera incorrecta. No es útil continuar entrenando correos que ya han sido reconocidos correctamente. Si un correo fue marcado correctamente como «Importante», no debe volver a entrenarse como «Importante». Lo mismo ocurre con los correos reconocidos correctamente como «NO Importantes»: no deben volver a entrenarse como «NO Importantes».",
+  "poor_training_text_2": "Un entrenamiento incorrecto repetido puede llevar al sobreajuste (overfitting), reduciendo la capacidad de aprendizaje del filtro. En resumen: entrena solo los falsos positivos y negativos para obtener los mejores resultados.",
+  
+  "additional_notes_title": "Notas:",
+  "note_1": "Las etiquetas se entrenan de forma independiente. Es normal que los correos tengan varias etiquetas al mismo tiempo. Esto es intencional.",
+  "note_2": "Aplicar o quitar etiquetas manualmente no modifica los datos de entrenamiento. El entrenamiento se realiza únicamente a través del menú PrioMailbox.",
+  "note_3": "Los correos ya entrenados no pueden volver a entrenarse durante un tiempo para evitar el sobreajuste.",
+  
+  "questions_title": "Preguntas:",
+  "question_1_title": "¿Dónde se almacenan los datos?",
+  "question_1_text": "Los datos de entrenamiento se almacenan localmente en tu dispositivo dentro de tu perfil de Thunderbird. Por lo tanto, tus datos están completamente bajo tu control y no se transmiten a terceros.",
+  
+  "question_2_title": "¿Cómo funciona el reconocimiento?",
+  "question_2_text": "El reconocimiento se basa en un filtro bayesiano. Se cuenta la aparición de tokens (palabras o pares de palabras) en los correos entrenados, distinguiendo aquellos que corresponden a la etiqueta y los que no. Para correos nuevos, se calcula la probabilidad de que correspondan a la etiqueta analizando sus tokens. Si esta probabilidad supera un umbral determinado, la etiqueta se aplica automáticamente.",
+  
+  "question_3_title": "¿Qué partes de un correo se consideran durante el entrenamiento/la clasificación?",
+  "question_3_text": "PrioMailbox analiza los primeros 150 tokens (palabras) de un correo, así como el asunto, el remitente, el destinatario, los CC y los nombres de los archivos adjuntos."
+}
