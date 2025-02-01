@@ -235,10 +235,25 @@ function createContextMenu() {
         });
 
         // Hauptmenüeintrag für PrioMailbox
+        // Context menu for messages
         messenger.menus.create({
           id: "priomailbox",
           title: "PrioMailbox",
           contexts: ["message_list"],
+        });
+
+        // Context menu for folders
+        messenger.menus.create({
+          id: "priomailbox-folder",
+          title: "PrioMailbox",
+          contexts: ["folder_pane"],
+        });
+
+        messenger.menus.create({
+          id: "classify-folder",
+          parentId: "priomailbox-folder",
+          title: trans("classifyMenu"),
+          contexts: ["folder_pane"]
         });
 
         if (selectedTags.length === 0) {
@@ -350,28 +365,38 @@ messenger.storage.onChanged.addListener((changes, area) => {
 messenger.menus.onClicked.addListener((info, tab) => {
   console.log("Menu item clicked:", info.menuItemId);
   console.log("Info object:", info);
-  
+
+  if (info.menuItemId === "classify-folder") {
+    if (info.selectedFolder) {
+      classifyFolder(info.selectedFolder);
+    } else {
+      console.error("No folder selected for classification.");
+    }
+    return;
+  }
+
   if (info.selectedMessages && info.selectedMessages.messages.length > 0) {
     const messageId = info.selectedMessages.messages[0].id;
-    
+
     if (info.menuItemId === "select_tag") {
       messenger.runtime.openOptionsPage().catch((error) => {
         console.error("Error opening settings page:", error);
       });
       return;
     }
-    
+
     selectMessage(messageId)
       .then(() => {
         handleMenuClick(info, messageId);
       })
       .catch((error) => {
         console.error("Error selecting message:", error);
-      });
+      });      
   } else {
-    console.error("No message selected.");
+    console.log("No message selected. Assuming folder operation.");
   }
 });
+
 
 function handleMenuClick(info, messageId) {
   // Lade die neuesten bayesData bei jedem Klick
@@ -423,6 +448,37 @@ function handleMenuClick(info, messageId) {
       console.error("Error loading bayesData:", error);
     });
 }
+
+
+async function classifyFolder(folder) {
+    console.log("classifyFolder executed for", folder);
+
+    let folderToQuery = {
+        accountId: folder.accountId,
+        path: folder.path
+    };
+
+  try {
+    let page = await messenger.messages.list(folderToQuery);
+    
+    while (true) {
+        for (let message of page.messages) {
+            console.log("Verarbeite Nachricht:", message);
+            classifyEmail(message.id);
+        }
+
+        if (page.id) {
+            page = await messenger.messages.continueList(page.id);
+        } else {
+            break;
+        }
+    }
+  } catch (error) {
+    console.error("Error retrieving messages:", error);
+  }
+  openPopupWithMessage(trans("classificationCompleteMessage"));
+}
+
 
 function selectMessage(messageId) {
   return messenger.mailTabs
