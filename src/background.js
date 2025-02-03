@@ -399,50 +399,59 @@ messenger.menus.onClicked.addListener((info, tab) => {
 
 
 function handleMenuClick(info, messageId) {
-  // Lade die neuesten bayesData bei jedem Klick
+  // Lade die neuesten bayesData
   messenger.storage.local
     .get("bayesData")
     .then((result) => {
-      bayesData = result.bayesData || {}; // Stelle sicher, dass die neuesten Daten geladen sind
+      bayesData = result.bayesData || {}; 
+      return messenger.messages.listTags();
+    })
+    .then((tags) => {
+      allTags = tags;
+      tagKeyToNameMap = {};
+      tagNameToKeyMap = {};
+      allTags.forEach((tag) => {
+        tagKeyToNameMap[tag.key] = tag.tag;
+        tagNameToKeyMap[tag.tag] = tag.key;
+      });
 
-      // Aktualisiere die Tags und Mappings
-      messenger.messages.listTags().then((tags) => {
-        allTags = tags;
-        tagKeyToNameMap = {};
-        tagNameToKeyMap = {};
-        allTags.forEach((tag) => {
-          tagKeyToNameMap[tag.key] = tag.tag;
-          tagNameToKeyMap[tag.tag] = tag.key;
+      const selectedMessagesPage = info.selectedMessages;
+
+      if (info.menuItemId.startsWith("learn_") || info.menuItemId.startsWith("unlearn_")) {
+        const isPositive = info.menuItemId.startsWith("learn_");
+        const tagKey = info.menuItemId.split("_")[1]; // Extrahiere den tagKey
+        const tagName = tagKeyToNameMap[tagKey]; // Hole den korrekten tagName aus der Map
+
+        if (!tagName) {
+          console.warn(`No valid tag name for key "${tagKey}" found.`);
+          return;
+        }
+
+        selectedMessagesPage.messages.forEach((message) => {
+          learnTagFromMail(message.id, tagName, isPositive);
         });
-
-        const messages = info.selectedMessages.messages;
-
-        if (info.menuItemId.startsWith("learn_") || info.menuItemId.startsWith("unlearn_")) {
-          const isPositive = info.menuItemId.startsWith("learn_");
-          const tagKey = info.menuItemId.split("_")[1]; // Extrahiere den tagKey
-          const tagName = tagKeyToNameMap[tagKey]; // Hole den korrekten tagName aus der Map
-
-          if (!tagName) {
-            console.warn(`No valid tag name for key "${tagKey}" found.`);
-            return;
+        const popupMessage = trans(isPositive ? "trainingCompleteMessage" : "untrainingCompleteMessage",[tagName]);
+        openPopupWithMessage(popupMessage);
+      } else if (info.menuItemId === "classify") {
+        (async () => {
+          let page = selectedMessagesPage;
+          while (true) {
+            for (let message of page.messages) {
+              classifyEmail(message.id);
+            }
+            if (page.id) {
+              page = await messenger.messages.continueList(page.id);
+            } else {
+              break;
+            }
           }
-
-          messages.forEach((message) => {
-            learnTagFromMail(message.id, tagName, isPositive);
-            const popupMessage = trans(isPositive ? 'trainingCompleteMessage' : 'untrainingCompleteMessage', [tagName]);
-            openPopupWithMessage(popupMessage);
-          });
-        } else if (info.menuItemId === "classify") {
-          messages.forEach((message) => {
-            classifyEmail(message.id);
-          });
           const popupMessage = trans("classificationCompleteMessage");
           openPopupWithMessage(popupMessage);
-        } else if (info.menuItemId === "show_info") {
-          const messageId = messages[0].id;
-          showEMailInfo(messageId);
-        }
-      });
+        })();
+      } else if (info.menuItemId === "show_info") {
+        const firstMessageId = selectedMessagesPage.messages[0].id;
+        showEMailInfo(firstMessageId);
+      }
     })
     .catch((error) => {
       console.error("Error loading bayesData:", error);
