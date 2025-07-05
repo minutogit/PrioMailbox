@@ -52,8 +52,9 @@ function initialize() {
           : 0.99;
 
       // Setze den Standardwert von 'tagOnTraining' auf true, falls nicht vorhanden
-      tagOnTraining =
-        storageResult.tagOnTraining !== undefined
+      // Die Variable 'tagOnTraining' wurde nicht deklariert, was zu einem Fehler führen könnte.
+      // Deklariere sie mit 'let' falls sie global sein soll oder innerhalb des Scopes, wo sie benötigt wird.
+      let tagOnTraining = storageResult.tagOnTraining !== undefined
           ? storageResult.tagOnTraining
           : true;
 
@@ -67,7 +68,7 @@ function initialize() {
       messenger.storage.local.get('donation_handler').then(storageResult => {
         if (!storageResult.donation_handler) {
             // Wenn donation_handler nicht existiert, initialisiere ihn
-            const today = new Date().toISOString().split('T')[0]; // Aktuelles Datum im Format YYYY-MM-DD
+            const today = new Date().toISOString().split('T')[0]; // Aktuelles Datum im FormatYYYY-MM-DD
             const defaultDonationData = {
                 donation_key: '',
                 donation_mail: '',
@@ -112,8 +113,8 @@ function initialize() {
 
       // Konvertiere selectedTags von Tag-Keys zu Tag-Namen
       selectedTags = selectedTags.map(
-        (tagKey) => tagKeyToNameMap[tagKey] || tagKey
-      );
+        (tagKey) => tagKeyToNameMap[tagKey] || tagKey // tagKeyToNameMap sollte den echten Namen enthalten
+      ).map(tagName => tagName.replace(/_/g, ' ')); // Wenn der Name Unterstriche von einer früheren Speicherung enthält, ersetze sie
 
       // Sicherstellen, dass die Struktur korrekt ist
       selectedTags.forEach((tagName) => {
@@ -229,8 +230,8 @@ function createContextMenu() {
         allTags = tags;
         tagKeyToNameMap = {};
         tagNameToKeyMap = {};
-        allTags.forEach((tag) => {
-          tagKeyToNameMap[tag.key] = tag.tag;
+        allTags.forEach(tag => {
+          tagKeyToNameMap[tag.key] = tag.tag; // Speichere den tatsächlichen Tag-Namen
           tagNameToKeyMap[tag.tag] = tag.key;
         });
 
@@ -291,11 +292,12 @@ function createContextMenu() {
 
           // Erstelle Menüeinträge für ausgewählte Tags
           selectedTags.forEach((tagName) => {
-            const tagKey = tagNameToKeyMap[tagName];
-            if (tagKey) {
+            const tagKey = tagNameToKeyMap[tagName]; // Holen des tatsächlichen Tag-Keys
+            if (tagKey) { // Sicherstellen, dass der Tag-Key existiert
+              const menuIdSafeTagName = tagName.replace(/ /g, '_'); // Ersetze Leerzeichen für die Menü-ID
               // Hauptmenüeintrag für das Schlagwort mit Platzhalter
               messenger.menus.create({
-                id: `tag_${tagKey}`,
+                id: `tag_${menuIdSafeTagName}`,
                 parentId: "priomailbox",
                 title: trans("trainTagMenu", [tagName]),
                 contexts: ["message_list"],
@@ -303,16 +305,16 @@ function createContextMenu() {
 
               // Untermenüeintrag: Lerne als [Schlagwort]
               messenger.menus.create({
-                id: `learn_${tagKey}`,
-                parentId: `tag_${tagKey}`,
+                id: `learn_${menuIdSafeTagName}`,
+                parentId: `tag_${menuIdSafeTagName}`,
                 title: trans("learnTagMenu", [tagName]),
                 contexts: ["message_list"],
               });
 
               // Untermenüeintrag: Lerne als nicht [Schlagwort]
               messenger.menus.create({
-                id: `unlearn_${tagKey}`,
-                parentId: `tag_${tagKey}`,
+                id: `unlearn_${menuIdSafeTagName}`,
+                parentId: `tag_${menuIdSafeTagName}`,
                 title: trans("unlearnTagMenu", [tagName]),
                 contexts: ["message_list"],
               });
@@ -334,8 +336,9 @@ initialize();
 messenger.storage.onChanged.addListener((changes, area) => {
   if (area === "local") {
     if (changes.selectedTags) {
-      selectedTags = changes.selectedTags.newValue.map(
-        (tagKey) => tagKeyToNameMap[tagKey] || tagKey
+      selectedTags = changes.selectedTags.newValue.map(tagKey =>
+        // Wenn selectedTags von Storage kommt, ist es ein Tag-Key.
+        tagKeyToNameMap[tagKey] ? tagKeyToNameMap[tagKey] : tagKey // Hole den tatsächlichen Tag-Namen
       );
       // Aktualisiere die Tags und Mappings
       messenger.messages.listTags().then((tags) => {
@@ -419,8 +422,7 @@ function handleMenuClick(info, messageId) {
 
       if (info.menuItemId.startsWith("learn_") || info.menuItemId.startsWith("unlearn_")) {
         const isPositive = info.menuItemId.startsWith("learn_");
-        const tagKey = info.menuItemId.split("_")[1]; // Extrahiere den tagKey
-        const tagName = tagKeyToNameMap[tagKey]; // Hole den korrekten tagName aus der Map
+        const tagName = info.menuItemId.substring(info.menuItemId.indexOf('_') + 1).replace(/_/g, ' '); // Rekonstruiere den ursprünglichen Tag-Namen
 
         if (!tagName) {
           console.warn(`No valid tag name for key "${tagKey}" found.`);
@@ -511,8 +513,7 @@ function getMessageTags(messageId) {
  * workarround to check all new mails
  * Listener function that checks for new emails in the displayed folder and classifies them.
  * On the first visit to a folder, it stores the date of the newest email but does not process any emails.
- * 
- * @param {object} tab - Information about the active tab.
+ * * @param {object} tab - Information about the active tab.
  * @param {object} folder - Information about the displayed folder.
  */
 
@@ -1014,8 +1015,8 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
           allTags = tags;
           tagKeyToNameMap = {};
           tagNameToKeyMap = {};
-          allTags.forEach((tag) => {
-            tagKeyToNameMap[tag.key] = tag.tag;
+          allTags.forEach(tag => {
+            tagKeyToNameMap[tag.key] = tag.tag; // Speichere den tatsächlichen Tag-Namen
             tagNameToKeyMap[tag.tag] = tag.key;
           });
           createContextMenu();
@@ -1030,9 +1031,10 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
     messenger.storage.local
       .get(["selectedTags", "selectedAccounts"])
       .then((result) => {
-        selectedTags = result.selectedTags || [];
-        selectedTags = selectedTags.map(
-          (tagKey) => tagKeyToNameMap[tagKey] || tagKey
+        selectedTags = result.selectedTags || []; // Diese selectedTags kommen als Key aus dem Storage
+        selectedTags = selectedTags.map(tagKey =>
+          // Konvertiere Tag-Keys aus dem Storage zurück in die ursprünglichen Tag-Namen (mit Leerzeichen)
+          tagKeyToNameMap[tagKey] ? tagKeyToNameMap[tagKey] : tagKey
         );
         selectedAccounts = result.selectedAccounts || [];
 
