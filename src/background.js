@@ -339,7 +339,7 @@ messenger.storage.onChanged.addListener((changes, area) => {
       selectedTags = changes.selectedTags.newValue.map(tagKey =>
         // Wenn selectedTags von Storage kommt, ist es ein Tag-Key.
         tagKeyToNameMap[tagKey] ? tagKeyToNameMap[tagKey] : tagKey // Hole den tatsächlichen Tag-Namen
-      );
+      ).map(tagName => tagName.replace(/_/g, ' ')); // Konsistenz mit initialize()
       // Aktualisiere die Tags und Mappings
       messenger.messages.listTags().then((tags) => {
         allTags = tags;
@@ -1035,7 +1035,7 @@ messenger.runtime.onMessage.addListener((message, sender, sendResponse) => {
         selectedTags = selectedTags.map(tagKey =>
           // Konvertiere Tag-Keys aus dem Storage zurück in die ursprünglichen Tag-Namen (mit Leerzeichen)
           tagKeyToNameMap[tagKey] ? tagKeyToNameMap[tagKey] : tagKey
-        );
+        ).map(tagName => tagName.replace(/_/g, ' ')); // Konsistenz mit initialize()
         selectedAccounts = result.selectedAccounts || [];
 
         // Aktualisiere die Tags und Mappings
