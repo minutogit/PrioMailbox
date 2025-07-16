@@ -153,10 +153,10 @@
     "message": "OK"
   },
   "settings_donation_title": {
-    "message": "Support PrioMailbox 💖"
+    "message": "Support PrioMailbox and get Plus Version💖"
   },
   "settings_donation_message": {
-    "message": "💖 Thank you for using PrioMailbox! Maintaining this add-on requires a lot of time and effort. Support PrioMailbox with a donation 💰</a>"
+  "message": "💖 Thank you for using PrioMailbox! Maintaining this add-on requires a lot of time and effort.<br><br><b>Upgrade to PrioMailbox Plus with a donation 💰</b><br>The Plus version offers advanced features like category-based classification, flexible rules for specific accounts (e.g., tagging), and automated actions such as moving, copying, or starring messages. It also includes an interactive Training Helper for improved recognition accuracy and **more comfortable training**.<br><br>Your donation not only unlocks the Plus Version as a bonus but also directly supports the continuous development of the free PrioMailbox version, benefiting all users."
   },
   "settings_donate_button_text": {
     "message": "Donate Now 💰"

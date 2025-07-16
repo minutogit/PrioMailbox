@@ -27,12 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("settings-title").textContent = trans("setting_title");
 
-  const donationEmailInput = document.getElementById("donation-email");
-  const requestDonationCodeButton = document.getElementById("request-donation-code-button");
-  const donationCodeInput = document.getElementById("donation-code-input");
-  const donationMessage = document.getElementById("donation-message");
-  const donationError = document.getElementById("donation-error");
-
   // Securely adding tooltip content without innerHTML
   const autoTagTitle = document.getElementById("auto-tag-title");
   autoTagTitle.textContent = trans("setting_autoTagTitle");
@@ -75,19 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
    const donationTitle = document.getElementById("donation-title");
    const donationText = document.getElementById("donation-text");
    const donateButton = document.getElementById("donate-button");
-   const donationRequestCodeTitle = document.getElementById("donation-request-code-title");
-   const donationRequestCodeDescription = document.getElementById("donation-request-code-description");
    
- 
    // Setze die übersetzten Texte für die Donation Section
    donationTitle.innerHTML = trans("settings_donation_title");
    donationText.innerHTML = trans("settings_donation_message");
    donateButton.innerHTML = trans("settings_donate_button_text");
-   donationRequestCodeTitle.textContent = trans("settings_donation_request_code_title");
-   donationRequestCodeDescription.textContent = trans("settings_donation_request_code_description");
-   donationEmailInput.placeholder = trans("settings_donation_email_placeholder");
-   donationCodeInput.placeholder = trans("settings_donation_code_placeholder");
-   requestDonationCodeButton.textContent = trans("settings_donation_request_code_button");
  
 
   // Initialize variables and bind to window
@@ -114,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
           "threshold",
           "tagOnTraining",
           "removeOnClassify",
-          "donation_handler" 
       ]),
   ])
   .then(([tags, accounts, result]) => {
@@ -136,40 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Set the status of checkboxes
       tagOnTrainingCheckbox.checked = window.tagOnTraining;
       removeOnClassifyCheckbox.checked = window.removeOnClassify;
-
-      // Laden der vorhandenen donation_handler Daten
-      window.donationHandler = result.donation_handler;
-      console.log("Donation data loaded:", window.donationHandler);
-
-      // Setze das E-Mail-Feld auf die gespeicherte donation_mail
-      if (window.donationHandler && window.donationHandler.donation_mail) {
-          donationEmailInput.value = window.donationHandler.donation_mail;
-      } else {
-          donationEmailInput.value = '';
-      }
-
-      if (window.donationHandler && window.donationHandler.donation_key) {
-        donationCodeInput.value = window.donationHandler.donation_key;
-        requestDonationCodeButton.disabled = true; // Button deaktivieren
-        donationEmailInput.disabled = true;
-        donationCodeInput.disabled = true;
-        console.log("Donation code is already present. Button and inputs are disabled.");
-    }
-
-      // **Neuer Code zur Überprüfung und Vorfüllung des Spenden-Codes**
-      if (window.donationHandler && window.donationHandler.donation_key) {
-          donationCodeInput.value = window.donationHandler.donation_key;
-          // **Deaktiviere den "Spenden-Code anfordern" Button und die Eingabefelder**
-          requestDonationCodeButton.disabled = true;
-          donationEmailInput.disabled = true;
-          donationCodeInput.disabled = true;
-          console.log("Donation code is already present. Request button and input fields disabled.");
-      } else {
-          donationCodeInput.value = '';
-          requestDonationCodeButton.disabled = false;
-          donationEmailInput.disabled = false;
-          donationCodeInput.disabled = false;
-}
 
       // Create mapping
       window.allTags.forEach((tag) => {
@@ -482,84 +433,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   };
 
-  // **Neuer Code zur automatischen Überprüfung des Spenden-Codes**
-  donationCodeInput.addEventListener("input", async () => {
-    const code = donationCodeInput.value.replace(/\s+/g, '').trim();
-    if (code.length === 16) {
-        const email = donationEmailInput.value.trim().toLowerCase();
-        if (!email) {
-            donationError.textContent = trans("settings_donation_invalid_email");
-            donationError.style.display = "block";
-            donationMessage.style.display = "none";
-            return;
-        }
-
-        // Berechne SHA256 Hash der E-Mail und nehme die ersten 16 Zeichen
-        const encoder = new TextEncoder();
-        const data = encoder.encode(email);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        const cryptedemail = fullHash.substring(0, 16);
-        console.debug("Computed cryptedemail:", cryptedemail, " Code:", code);
-
-        try {
-            const isValid = await messenger.runtime.sendMessage({
-                action: "verifyDonationCode",
-                cryptedemail: cryptedemail,
-                code: code
-            });
-
-            if (isValid) {
-                donationMessage.textContent = trans("settings_donation_code_verified");
-                donationMessage.style.display = "block";
-                donationError.style.display = "none";
-
-                // Spenden-Code in der Datenbank speichern
-                messenger.storage.local.get('donation_handler').then(storageResult => {
-                    const donationData = storageResult.donation_handler || {};
-                    donationData.donation_key = code;
-                    donationData.donation_mail = email;
-                    donationData.last_check_date = new Date().toISOString().split('T')[0];
-                    donationData.usage_counter = 0;
-
-                    messenger.storage.local.set({ donation_handler: donationData })
-                        .then(() => {
-                            console.log("Donation code successfully saved.");
-                            // **Deaktiviere den "Spenden-Code anfordern" Button und die Eingabefelder**
-                            requestDonationCodeButton.disabled = true;
-                            donationEmailInput.disabled = true;
-                            donationCodeInput.disabled = true;
-                        })
-                        .catch((error) => {
-                            console.error("Error saving donation code:", error);
-                        });
-                });
-            } else {
-                donationError.textContent = trans("settings_donation_invalid_code");
-                donationError.style.display = "block";
-                donationMessage.style.display = "none";
-
-                // Blende die Fehlermeldung nach 5 Sekunden aus
-                setTimeout(() => {
-                    donationError.style.display = "none";
-                }, 5000);
-            }
-        } catch (error) {
-            console.error("Error verifying donation code:", error);
-            donationError.textContent = trans("settings_donation_error");
-            donationError.style.display = "block";
-            donationMessage.style.display = "none";
-        }
-    } else {
-        // Wenn der Code weniger als 16 Zeichen ist, reaktiviere die Buttons und Eingabefelder
-        if (code.length < 16) {
-            requestDonationCodeButton.disabled = false;
-            donationEmailInput.disabled = false;
-        }
-    }
-  });
-
 
   // Input validation for Threshold
   thresholdInput.addEventListener("input", () => {
@@ -829,89 +702,9 @@ document.addEventListener("DOMContentLoaded", () => {
       saveSelectedAccounts();
   });
 
-  // **Handle 'Spenden-Code anfordern' Button-Klick**
-  let isRequestDonationCodeAllowed = true; // Status, ob der Button aktiviert ist
-
-  requestDonationCodeButton.addEventListener("click", async () => {
-      if (!isRequestDonationCodeAllowed) {
-          alert("Bitte warten Sie 10 Sekunden, bevor Sie erneut klicken.");
-          return;
-      }
-
-      let email = donationEmailInput.value.trim().toLowerCase();
-      donationEmailInput.value = email; // Aktualisiere das Eingabefeld mit der normalisierten E-Mail
-
-      // Entferne Leerzeichen und stelle sicher, dass die E-Mail-Adresse klein geschrieben ist
-      email = email.replace(/\s+/g, '');
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email || !emailRegex.test(email)) {
-          alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
-          return;
-      }
-
-      // Deaktiviere den Button für 10 Sekunden
-      isRequestDonationCodeAllowed = false;
-      requestDonationCodeButton.disabled = true;
-
-      // Berechne SHA-256 Hash der E-Mail und nehme die ersten 16 Zeichen
-      const encoder = new TextEncoder();
-      const data = encoder.encode(email);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      const cryptedemail = fullHash.substring(0, 16);
-
-      console.log("Berechneter cryptedemail:", cryptedemail); // Debugging-Log
-
-      // Sende Nachricht zum Anfordern des Spenden-Codes
-      try {
-          const response = await messenger.runtime.sendMessage({
-              action: "requestDonationCode",
-              email: email // Hier sendest du die normalisierte E-Mail
-          });
-
-          if (response.success) {
-              donationMessage.textContent = trans("settings_donation_code_sent");
-              donationMessage.style.display = "block";
-              donationError.style.display = "none";
-          } else {
-              donationError.textContent = response.message || trans("settings_donation_no_donation");
-              donationError.style.display = "block";
-              donationMessage.style.display = "none";
-
-              // Blende die Fehlermeldung nach 5 Sekunden aus
-              setTimeout(() => {
-                  donationError.style.display = "none";
-              }, 5000);
-          }
-      } catch (error) {
-          console.error("Fehler beim Anfordern des Spenden-Codes:", error);
-          donationError.textContent = trans("settings_donation_error");
-          donationError.style.display = "block";
-          donationMessage.style.display = "none";
-      } finally {
-          // Aktiviere den Button nach 10 Sekunden wieder
-          setTimeout(() => {
-              isRequestDonationCodeAllowed = true;
-              requestDonationCodeButton.disabled = false;
-          }, 10000);
-      }
-  });
-
-
-  // **Neuer Code zum Reaktivieren der Buttons und Eingabefelder, wenn der Spenden-Code entfernt wird**
-  donationCodeInput.addEventListener("input", () => {
-      if (donationCodeInput.value.trim() === "") {
-          requestDonationCodeButton.disabled = false; // **Aktiviere den "Spenden-Code anfordern" Button**
-          donationEmailInput.disabled = false; // **Aktiviere die E-Mail-Eingabe**
-          console.log("Donation code input cleared. Verify and Request buttons enabled.");
-      }
-  });
-
   // Öffnet die Spendenseite im Systembrowser
   document.getElementById("donate-button").addEventListener("click", () => {
-      const donationUrl = "https://priomailbox.innere-leichtigkeit.de/donation.html"; 
+      const donationUrl = "https://priomailbox.sebastiangalek.de/donate/donation.html"; 
       messenger.runtime.sendMessage({
           action: "openUrlInSystemBrowser",
           url: donationUrl

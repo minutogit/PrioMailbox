@@ -232,16 +232,13 @@
 <body>
   <h1 id="settings-title"></h1>
   <form id="settings-form">
-    <!-- Automatic Tagging -->
     <h2 id="auto-tag-title"></h2>
     <div id="accounts-container">
-      <!-- Section for "Select All Accounts" with separator -->
       <div id="all-accounts-section" class="account-item">
         <input type="checkbox" id="all-accounts-checkbox">
         <label for="all-accounts-checkbox" id="all-accounts-label"></label>
       </div>
       
-      <!-- Individual accounts list with frame -->
       <div id="individual-accounts-container" style="display: none;"></div>
     </div>
 
@@ -276,28 +273,10 @@
     <button type="submit" id="save-button" class="primary-button">Speichern</button>
     <div style="height: 50px;"></div>
 
-    <!-- Donation Section -->
     <div id="donation-section">
       <h2 id="donation-title" style="margin-top: 20px;"></h2>
       <p id="donation-text"></p>
-      <button type="button" id="donate-button" class="primary-button"></button>
-
-      <h3 id="donation-request-code-title"></h3>
-      <p id="donation-request-code-description"></p>
-
-      <div class="button-group">
-        <!-- E-Mail-Feld -->
-        <input type="email" id="donation-email" placeholder="">
-        <!-- Spenden-Code-Feld -->
-        <input type="text" id="donation-code-input" placeholder="">
-      </div>
-
-      <div>
-        <button type="button" id="request-donation-code-button" class="primary-button"></button>
-      </div>
-
-      <div id="donation-message" style="display: none;"></div>
-      <div id="donation-error" style="display: none;"></div>
+      <button type="button" id="donate-button" class="primary-button"></button>      
     </div>
 
 
