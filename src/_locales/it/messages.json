@@ -3,25 +3,25 @@
         "message": "Seleziona etichetta"
     },
     "emailInfoMenu": {
-        "message": "🔍 Informazioni email"
+        "message": "🔍 Info e-mail"
     },
     "classifyMenu": {
-        "message": "📄 Classifica email"
+        "message": "📄 Classifica e-mail"
     },
     "trainTagMenu": {
-        "message": "Addestra: $1"
+        "message": "Allena: $1"
     },
     "learnTagMenu": {
         "message": "✔️ Impara come $1"
     },
     "unlearnTagMenu": {
-        "message": "❌ Impara come non $1"
+        "message": "❌ Non imparare come $1"
     },
     "trainingCompleteMessage": {
-        "message": "Addestrato come: $1"
+        "message": "Appreso come: $1"
     },
     "untrainingCompleteMessage": {
-        "message": "Addestrato come: NON-$1"
+        "message": "Appreso come: NON-$1"
     },
     "classificationCompleteMessage": {
         "message": "Classificazione completata"
@@ -36,25 +36,25 @@
         "message": "Impostazioni PrioMailbox"
     },
     "setting_autoTagTitle": {
-        "message": "Etichettatura automatica delle nuove email"
+        "message": "Etichetta automaticamente le nuove e-mail"
     },
     "setting_autoTagTooltip": {
-        "message": "Controlla le nuove email in base alle etichette apprese e applicale automaticamente."
+        "message": "Controlla le nuove e-mail per le etichette apprese e applica le etichette."
     },
     "setting_allAccountsLabel": {
-        "message": "Attivato per tutti gli account"
+        "message": "Abilitato per tutti gli account"
     },
     "setting_selectTagsTitle": {
         "message": "Seleziona etichette"
     },
     "setting_selectTagsTooltip": {
-        "message": "Seleziona le etichette da utilizzare per l'addestramento e l'etichettatura automatica."
+        "message": "Scegli le etichette utilizzate per l'allenamento e l'etichettatura automatica."
     },
     "setting_thresholdTitle": {
         "message": "Soglia per l'etichettatura automatica"
     },
     "setting_thresholdTooltip": {
-        "message": "Questo valore definisce la probabilità oltre la quale un'etichetta viene applicata. Si consiglia di mantenerlo al 99%."
+        "message": "Questo valore definisce la probabilità con cui viene applicata un'etichetta. Si consiglia di lasciarlo al 99%."
     },
     "setting_thresholdLabel": {
         "message": "Soglia (%)"
@@ -63,43 +63,43 @@
         "message": "Imposta etichette"
     },
     "setting_tagOnTrainingLabel": {
-        "message": "Imposta/rimuovi etichetta durante l'addestramento"
+        "message": "Applica/rimuovi etichetta durante l'allenamento"
     },
     "setting_removeOnClassifyLabel": {
-        "message": "Rimuovi etichette applicate durante la classificazione se la probabilità è sotto la soglia"
+        "message": "Rimuovi etichette durante la classificazione se sotto la soglia"
     },
     "setting_backupRestoreTitle": {
-        "message": "Backup e ripristino dei dati di addestramento"
+        "message": "Backup e ripristino dei dati di allenamento"
     },
     "setting_backupButton": {
-        "message": "Esegui backup dei dati di addestramento"
+        "message": "Backup dati di allenamento"
     },
     "setting_restoreButton": {
-        "message": "Ripristina dati di addestramento"
+        "message": "Ripristina dati di allenamento"
     },
     "setting_saveButton": {
         "message": "Salva"
     },
     "settings_defaultOption": {
-        "message": "--- Seleziona un'opzione ---"
+        "message": "--- Seleziona ---"
     },
     "settings_deleteTrainingData": {
-        "message": "Elimina dati di addestramento"
+        "message": "Elimina dati di allenamento"
     },
     "settings_stopDeletion": {
-        "message": "Interrompi eliminazione ($1s)"
+        "message": "Ferma eliminazione ($1s)"
     },
     "settings_noTrainingData": {
-        "message": "Nessun dato di addestramento presente per $1."
+        "message": "Nessun dato di allenamento disponibile per $1."
     },
     "settings_loadTrainingDataError": {
-        "message": "Errore durante il caricamento dei dati di addestramento. Riprova."
+        "message": "Errore durante il caricamento dei dati di allenamento. Riprova."
     },
     "settings_trainingDataDeleted": {
-        "message": "Dati di addestramento per $1 eliminati."
+        "message": "Dati di allenamento per $1 eliminati."
     },
     "settings_deleteTrainingDataError": {
-        "message": "Errore durante l'eliminazione dei dati di addestramento per $1."
+        "message": "Errore durante l'eliminazione dei dati di allenamento per $1."
     },
     "settings_invalidThreshold": {
         "message": "Inserisci una soglia valida tra 1 e 99."
@@ -111,7 +111,7 @@
         "message": "Errore durante il salvataggio delle impostazioni. Riprova."
     },
     "emailinfo_title": {
-        "message": "PrioMailbox - Informazioni email"
+        "message": "PrioMailbox - Info e-mail"
     },
     "emailinfo_label_tag": {
         "message": "Etichetta"
@@ -120,13 +120,13 @@
         "message": "Probabilità"
     },
     "emailinfo_label_known_tokens": {
-        "message": "Token noti (Uni-/Bigrammi)"
+        "message": "Token conosciuti (Uni-/Bigrammi)"
     },
     "settings_donation_title": {
-        "message": "Sostieni PrioMailbox 💖"
+        "message": "Sostieni PrioMailbox e ottieni la versione Plus💖"
     },
     "settings_donation_message": {
-        "message": "💖 Grazie per aver utilizzato PrioMailbox! La manutenzione di questo componente aggiuntivo richiede molto tempo e impegno. Sostieni PrioMailbox con una donazione 💰</a>"
+        "message": "💖 Grazie per aver usato PrioMailbox! Mantenere questo componente aggiuntivo richiede molto tempo e impegno.<br><br><b>Aggiorna a PrioMailbox Plus con una donazione 💰</b><br>La versione Plus offre funzionalità avanzate come la classificazione basata su categorie, regole flessibili per account specifici (ad esempio, etichettatura) e azioni automatizzate come lo spostamento, la copia o la marcatura dei messaggi. Include anche un assistente di formazione interattivo per una migliore precisione di riconoscimento e un **allenamento più confortevole**. <a href=\"https://priomailbox.sebastiangalek.de/plusinfos/\" target=\"_blank\">Visualizza screenshot qui</a><br><br>La tua donazione non solo sblocca la versione Plus come bonus, ma supporta anche direttamente lo sviluppo continuo della versione gratuita di PrioMailbox, a beneficio di tutti gli utenti.<br>"
     },
     "settings_donate_button_text": {
         "message": "Dona ora 💰"

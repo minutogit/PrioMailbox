@@ -3,10 +3,10 @@
         "message": "Sélectionner une étiquette"
     },
     "emailInfoMenu": {
-        "message": "🔍 Infos sur l'e-mail"
+        "message": "🔍 Infos e-mail"
     },
     "classifyMenu": {
-        "message": "📄 Classifier l'e-mail"
+        "message": "📄 Classer e-mail(s)"
     },
     "trainTagMenu": {
         "message": "Entraîner : $1"
@@ -15,13 +15,13 @@
         "message": "✔️ Apprendre comme $1"
     },
     "unlearnTagMenu": {
-        "message": "❌ Apprendre comme non $1"
+        "message": "❌ Ne pas apprendre comme $1"
     },
     "trainingCompleteMessage": {
-        "message": "Entraîné comme : $1"
+        "message": "Appris comme : $1"
     },
     "untrainingCompleteMessage": {
-        "message": "Entraîné comme : NON-$1"
+        "message": "Appris comme : NON-$1"
     },
     "classificationCompleteMessage": {
         "message": "Classification terminée"
@@ -33,40 +33,40 @@
         "message": "Aide"
     },
     "setting_title": {
-        "message": "Paramètres de PrioMailbox"
+        "message": "Paramètres PrioMailbox"
     },
     "setting_autoTagTitle": {
-        "message": "Étiquetage automatique des nouveaux e-mails"
+        "message": "Étiqueter automatiquement les nouveaux e-mails"
     },
     "setting_autoTagTooltip": {
-        "message": "Analyser les nouveaux e-mails et appliquer automatiquement les étiquettes apprises."
+        "message": "Vérifier les nouveaux e-mails pour les étiquettes apprises et appliquer les étiquettes."
     },
     "setting_allAccountsLabel": {
         "message": "Activé pour tous les comptes"
     },
     "setting_selectTagsTitle": {
-        "message": "Sélectionner des étiquettes"
+        "message": "Sélectionner les étiquettes"
     },
     "setting_selectTagsTooltip": {
-        "message": "Sélectionnez les étiquettes à utiliser pour l'entraînement et l'étiquetage automatique."
+        "message": "Choisissez les étiquettes utilisées pour l'entraînement et l'étiquetage automatique."
     },
     "setting_thresholdTitle": {
         "message": "Seuil pour l'étiquetage automatique"
     },
     "setting_thresholdTooltip": {
-        "message": "Ce paramètre détermine la probabilité à partir de laquelle une étiquette est appliquée. Il est recommandé de le laisser à 99%."
+        "message": "Cette valeur définit la probabilité à laquelle une étiquette est appliquée. Il est recommandé de la laisser à 99%."
     },
     "setting_thresholdLabel": {
         "message": "Seuil (%)"
     },
     "setting_setTagsTitle": {
-        "message": "Appliquer des étiquettes"
+        "message": "Définir les étiquettes"
     },
     "setting_tagOnTrainingLabel": {
-        "message": "Appliquer/retirer l'étiquette lors de l'entraînement"
+        "message": "Appliquer/supprimer l'étiquette lors de l'entraînement"
     },
     "setting_removeOnClassifyLabel": {
-        "message": "Retirer les étiquettes appliquées si la probabilité est inférieure au seuil"
+        "message": "Supprimer les étiquettes lors de la classification si la probabilité est inférieure au seuil"
     },
     "setting_backupRestoreTitle": {
         "message": "Sauvegarder et restaurer les données d'entraînement"
@@ -111,7 +111,7 @@
         "message": "Erreur lors de l'enregistrement des paramètres. Veuillez réessayer."
     },
     "emailinfo_title": {
-        "message": "PrioMailbox - Infos sur l'e-mail"
+        "message": "PrioMailbox - Infos e-mail"
     },
     "emailinfo_label_tag": {
         "message": "Étiquette"
@@ -120,15 +120,15 @@
         "message": "Probabilité"
     },
     "emailinfo_label_known_tokens": {
-        "message": "Tokens connus (Uni-/Bigrams)"
+        "message": "Jetons connus (Uni-/Bigrammes)"
     },
     "settings_donation_title": {
-        "message": "Soutenez PrioMailbox 💖"
+        "message": "Soutenez PrioMailbox et obtenez la version Plus💖"
     },
     "settings_donation_message": {
-        "message": "💖 Merci d'utiliser PrioMailbox ! Maintenir cet add-on demande beaucoup de temps et d'efforts. Soutenez PrioMailbox avec un don 💰"
+        "message": "💖 Merci d'utiliser PrioMailbox ! Le maintien de cet add-on demande beaucoup de temps et d'efforts.<br><br><b>Passez à PrioMailbox Plus avec un don 💰</b><br>La version Plus offre des fonctionnalités avancées telles que la classification par catégorie, des règles flexibles pour des comptes spécifiques (par exemple, l'étiquetage) et des actions automatisées telles que le déplacement, la copie ou l'étoile des messages. Elle inclut également un assistant de formation interactif pour une meilleure précision de reconnaissance et un **entraînement plus confortable**. <a href=\"https://priomailbox.sebastiangalek.de/plusinfos/\" target=\"_blank\">Voir les captures d'écran ici</a><br><br>Votre don débloque non seulement la version Plus en bonus, mais soutient également directement le développement continu de la version gratuite de PrioMailbox, au profit de tous les utilisateurs.<br>"
     },
     "settings_donate_button_text": {
-        "message": "Faire un don 💰"
+        "message": "Faire un don maintenant 💰"
     }
 }

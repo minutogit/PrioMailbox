@@ -3,25 +3,25 @@
         "message": "Schlagwort auswählen"
     },
     "emailInfoMenu": {
-        "message": "🔍 E-Mail-Infos"
+        "message": "🔍 E-Mail-Info"
     },
     "classifyMenu": {
-        "message": "📄 Klassifiziere E-Mail(s)"
+        "message": "📄 E-Mail(s) klassifizieren"
     },
     "trainTagMenu": {
-        "message": "Trainiere: $1"
+        "message": "Trainieren: $1"
     },
     "learnTagMenu": {
-        "message": "✔️ Lerne als $1"
+        "message": "✔️ Als $1 lernen"
     },
     "unlearnTagMenu": {
-        "message": "❌ Lerne als nicht $1"
+        "message": "❌ Als nicht $1 lernen"
     },
     "trainingCompleteMessage": {
-        "message": "Trainiert als: $1"
+        "message": "Gelernt als: $1"
     },
     "untrainingCompleteMessage": {
-        "message": "Trainiert als: NICHT-$1"
+        "message": "Gelernt als: NICHT-$1"
     },
     "classificationCompleteMessage": {
         "message": "Klassifizierung abgeschlossen"
@@ -36,37 +36,37 @@
         "message": "PrioMailbox Einstellungen"
     },
     "setting_autoTagTitle": {
-        "message": "Automatisches Taggen neuer E-Mails"
+        "message": "Neue E-Mails automatisch schlagworten"
     },
     "setting_autoTagTooltip": {
-        "message": "Neue E-Mails auf die gelernten Schlagwörter prüfen und taggen."
+        "message": "Neue E-Mails auf gelernte Schlagworte prüfen und anwenden."
     },
     "setting_allAccountsLabel": {
         "message": "Für alle Konten aktiviert"
     },
     "setting_selectTagsTitle": {
-        "message": "Schlagwörter auswählen"
+        "message": "Schlagworte auswählen"
     },
     "setting_selectTagsTooltip": {
-        "message": "Wählen Sie die Schlagwörter aus, die zum Trainieren und automatischen Taggen verwendet werden."
+        "message": "Wählen Sie die Schlagworte für Training und automatische Schlagwortvergabe."
     },
     "setting_thresholdTitle": {
-        "message": "Schwellwert für automatisches Taggen"
+        "message": "Schwellenwert für automatische Schlagwortvergabe"
     },
     "setting_thresholdTooltip": {
-        "message": "Dieser Wert legt die Wahrscheinlichkeit fest, ab der ein Tag gesetzt wird. Es wird empfohlen, den Wert bei 99% zu belassen."
+        "message": "Dieser Wert definiert die Wahrscheinlichkeit, ab der ein Schlagwort angewendet wird. Es wird empfohlen, ihn bei 99% zu belassen."
     },
     "setting_thresholdLabel": {
-        "message": "Schwellwert (%)"
+        "message": "Schwellenwert (%)"
     },
     "setting_setTagsTitle": {
-        "message": "Schlagwörter setzen"
+        "message": "Schlagworte festlegen"
     },
     "setting_tagOnTrainingLabel": {
-        "message": "Schlagwort beim Trainieren setzen/entfernen"
+        "message": "Schlagwort beim Training anwenden/entfernen"
     },
     "setting_removeOnClassifyLabel": {
-        "message": "Entferne gesetzte Schlagwörter beim Klassifizieren wenn Wahrscheinlichkeit unter Schwellwert"
+        "message": "Schlagworte beim Klassifizieren entfernen, wenn unter Schwellenwert"
     },
     "setting_backupRestoreTitle": {
         "message": "Trainingsdaten sichern und wiederherstellen"
@@ -81,7 +81,7 @@
         "message": "Speichern"
     },
     "settings_defaultOption": {
-        "message": "--- Bitte wählen ---"
+        "message": "--- Bitte auswählen ---"
     },
     "settings_deleteTrainingData": {
         "message": "Trainingsdaten löschen"
@@ -90,19 +90,19 @@
         "message": "Löschen stoppen ($1s)"
     },
     "settings_noTrainingData": {
-        "message": "Keine Trainingsdaten für $1 vorhanden."
+        "message": "Keine Trainingsdaten für $1 verfügbar."
     },
     "settings_loadTrainingDataError": {
         "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut."
     },
     "settings_trainingDataDeleted": {
-        "message": "Trainingsdaten für $1 wurden gelöscht."
+        "message": "Trainingsdaten für $1 gelöscht."
     },
     "settings_deleteTrainingDataError": {
         "message": "Fehler beim Löschen der Trainingsdaten für $1."
     },
     "settings_invalidThreshold": {
-        "message": "Bitte geben Sie einen gültigen Schwellwert zwischen 1 und 99 ein."
+        "message": "Bitte geben Sie einen gültigen Schwellenwert zwischen 1 und 99 ein."
     },
     "settings_saved": {
         "message": "Einstellungen gespeichert."
@@ -120,15 +120,15 @@
         "message": "Wahrscheinlichkeit"
     },
     "emailinfo_label_known_tokens": {
-        "message": "Bekannte Token (Uni-/Bigrams)"
+        "message": "Bekannte Token (Uni-/Bigramme)"
     },
     "settings_donation_title": {
-        "message": "Unterstütze PrioMailbox 💖"
+        "message": "Unterstützen Sie PrioMailbox und erhalten Sie die Plus-Version💖"
     },
     "settings_donation_message": {
-        "message": "💖 Danke, dass du PrioMailbox nutzt! Die Wartung dieses Add-ons erfordert viel Zeit und Mühe. Unterstütze PrioMailbox mit einer Spende 💰</a>"
+        "message": "💖 Vielen Dank, dass Sie PrioMailbox nutzen! Die Pflege dieses Add-ons erfordert viel Zeit und Mühe.<br><br><b>Upgrade auf PrioMailbox Plus mit einer Spende 💰</b><br>Die Plus-Version bietet erweiterte Funktionen wie kategoriebasierte Klassifizierung, flexible Regeln für bestimmte Konten (z.B. Schlagwortvergabe) und automatisierte Aktionen wie das Verschieben, Kopieren oder Markieren von Nachrichten. Sie enthält auch einen interaktiven Trainingshelfer für eine verbesserte Erkennungsgenauigkeit und **komfortableres Training**. <a href=\"https://priomailbox.sebastiangalek.de/plusinfos/\" target=\"_blank\">Hier Screenshots ansehen</a><br><br>Ihre Spende schaltet nicht nur die Plus-Version als Bonus frei, sondern unterstützt auch direkt die kontinuierliche Entwicklung der kostenlosen PrioMailbox-Version, wovon alle Nutzer profitieren.<br>"
     },
     "settings_donate_button_text": {
-        "message": "Jetzt spenden 💰"
+        "message": "Jetzt Spenden 💰"
     }
 }
