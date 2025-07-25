@@ -1,200 +1,134 @@
 {
-  "selectTagMenu": {
-    "message": "Schlagwort auswählen"
-  },
-  "emailInfoMenu": {
-    "message": "🔍 E-Mail-Infos"
-  },
-  "classifyMenu": {
-    "message": "📄 Klassifiziere E-Mail(s)"
-  },
-  "trainTagMenu": {
-    "message": "Trainiere: $1"
-  },
-  "learnTagMenu": {
-    "message": "✔️ Lerne als $1"
-  },
-  "unlearnTagMenu": {
-    "message": "❌ Lerne als nicht $1"
-  },
-  "trainingCompleteMessage": {
-    "message": "Trainiert als: $1"
-  },
-  "untrainingCompleteMessage": {
-    "message": "Trainiert als: NICHT-$1"
-  },
-  "classificationCompleteMessage": {
-    "message": "Klassifizierung abgeschlossen"
-  },
-  "popup_settingsButton": {
-    "message": "Einstellungen"
-  },
-  "popup_helpButton": {
-    "message": "Hilfe"
-  },
-  "setting_title": {
-    "message": "PrioMailbox Einstellungen"
-  },
-  "setting_autoTagTitle": {
-    "message": "Automatisches Taggen neuer E-Mails"
-  },
-  "setting_autoTagTooltip": {
-    "message": "Neue E-Mails auf die gelernten Schlagwörter prüfen und taggen."
-  },
-  "setting_allAccountsLabel": {
-    "message": "Für alle Konten aktiviert"
-  },
-  "setting_selectTagsTitle": {
-    "message": "Schlagwörter auswählen"
-  },
-  "setting_selectTagsTooltip": {
-    "message": "Wählen Sie die Schlagwörter aus, die zum Trainieren und automatischen Taggen verwendet werden."
-  },
-  "setting_thresholdTitle": {
-    "message": "Schwellwert für automatisches Taggen"
-  },
-  "setting_thresholdTooltip": {
-    "message": "Dieser Wert legt die Wahrscheinlichkeit fest, ab der ein Tag gesetzt wird. Es wird empfohlen, den Wert bei 99% zu belassen."
-  },
-  "setting_thresholdLabel": {
-    "message": "Schwellwert (%)"
-  },
-  "setting_setTagsTitle": {
-    "message": "Schlagwörter setzen"
-  },
-  "setting_tagOnTrainingLabel": {
-    "message": "Schlagwort beim Trainieren setzen/entfernen"
-  },
-  "setting_tagOnTrainingTooltip": {
-    "message": "Wenn aktiviert, wird beim Trainieren das entsprechende Schlagwort gesetzt oder entfernt."
-  },
-  "setting_removeOnClassifyLabel": {
-    "message": "Entferne gesetzte Schlagwörter beim Klassifizieren wenn Wahrscheinlichkeit unter Schwellwert"
-  },
-  "setting_removeOnClassifyTooltip": {
-    "message": "Wenn aktiviert, werden gesetzte Schlagwörter entfernt, wenn die Wahrscheinlichkeit unter dem Schwellwert liegt."
-  },
-  "setting_backupRestoreTitle": {
-    "message": "Trainingsdaten sichern und wiederherstellen"
-  },
-  "setting_backupButton": {
-    "message": "Trainingsdaten sichern"
-  },
-  "setting_restoreButton": {
-    "message": "Trainingsdaten wiederherstellen"
-  },
-  "setting_saveButton": {
-    "message": "Speichern"
-  },
-  "settings_defaultOption": {
-    "message": "--- Bitte wählen ---"
-  },
-  "settings_deleteTrainingData": {
-    "message": "Trainingsdaten löschen"
-  },
-  "settings_stopDeletion": {
-    "message": "Löschen stoppen ($1s)"
-  },
-  "settings_noTrainingData": {
-    "message": "Keine Trainingsdaten für $1 vorhanden."
-  },
-  "settings_loadTrainingDataError": {
-    "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut."
-  },
-  "settings_trainingDataDeleted": {
-    "message": "Trainingsdaten für $1 wurden gelöscht."
-  },
-  "settings_deleteTrainingDataError": {
-    "message": "Fehler beim Löschen der Trainingsdaten für $1."
-  },
-  "settings_invalidThreshold": {
-    "message": "Bitte geben Sie einen gültigen Schwellwert zwischen 1 und 99 ein."
-  },
-  "settings_saved": {
-    "message": "Einstellungen gespeichert."
-  },
-  "settings_saveError": {
-    "message": "Fehler beim Speichern der Einstellungen. Bitte versuchen Sie es erneut."
-  },
-  "emailinfo_title": {
-    "message": "PrioMailbox - E-Mail Info"
-  },
-  "emailinfo_label_tag": {
-    "message": "Schlagwort"
-  },
-  "emailinfo_label_probability": {
-    "message": "Wahrscheinlichkeit"
-  },
-  "emailinfo_label_known_tokens": {
-    "message": "Bekannte Token (Uni-/Bigrams)"
-  },
-  "emailinfo_top_tokens": {
-    "message": "Top Tokens für Schlagwort \"$1\""
-  },
-  "emailinfo_token": {
-    "message": "Token"
-  },
-  "emailinfo_probability": {
-    "message": "Wahrscheinlichkeit"
-  },
-  "emailinfo_type": {
-    "message": "Typ"
-  },
-  "emailinfo_positive": {
-    "message": "Positiv"
-  },
-  "emailinfo_negative": {
-    "message": "Negativ"
-  },
-  "emailinfo_donation_message": {
-    "message": "💖 Danke, dass du PrioMailbox nutzt!<br>Die Wartung dieses Add-ons erfordert viel Zeit und Mühe.<br>Unterstütze PrioMailbox mit einer Spende 💰<br>Nach der Spende und Eingabe deines Codes verschwindet dieser Hinweis.<br>👉 <a href=\"#\" id=\"donation-link\" style=\"color: #27ae60; text-decoration: none;\">Einstellungen & Spenden</a>"
-  },
-  "emailinfo_donation_button_ok": {
-    "message": "OK"
-  },
-  "settings_donation_title": {
-    "message": "Unterstütze PrioMailbox 💖"
-  },
-  "settings_donation_message": {
-    "message": "💖 Danke, dass du PrioMailbox nutzt! Die Wartung dieses Add-ons erfordert viel Zeit und Mühe. Unterstütze PrioMailbox mit einer Spende 💰</a>"
-  },
-  "settings_donate_button_text": {
-    "message": "Jetzt spenden 💰"
-  },
-  "settings_donation_request_code_title": {
-    "message": "Spenden-Code anfordern 📧"
-  },
-  "settings_donation_request_code_description": {
-    "message": "Wenn du bereits gespendet hast, kannst du hier deinen Spenden-Code per E-Mail anfordern. Trage dann deine E-Mail-Adresse und den Spenden-Code ein. Als Dankeschön erhältst du keine weiteren Hinweise im Programm zu spenden."
-  },
-  "settings_donation_email_placeholder": {
-    "message": "Ihre E-Mail-Adresse"
-  },
-  "settings_donation_code_placeholder": {
-    "message": "Spenden-Code eingeben"
-  },
-  "settings_donation_request_code_button": {
-    "message": "Spenden-Code anfordern ✉️"
-  },
-  "settings_donation_code_sent": {
-    "message": "Ein Spenden-Code wurde an Ihre E-Mail-Adresse gesendet."
-  },
-  "settings_donation_no_donation": {
-    "message": "Keine Spende gefunden."
-  },
-  "settings_donation_invalid_code": {
-    "message": "Der eingegebene Spenden-Code ist ungültig."
-  },
-  "settings_donation_error": {
-    "message": "Ein unerwarteter Fehler ist aufgetreten."
-  },
-  "settings_donation_invalid_email": {
-    "message": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
-  },
-  "settings_donation_wait": {
-    "message": "Bitte warten Sie 10 Sekunden, bevor Sie erneut klicken."
-  },
-  "settings_donation_code_verified": {
-    "message": "Spenden-Code erfolgreich überprüft. Vielen Dank für Ihre Unterstützung!"
-  }
+    "selectTagMenu": {
+        "message": "Schlagwort auswählen"
+    },
+    "emailInfoMenu": {
+        "message": "🔍 E-Mail-Infos"
+    },
+    "classifyMenu": {
+        "message": "📄 Klassifiziere E-Mail(s)"
+    },
+    "trainTagMenu": {
+        "message": "Trainiere: $1"
+    },
+    "learnTagMenu": {
+        "message": "✔️ Lerne als $1"
+    },
+    "unlearnTagMenu": {
+        "message": "❌ Lerne als nicht $1"
+    },
+    "trainingCompleteMessage": {
+        "message": "Trainiert als: $1"
+    },
+    "untrainingCompleteMessage": {
+        "message": "Trainiert als: NICHT-$1"
+    },
+    "classificationCompleteMessage": {
+        "message": "Klassifizierung abgeschlossen"
+    },
+    "popup_settingsButton": {
+        "message": "Einstellungen"
+    },
+    "popup_helpButton": {
+        "message": "Hilfe"
+    },
+    "setting_title": {
+        "message": "PrioMailbox Einstellungen"
+    },
+    "setting_autoTagTitle": {
+        "message": "Automatisches Taggen neuer E-Mails"
+    },
+    "setting_autoTagTooltip": {
+        "message": "Neue E-Mails auf die gelernten Schlagwörter prüfen und taggen."
+    },
+    "setting_allAccountsLabel": {
+        "message": "Für alle Konten aktiviert"
+    },
+    "setting_selectTagsTitle": {
+        "message": "Schlagwörter auswählen"
+    },
+    "setting_selectTagsTooltip": {
+        "message": "Wählen Sie die Schlagwörter aus, die zum Trainieren und automatischen Taggen verwendet werden."
+    },
+    "setting_thresholdTitle": {
+        "message": "Schwellwert für automatisches Taggen"
+    },
+    "setting_thresholdTooltip": {
+        "message": "Dieser Wert legt die Wahrscheinlichkeit fest, ab der ein Tag gesetzt wird. Es wird empfohlen, den Wert bei 99% zu belassen."
+    },
+    "setting_thresholdLabel": {
+        "message": "Schwellwert (%)"
+    },
+    "setting_setTagsTitle": {
+        "message": "Schlagwörter setzen"
+    },
+    "setting_tagOnTrainingLabel": {
+        "message": "Schlagwort beim Trainieren setzen/entfernen"
+    },
+    "setting_removeOnClassifyLabel": {
+        "message": "Entferne gesetzte Schlagwörter beim Klassifizieren wenn Wahrscheinlichkeit unter Schwellwert"
+    },
+    "setting_backupRestoreTitle": {
+        "message": "Trainingsdaten sichern und wiederherstellen"
+    },
+    "setting_backupButton": {
+        "message": "Trainingsdaten sichern"
+    },
+    "setting_restoreButton": {
+        "message": "Trainingsdaten wiederherstellen"
+    },
+    "setting_saveButton": {
+        "message": "Speichern"
+    },
+    "settings_defaultOption": {
+        "message": "--- Bitte wählen ---"
+    },
+    "settings_deleteTrainingData": {
+        "message": "Trainingsdaten löschen"
+    },
+    "settings_stopDeletion": {
+        "message": "Löschen stoppen ($1s)"
+    },
+    "settings_noTrainingData": {
+        "message": "Keine Trainingsdaten für $1 vorhanden."
+    },
+    "settings_loadTrainingDataError": {
+        "message": "Fehler beim Laden der Trainingsdaten. Bitte versuchen Sie es erneut."
+    },
+    "settings_trainingDataDeleted": {
+        "message": "Trainingsdaten für $1 wurden gelöscht."
+    },
+    "settings_deleteTrainingDataError": {
+        "message": "Fehler beim Löschen der Trainingsdaten für $1."
+    },
+    "settings_invalidThreshold": {
+        "message": "Bitte geben Sie einen gültigen Schwellwert zwischen 1 und 99 ein."
+    },
+    "settings_saved": {
+        "message": "Einstellungen gespeichert."
+    },
+    "settings_saveError": {
+        "message": "Fehler beim Speichern der Einstellungen. Bitte versuchen Sie es erneut."
+    },
+    "emailinfo_title": {
+        "message": "PrioMailbox - E-Mail Info"
+    },
+    "emailinfo_label_tag": {
+        "message": "Schlagwort"
+    },
+    "emailinfo_label_probability": {
+        "message": "Wahrscheinlichkeit"
+    },
+    "emailinfo_label_known_tokens": {
+        "message": "Bekannte Token (Uni-/Bigrams)"
+    },
+    "settings_donation_title": {
+        "message": "Unterstütze PrioMailbox 💖"
+    },
+    "settings_donation_message": {
+        "message": "💖 Danke, dass du PrioMailbox nutzt! Die Wartung dieses Add-ons erfordert viel Zeit und Mühe. Unterstütze PrioMailbox mit einer Spende 💰</a>"
+    },
+    "settings_donate_button_text": {
+        "message": "Jetzt spenden 💰"
+    }
 }

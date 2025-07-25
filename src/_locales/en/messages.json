@@ -1,200 +1,134 @@
 {
-  "selectTagMenu": {
-    "message": "Select Tag"
-  },
-  "emailInfoMenu": {
-    "message": "🔍 Email Info"
-  },
-  "classifyMenu": {
-    "message": "📄 Classify Email(s)"
-  },
-  "trainTagMenu": {
-    "message": "Train: $1"
-  },
-  "learnTagMenu": {
-    "message": "✔️ Learn as $1"
-  },
-  "unlearnTagMenu": {
-    "message": "❌ Learn as not $1"
-  },
-  "trainingCompleteMessage": {
-    "message": "Trained as: $1"
-  },
-  "untrainingCompleteMessage": {
-    "message": "Trained as: NOT-$1"
-  },
-  "classificationCompleteMessage": {
-    "message": "Classification Complete"
-  },
-  "popup_settingsButton": {
-    "message": "Settings"
-  },
-  "popup_helpButton": {
-    "message": "Help"
-  },
-  "setting_title": {
-    "message": "PrioMailbox Settings"
-  },
-  "setting_autoTagTitle": {
-    "message": "Automatically Tag New Emails"
-  },
-  "setting_autoTagTooltip": {
-    "message": "Check new emails for learned tags and apply tags."
-  },
-  "setting_allAccountsLabel": {
-    "message": "Enabled for All Accounts"
-  },
-  "setting_selectTagsTitle": {
-    "message": "Select Tags"
-  },
-  "setting_selectTagsTooltip": {
-    "message": "Choose the tags used for training and automatic tagging."
-  },
-  "setting_thresholdTitle": {
-    "message": "Threshold for Automatic Tagging"
-  },
-  "setting_thresholdTooltip": {
-    "message": "This value defines the probability at which a tag is applied. It is recommended to leave it at 99%."
-  },
-  "setting_thresholdLabel": {
-    "message": "Threshold (%)"
-  },
-  "setting_setTagsTitle": {
-    "message": "Set Tags"
-  },
-  "setting_tagOnTrainingLabel": {
-    "message": "Apply/Remove Tag When Training"
-  },
-  "setting_tagOnTrainingTooltip": {
-    "message": "If enabled, the relevant tag is applied or removed during training."
-  },
-  "setting_removeOnClassifyLabel": {
-    "message": "Remove Tags When Classifying If Below Threshold"
-  },
-  "setting_removeOnClassifyTooltip": {
-    "message": "If enabled, tags are removed when the probability is below the threshold."
-  },
-  "setting_backupRestoreTitle": {
-    "message": "Backup and Restore Training Data"
-  },
-  "setting_backupButton": {
-    "message": "Backup Training Data"
-  },
-  "setting_restoreButton": {
-    "message": "Restore Training Data"
-  },
-  "setting_saveButton": {
-    "message": "Save"
-  },
-  "settings_defaultOption": {
-    "message": "--- Please Select ---"
-  },
-  "settings_deleteTrainingData": {
-    "message": "Delete Training Data"
-  },
-  "settings_stopDeletion": {
-    "message": "Stop Deletion ($1s)"
-  },
-  "settings_noTrainingData": {
-    "message": "No training data available for $1."
-  },
-  "settings_loadTrainingDataError": {
-    "message": "Error loading training data. Please try again."
-  },
-  "settings_trainingDataDeleted": {
-    "message": "Training data for $1 deleted."
-  },
-  "settings_deleteTrainingDataError": {
-    "message": "Error deleting training data for $1."
-  },
-  "settings_invalidThreshold": {
-    "message": "Please enter a valid threshold between 1 and 99."
-  },
-  "settings_saved": {
-    "message": "Settings saved."
-  },
-  "settings_saveError": {
-    "message": "Error saving settings. Please try again."
-  },
-  "emailinfo_title": {
-    "message": "PrioMailbox - Email Info"
-  },
-  "emailinfo_label_tag": {
-    "message": "Tag"
-  },
-  "emailinfo_label_probability": {
-    "message": "Probability"
-  },
-  "emailinfo_label_known_tokens": {
-    "message": "Known Token (Uni-/Bigrams)"
-  },
-  "emailinfo_top_tokens": {
-    "message": "Top Tokens for Tag \"$1\""
-  },
-  "emailinfo_token": {
-    "message": "Token"
-  },
-  "emailinfo_probability": {
-    "message": "Probability"
-  },
-  "emailinfo_type": {
-    "message": "Type"
-  },
-  "emailinfo_positive": {
-    "message": "Positive"
-  },
-  "emailinfo_negative": {
-    "message": "Negative"
-  },
-  "emailinfo_donation_message": {
-    "message": "💖 Thank you for using PrioMailbox!<br>Maintaining this add-on requires a lot of time and effort.<br>Support PrioMailbox with a donation 💰<br>After donating and entering your code, this message will disappear.<br>👉 <a href=\"#\" id=\"donation-link\" style=\"color: #27ae60; text-decoration: none;\">Settings & Donations</a>"
-  },
-  "emailinfo_donation_button_ok": {
-    "message": "OK"
-  },
-  "settings_donation_title": {
-    "message": "Support PrioMailbox and get Plus Version💖"
-  },
-  "settings_donation_message": {
-  "message": "💖 Thank you for using PrioMailbox! Maintaining this add-on requires a lot of time and effort.<br><br><b>Upgrade to PrioMailbox Plus with a donation 💰</b><br>The Plus version offers advanced features like category-based classification, flexible rules for specific accounts (e.g., tagging), and automated actions such as moving, copying, or starring messages. It also includes an interactive Training Helper for improved recognition accuracy and **more comfortable training**.<br><br>Your donation not only unlocks the Plus Version as a bonus but also directly supports the continuous development of the free PrioMailbox version, benefiting all users."
-  },
-  "settings_donate_button_text": {
-    "message": "Donate Now 💰"
-  },
-  "settings_donation_request_code_title": {
-    "message": "Request Donation Code 📧"
-  },
-  "settings_donation_request_code_description": {
-    "message": "If you have already donated, you can request your donation code via email here. Then enter your email address and donation code. As a thank you, no further donation reminders will appear in the program."
-  },
-  "settings_donation_email_placeholder": {
-    "message": "Your Email Address"
-  },
-  "settings_donation_code_placeholder": {
-    "message": "Enter Donation Code"
-  },
-  "settings_donation_request_code_button": {
-    "message": "Request Donation Code ✉️"
-  },
-  "settings_donation_code_sent": {
-    "message": "A donation code has been sent to your email address."
-  },
-  "settings_donation_no_donation": {
-    "message": "No donation found."
-  },
-  "settings_donation_invalid_code": {
-    "message": "The entered donation code is invalid."
-  },
-  "settings_donation_error": {
-    "message": "An unexpected error occurred."
-  },
-  "settings_donation_invalid_email": {
-    "message": "Please enter a valid email address."
-  },
-  "settings_donation_wait": {
-    "message": "Please wait 10 seconds before clicking again."
-  },
-  "settings_donation_code_verified": {
-    "message": "Donation code successfully verified. Thank you for your support!"
-  }
+    "selectTagMenu": {
+        "message": "Select Tag"
+    },
+    "emailInfoMenu": {
+        "message": "🔍 Email Info"
+    },
+    "classifyMenu": {
+        "message": "📄 Classify Email(s)"
+    },
+    "trainTagMenu": {
+        "message": "Train: $1"
+    },
+    "learnTagMenu": {
+        "message": "✔️ Learn as $1"
+    },
+    "unlearnTagMenu": {
+        "message": "❌ Learn as not $1"
+    },
+    "trainingCompleteMessage": {
+        "message": "Trained as: $1"
+    },
+    "untrainingCompleteMessage": {
+        "message": "Trained as: NOT-$1"
+    },
+    "classificationCompleteMessage": {
+        "message": "Classification Complete"
+    },
+    "popup_settingsButton": {
+        "message": "Settings"
+    },
+    "popup_helpButton": {
+        "message": "Help"
+    },
+    "setting_title": {
+        "message": "PrioMailbox Settings"
+    },
+    "setting_autoTagTitle": {
+        "message": "Automatically Tag New Emails"
+    },
+    "setting_autoTagTooltip": {
+        "message": "Check new emails for learned tags and apply tags."
+    },
+    "setting_allAccountsLabel": {
+        "message": "Enabled for All Accounts"
+    },
+    "setting_selectTagsTitle": {
+        "message": "Select Tags"
+    },
+    "setting_selectTagsTooltip": {
+        "message": "Choose the tags used for training and automatic tagging."
+    },
+    "setting_thresholdTitle": {
+        "message": "Threshold for Automatic Tagging"
+    },
+    "setting_thresholdTooltip": {
+        "message": "This value defines the probability at which a tag is applied. It is recommended to leave it at 99%."
+    },
+    "setting_thresholdLabel": {
+        "message": "Threshold (%)"
+    },
+    "setting_setTagsTitle": {
+        "message": "Set Tags"
+    },
+    "setting_tagOnTrainingLabel": {
+        "message": "Apply/Remove Tag When Training"
+    },
+    "setting_removeOnClassifyLabel": {
+        "message": "Remove Tags When Classifying If Below Threshold"
+    },
+    "setting_backupRestoreTitle": {
+        "message": "Backup and Restore Training Data"
+    },
+    "setting_backupButton": {
+        "message": "Backup Training Data"
+    },
+    "setting_restoreButton": {
+        "message": "Restore Training Data"
+    },
+    "setting_saveButton": {
+        "message": "Save"
+    },
+    "settings_defaultOption": {
+        "message": "--- Please Select ---"
+    },
+    "settings_deleteTrainingData": {
+        "message": "Delete Training Data"
+    },
+    "settings_stopDeletion": {
+        "message": "Stop Deletion ($1s)"
+    },
+    "settings_noTrainingData": {
+        "message": "No training data available for $1."
+    },
+    "settings_loadTrainingDataError": {
+        "message": "Error loading training data. Please try again."
+    },
+    "settings_trainingDataDeleted": {
+        "message": "Training data for $1 deleted."
+    },
+    "settings_deleteTrainingDataError": {
+        "message": "Error deleting training data for $1."
+    },
+    "settings_invalidThreshold": {
+        "message": "Please enter a valid threshold between 1 and 99."
+    },
+    "settings_saved": {
+        "message": "Settings saved."
+    },
+    "settings_saveError": {
+        "message": "Error saving settings. Please try again."
+    },
+    "emailinfo_title": {
+        "message": "PrioMailbox - Email Info"
+    },
+    "emailinfo_label_tag": {
+        "message": "Tag"
+    },
+    "emailinfo_label_probability": {
+        "message": "Probability"
+    },
+    "emailinfo_label_known_tokens": {
+        "message": "Known Token (Uni-/Bigrams)"
+    },
+    "settings_donation_title": {
+        "message": "Support PrioMailbox and get Plus Version💖"
+    },
+    "settings_donation_message": {
+        "message": "💖 Thank you for using PrioMailbox! Maintaining this add-on requires a lot of time and effort.<br><br><b>Upgrade to PrioMailbox Plus with a donation 💰</b><br>The Plus version offers advanced features like category-based classification, flexible rules for specific accounts (e.g., tagging), and automated actions such as moving, copying, or starring messages. It also includes an interactive Training Helper for improved recognition accuracy and **more comfortable training**.<br><br>Your donation not only unlocks the Plus Version as a bonus but also directly supports the continuous development of the free PrioMailbox version, benefiting all users."
+    },
+    "settings_donate_button_text": {
+        "message": "Donate Now 💰"
+    }
 }
