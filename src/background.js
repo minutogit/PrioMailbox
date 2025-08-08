@@ -351,13 +351,9 @@ messenger.menus.onClicked.addListener((info, tab) => {
       return;
     }
 
-    selectMessage(messageId)
-      .then(() => {
-        handleMenuClick(info, messageId);
-      })
-      .catch((error) => {
-        console.error("Error selecting message:", error);
-      });      
+    // Direct call to handleMenuClick - no message selection needed
+    handleMenuClick(info, messageId);
+    
   } else {
     console.log("No message selected. Assuming folder operation.");
   }
